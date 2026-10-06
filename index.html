@@ -425,6 +425,31 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
 .shelf .sep::before,.shelf .sep::after{content:"";flex:1;border-top:1px dashed var(--rule)}
 @container (min-width:520px){.facts{grid-template-columns:repeat(4,1fr)}}
 
+/* ---------- estimate warning (completion date) ---------- */
+.mm.eta{grid-column:1/-1;position:relative;padding:var(--s-4);border:1.5px dashed var(--warn-m);background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--warn-m) 8%,var(--sunk)) 0 10px,var(--sunk) 10px 20px)}
+.mm.eta .v{font-size:var(--t-xl);padding-inline-end:120px}
+.stamp{position:absolute;top:var(--s-3);inset-inline-end:var(--s-3);transform:rotate(-7deg);border:2px solid var(--warn);outline:1px solid var(--warn);outline-offset:2px;color:var(--warn);background:var(--sheet);font-weight:700;font-size:var(--t-xs);line-height:1.5;padding:2px 10px;border-radius:var(--r-1);text-align:center;white-space:nowrap}
+.stamp small{display:block;font-weight:600;font-size:var(--t-xs)}
+.eta-note{margin-top:var(--s-3);display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--s-2) var(--s-3);background:var(--sheet);border-radius:var(--r-2);padding:var(--s-3);border-inline-start:3px solid var(--warn-m);font-size:var(--t-sm);color:var(--ink-2);line-height:1.75}
+.eta-note .ico{color:var(--warn);margin-top:2px}
+.eta-note b{color:var(--ink)}
+.eta-note ul{margin:var(--s-1) 0 0;padding-inline-start:18px;display:grid;gap:2px}
+.eta-note a{color:var(--site);font-weight:600}
+.eta-mini{display:flex;gap:var(--s-2);align-items:flex-start;font-size:var(--t-xs);color:var(--ink-2);background:color-mix(in srgb,var(--warn-m) 10%,var(--sheet));border-radius:var(--r-2);padding:var(--s-2) var(--s-3);line-height:1.7}
+.eta-mini b{color:var(--warn)}
+
+/* ---------- official record (Wafi) ---------- */
+.wafi{border:var(--bw) solid var(--rule);border-radius:var(--r-2);background:var(--sunk);padding:var(--s-4);display:flex;flex-direction:column;gap:var(--s-3);position:relative;overflow:hidden}
+.wafi::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:4px;background:var(--site)}
+.wafi-h{display:flex;align-items:center;gap:var(--s-3);flex-wrap:wrap}
+.wafi-h h3{font-size:var(--t-lg)}
+.wafi dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:var(--s-2)}
+.wafi dl div{background:var(--sheet);border-radius:var(--r-2);padding:var(--s-2) var(--s-3);min-width:0}
+.wafi dt{font-size:var(--t-xs);color:var(--ink-3)}
+.wafi dd{margin:0;font-weight:700;font-size:var(--t-md);line-height:1.5}
+.wafi dd small{display:block;font-weight:400;font-size:var(--t-xs);color:var(--ink-2)}
+@container (min-width:520px){.wafi dl{grid-template-columns:repeat(4,1fr)}}
+
 </style>
 </head>
 <body>
@@ -436,6 +461,8 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
   <symbol id="i-trend" viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M5 15l4-4 3 3 7-7"/></symbol>
   <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></symbol>
   <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v6H4V6h6"/></symbol>
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
@@ -475,6 +502,22 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
       </div>
       <p class="srcnote">قُرئت التقارير صفحةً صفحةً، ونُقلت نسب المشروع والمراحل والبلوكات كما وردت فيها دون أي تعديل. أما الوتيرة والتوقعات والمقارنات فهي حسابات مبنية على تلك النسب. اضغط على أي تقرير لتتصفح صفحاته.</p>
       <ol class="shelf" id="shelf" aria-label="التقارير الشهرية مرتبة زمنيًا"></ol>
+      <div class="wafi" id="wafi">
+        <div class="wafi-h"><span class="chip c-good"><span class="sym" aria-hidden="true">✓</span>مصدر رسمي</span><h3>سجل المشروع في منصة وافي</h3></div>
+        <p class="lead">وافي منصة تابعة للهيئة العامة للعقار، تُسجَّل فيها مشاريع البيع على الخارطة. وهذه أبرز بيانات المشروع فيها:</p>
+        <dl>
+          <div><dt>حالة المشروع</dt><dd>جارٍ التنفيذ</dd></div>
+          <div><dt>نسبة الإنجاز في وافي</dt><dd><span class="ltr">26%</span><small>دون تاريخ تحديث ظاهر</small></dd></div>
+          <div><dt>تاريخ بداية المشروع</dt><dd>10 نوفمبر 2024</dd></div>
+          <div><dt>تاريخ نهاية المشروع</dt><dd>1 يونيو 2028</dd></div>
+          <div><dt>عدد الوحدات</dt><dd>596 وحدة<small>430 فيلا و166 تاون هاوس</small></dd></div>
+          <div><dt>الوحدات في التقارير الشهرية</dt><dd>360 فيلا<small>في أربع مراحل</small></dd></div>
+          <div><dt>المطوّر</dt><dd style="font-size:var(--t-sm)">شركة أورباس الشرق الأوسط العقارية</dd></div>
+          <div><dt>الموقع</dt><dd>الرياض، الجنادرية</dd></div>
+        </dl>
+        <a class="btn ghost" href="https://rega.gov.sa/rega-services/platforms/wafi-off-plan-sales-and-lease/%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84-%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9/?id=11717d0f-7990-4e3e-8db8-ffb03f2a7350" target="_blank" rel="noopener" style="align-self:flex-start"><svg class="ico sm"><use href="#i-ext"/></svg>افتح صفحة المشروع في وافي</a>
+        <p class="note">اطّلعنا على هذه البيانات في 6 أكتوبر 2026، وقد تتغير بعد ذلك؛ لذا ارجع إلى صفحة المشروع في وافي للاطلاع على آخر تحديث.</p>
+      </div>
     </div>
   </section>
 
@@ -488,7 +531,7 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
       <div class="kpis">
         <div class="kpi"><span class="k">نسبة الإنجاز</span><span class="v num"><span class="ltr">29.35%</span></span><span class="d c-good"><span aria-hidden="true">▲</span> بزيادة <span class="ltr">0.91%</span> عن أغسطس</span></div>
         <div class="kpi"><span class="k">التقدم الشهري مؤخرًا</span><span class="v num"><span class="ltr">0.92%</span></span><span class="d c-crit"><span aria-hidden="true">▼</span> مقابل <span class="ltr">1.23%</span> مطلع السنة</span></div>
-        <div class="kpi"><span class="k">موعد الاكتمال المتوقع</span><span class="v num"><span class="ltr">2032–2033</span></span><span class="d" style="color:var(--ink-2)">إذا استمرت الوتيرة نفسها</span></div>
+        <div class="kpi"><span class="k">موعد الاكتمال المتوقع</span><span class="v num"><span class="ltr">2032–2033</span></span><span class="d c-warn"><span aria-hidden="true">●</span> تقدير غير رسمي بالوتيرة الحالية</span></div>
         <div class="kpi"><span class="k">بلوكات شبه متوقفة</span><span class="v num">2</span><span class="d c-crit"><span aria-hidden="true">■</span> البلوكان 15 و23</span></div>
       </div>
       <p class="disc">صفحة مستقلة، غير تابعة للمطوّر ولا لأي جهة أخرى. جميع الأرقام منقولة من التقارير الشهرية التي يرسلها المطوّر إلى الملاك، وما يرد فيها من ملاحظات هو قراءة لهذه الأرقام، لا اتهام لأحد.</p>
@@ -501,10 +544,11 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
       <div class="chart" id="c-overall"><div class="tip" role="status"></div></div>
       <div class="legend"><span style="color:var(--site)"><i></i><span style="color:var(--ink-2)">نسبة المشروع وفق التقارير</span></span><span><i class="gap"></i>يوليو: لا يوجد تقرير</span></div>
       <div class="proj" aria-label="متى يبلغ المشروع 100%؟">
-        <b style="font-size:var(--t-sm)">متى يبلغ المشروع 100% إذا استمرت الوتيرة نفسها؟</b>
+        <b style="font-size:var(--t-sm)">متى يبلغ المشروع 100% إذا استمرت الوتيرة نفسها؟ <span class="chip c-warn"><span class="sym" aria-hidden="true">●</span>تقدير غير رسمي</span></b>
         <div class="proj-bar"><span class="done" style="width:29.35%"></span><span class="mk" style="left:76%;background:var(--s1)"></span><span class="mk" style="left:84%;background:var(--s2)"></span></div>
         <div class="proj-ax"><span>2026</span><span>2028</span><span>2030</span><span>2032</span><span>2034</span></div>
         <div class="legend"><span style="color:var(--s1)"><i></i><span style="color:var(--ink-2)">بمعدل <span class="ltr">1.02%</span> شهريًا: منتصف 2032</span></span><span style="color:var(--s2)"><i></i><span style="color:var(--ink-2)">بمعدل <span class="ltr">0.92%</span> شهريًا: مطلع 2033</span></span></div>
+        <p class="note">للمقارنة: تاريخ نهاية المشروع المسجل رسميًا في منصة وافي هو 1 يونيو 2028.</p>
       </div>
     </div>
   </section>
@@ -866,7 +910,10 @@ function drawMine(){
     take.innerHTML=`بلوك ${b.b}: ${chip(sc,sl,sy)}`;
     body.innerHTML=`<div class="mhead"><span class="mbig">${pct(last(b))}</span><span class="note">${ph.name} · ${villas(b.u)} · وفق تقرير سبتمبر</span></div>
      <div class="mmeta">
-      <div class="mm"><span class="k">موعد الاكتمال المتوقع</span><span class="v">${eta(b)}${stuck(b)?'':`<small>بين ${ym(q[0])} و${ym(q[2])}</small>`}</span></div>
+      <div class="mm eta"><span class="stamp" aria-hidden="true">تقديري<small>غير رسمي</small></span><span class="k">موعد الاكتمال المتوقع لبلوكك</span><span class="v">${eta(b)}${stuck(b)?'<small>البلوك شبه متوقف، فلا يمكن تقدير موعد اكتماله</small>':`<small>على الأرجح بين ${ym(q[0])} و${ym(q[2])}</small>`}</span>
+        <div class="eta-note" role="note"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg><div><b>تنبيه مهم: هذا الموعد تقدير، وليس موعدًا رسميًا من الشركة.</b>
+          <ul><li>التقارير الشهرية لا تذكر أي موعد لتسليم البلوكات، فحسبنا هذا الموعد بأنفسنا.</li><li>استخلصناه من وتيرة تقدم البلوك في التقارير السابقة، بعد تجربة آلاف الاحتمالات لتلك الوتيرة.</li><li>قد يتقدم الموعد أو يتأخر إذا تغيرت وتيرة العمل، وأعمال التشطيب عادةً أبطأ.</li><li>الموعد الرسمي الوحيد المعلن هو تاريخ نهاية المشروع كله في منصة وافي: <b>1 يونيو 2028</b>. <a href="https://rega.gov.sa/rega-services/platforms/wafi-off-plan-sales-and-lease/%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84-%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9/?id=11717d0f-7990-4e3e-8db8-ffb03f2a7350" target="_blank" rel="noopener">اطّلع عليه</a></li></ul></div></div>
+      </div>
       <div class="mm"><span class="k">وتيرته في آخر 3 أشهر</span><span class="v" style="color:var(--${recent(b)>=early(b)?'good':'crit'})"><span class="ltr">${recent(b).toFixed(1)}%</span> شهريًا<small>مقابل ${early(b).toFixed(1)}% مطلع السنة</small></span></div>
       <div class="mm"><span class="k">أشهر بلا تقدم يُذكر</span><span class="v">${st.filter(Boolean).length} من ${st.length}</span></div>
       <div class="mm"><span class="k">المرحلة الحالية</span><span class="v">${STAGE_N[STAGE[b.b]-1]}</span></div>
@@ -889,6 +936,7 @@ function openBlock(n,from){
   $('#dBlockT').textContent='بلوك '+n;$('#dBlockChip').innerHTML=chip(sc,sl,sy);$('#dBlockSub').textContent=`${ph.name} · ${villas(b.u)}`;
   const pages=SRC.map((mo,i)=>({src:`img/b${n}-m${mo}.jpg`,cap:`بلوك ${n} · تقرير ${M[mo]} 2026`,mo,v:b.v[i]}));
   $('#dBlockB').innerHTML=`<div class="ms"><div class="mm"><span class="k">نسبة الإنجاز</span><span class="v">${pct(last(b))}</span></div><div class="mm"><span class="k">الاكتمال المتوقع</span><span class="v" style="font-size:var(--t-md)">${eta(b)}</span></div><div class="mm"><span class="k">الوتيرة الحالية</span><span class="v"><span class="ltr">${recent(b).toFixed(1)}%</span></span></div><div class="mm"><span class="k">أشهر بلا تقدم</span><span class="v">${st.filter(Boolean).length} من ${st.length}</span></div></div>
+   <p class="eta-mini"><svg class="ico sm" aria-hidden="true" style="color:var(--warn);flex:0 0 auto"><use href="#i-alert"/></svg><span><b>موعد الاكتمال تقديري:</b> محسوب من وتيرة البلوك في التقارير، وليس موعدًا رسميًا من الشركة. الموعد الرسمي الوحيد هو نهاية المشروع في منصة وافي: 1 يونيو 2028.</span></p>
    <div>${ladKey()}${ladderHTML(n)}</div>
    <div class="chart" id="c-sheet"><div class="tip" role="status"></div></div>
    <div class="legend"><span style="color:var(--site)"><i></i><span style="color:var(--ink-2)">بلوك ${n}</span></span><span style="color:var(${ph.c})"><i></i><span style="color:var(--ink-2)">${ph.name} وفق التقرير</span></span></div>
@@ -904,7 +952,7 @@ function openBlock(n,from){
 }
 
 /* ================= blocks panel with views ================= */
-const VIEWS=[['progress','الإنجاز','نسبة كل بلوك في سبتمبر، ويوضح الخط الصغير تقدمه منذ يناير.'],['stage','المرحلة','المرحلة الفعلية لكل بلوك وفق تقرير سبتمبر، والمربع المخطَّط يمثل العمل الجاري.'],['speed','الوتيرة','وتيرة آخر ثلاثة أشهر مقارنةً بمطلع السنة: الأخضر يعني تسارعًا، والأحمر يعني تباطؤًا.'],['stall','التوقف','كل مربع يمثل شهرًا، والأحمر يعني أن البلوك تقدم أقل من 0.5% في ذلك الشهر.'],['eta','الاكتمال','جرّبنا آلاف الاحتمالات لوتيرة كل بلوك؛ النقطة هي التقدير الأرجح، والشريط حولها يمتد من التقدير المتفائل إلى المتشائم.'],['rank','الترتيب','ترتيب كل بلوك بين البلوكات شهرًا بشهر، والرقم 1 هو الأعلى إنجازًا.']];
+const VIEWS=[['progress','الإنجاز','نسبة كل بلوك في سبتمبر، ويوضح الخط الصغير تقدمه منذ يناير.'],['stage','المرحلة','المرحلة الفعلية لكل بلوك وفق تقرير سبتمبر، والمربع المخطَّط يمثل العمل الجاري.'],['speed','الوتيرة','وتيرة آخر ثلاثة أشهر مقارنةً بمطلع السنة: الأخضر يعني تسارعًا، والأحمر يعني تباطؤًا.'],['stall','التوقف','كل مربع يمثل شهرًا، والأحمر يعني أن البلوك تقدم أقل من 0.5% في ذلك الشهر.'],['eta','الاكتمال','جرّبنا آلاف الاحتمالات لوتيرة كل بلوك؛ النقطة هي التقدير الأرجح، والشريط حولها يمتد من التقدير المتفائل إلى المتشائم. وهذه تقديرات غير رسمية، وليست مواعيد صادرة عن الشركة.'],['rank','الترتيب','ترتيب كل بلوك بين البلوكات شهرًا بشهر، والرقم 1 هو الأعلى إنجازًا.']];
 let view='progress';try{view=sessionStorage.getItem('alb-view')||view}catch(e){}
 if(!VIEWS.some(v=>v[0]===view))view='progress';
 function spark(b){const W=120,H=32,vs=b.v.map((v,i)=>[SRC[i],v]).filter(x=>x[1]!=null);const lo=Math.min(...vs.map(x=>x[1]))-1,hi=Math.max(...vs.map(x=>x[1]))+1;const X=k=>k/8*(W-4)+2,Y=v=>H-3-(v-lo)/(hi-lo)*(H-6);
@@ -1001,5 +1049,6 @@ new MutationObserver(redraw).observe(document.documentElement,{attributes:true,a
 if(location.hash){const p=document.querySelector(location.hash);if(p&&p.classList.contains('panel')){S.open[p.dataset.p]=true;layoutPanels();setTimeout(()=>p.scrollIntoView(),50)}}
 })();
 </script>
+
 </body>
 </html>
