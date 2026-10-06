@@ -870,17 +870,23 @@ const NOCOPY='تعذّر النسخ؛ انسخ الرابط من شريط الع
 /* ================= settings ================= */
 const DEF={toured:false,urlBlock:null,block:null,theme:'auto',size:'m',density:'comfy',digits:'latin',order:PANELS.map(p=>p[0]),hidden:[],open:{},welcomed:false};
 let S=Object.assign({},DEF);
-try{const s=JSON.parse(localStorage.getItem('alb-set')||'null');if(s)S=Object.assign({},DEF,s)}catch(e){}
+/* settings storage: localStorage first, a cookie as fallback for browsers or embeds that block it */
+function readStore(){let v=null;try{v=localStorage.getItem('alb-set')}catch(e){}
+  if(!v){try{const m=document.cookie.match(/(?:^|; )alb-set=([^;]*)/);if(m)v=decodeURIComponent(m[1])}catch(e){}}
+  try{return v?JSON.parse(v):null}catch(e){return null}}
+function writeStore(o){const v=JSON.stringify(o);try{localStorage.setItem('alb-set',v)}catch(e){}
+  try{document.cookie='alb-set='+encodeURIComponent(v)+';max-age=31536000;path=/;SameSite=Lax'}catch(e){}}
+{const st=readStore();if(st)S=Object.assign({},DEF,st)}
 /* one-time migration of the old 'my block' key, then remove it so it can never bring a cleared choice back */
 try{const old=+localStorage.getItem('alb-blk');if(old&&!localStorage.getItem('alb-set')&&blocks.some(b=>b.b===old))S.block=old;localStorage.removeItem('alb-blk')}catch(e){}
 /* a ?block= link applies once; if the same link is reopened after the viewer cleared or changed the block, their choice wins */
-const qp=new URLSearchParams(location.search);const qb=+qp.get('block');if(blocks.some(b=>b.b===qb)&&qb!==S.urlBlock){S.block=qb;S.urlBlock=qb;S.welcomed=true;try{localStorage.setItem('alb-set',JSON.stringify(S))}catch(e){}}
+const qp=new URLSearchParams(location.search);const qb=+qp.get('block');if(blocks.some(b=>b.b===qb)&&qb!==S.urlBlock){S.block=qb;S.urlBlock=qb;S.welcomed=true;writeStore(S)}
 const known=id=>PANELS.some(p=>p[0]===id);
 S.order=(S.order||[]).filter(known);S.hidden=(S.hidden||[]).filter(known);
 PANELS.forEach((p,i)=>{if(!S.order.includes(p[0]))S.order.splice(Math.min(i,S.order.length),0,p[0])});
 /* the official Wafi record always stays last */
 S.order=S.order.filter(id=>id!=='wafi').concat('wafi');S.hidden=S.hidden.filter(id=>id!=='wafi');
-function save(){try{localStorage.setItem('alb-set',JSON.stringify(S))}catch(e){}}
+function save(){writeStore(S)}
 function syncURL(){try{const u=new URL(location.href);S.block?u.searchParams.set('block',S.block):u.searchParams.delete('block');history.replaceState(null,'',u)}catch(e){}}
 function applyLook(){const r=document.documentElement;if(S.theme==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',S.theme);
   S.size==='m'?r.removeAttribute('data-size'):r.setAttribute('data-size',S.size);
@@ -1346,7 +1352,7 @@ const TOUR=[
  {sel:()=>'#openSet',t:'الإعدادات',d:'ومن هنا تغيّر بلوكك وحجم الخط والمظهر، أو تعيد هذه الجولة متى شئت.'}
 ];
 let tourEl=null;
-function maybeTour(){if(!S.toured)setTimeout(startTour,500)}
+function maybeTour(){if(S.toured)return;S.toured=true;save();setTimeout(startTour,500)}
 function endTour(){tourEl?.remove();tourEl=null;S.toured=true;save();document.removeEventListener('keydown',tourKey,true)}
 function tourKey(e){if(e.key==='Escape'){e.preventDefault();endTour()}else if(e.key==='Tab'){const f=[...tourEl.querySelectorAll('button')];const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}}
 function startTour(){if(tourEl)return;tourEl=document.createElement('div');tourEl.className='tour';tourEl.dir='rtl';tourEl.setAttribute('role','dialog');tourEl.setAttribute('aria-modal','true');tourEl.setAttribute('aria-labelledby','tourT');
