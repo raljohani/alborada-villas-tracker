@@ -146,7 +146,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);min-width:0
 .ladkey{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;font-size:var(--t-xs);color:var(--ink-3);text-align:center;line-height:1.3}
 .warnbox{border-radius:var(--r-2);background:color-mix(in srgb,var(--crit-m) 10%,var(--sheet));padding:var(--s-3) var(--s-4);font-size:var(--t-sm);color:var(--ink-2);border-inline-start:3px solid var(--crit-m)}
 .warnbox b{color:var(--crit)}
-.btn{min-height:44px;border:0;background:var(--site);color:var(--on-site);font-weight:700;padding:var(--s-2) var(--s-5);border-radius:var(--r-2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2)}
+.btn{text-decoration:none;min-height:44px;border:0;background:var(--site);color:var(--on-site);font-weight:700;padding:var(--s-2) var(--s-5);border-radius:var(--r-2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2)}
 .btn.ghost{background:none;color:var(--site);border:var(--bw) solid var(--site)}
 .btn:hover{filter:brightness(1.06)}
 .row{display:flex;gap:var(--s-2);flex-wrap:wrap}
@@ -450,6 +450,50 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
 .wafi dd small{display:block;font-weight:400;font-size:var(--t-xs);color:var(--ink-2)}
 @container (min-width:520px){.wafi dl{grid-template-columns:repeat(4,1fr)}}
 
+/* ---------- plain-language layer ---------- */
+.explain-btn{align-self:flex-start;margin-top:var(--s-1);display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 var(--s-3) 0 var(--s-2);border:1.5px solid var(--site);border-radius:var(--r-pill);background:var(--site-soft);color:var(--site);font-weight:700;font-size:var(--t-sm);cursor:pointer;position:relative}
+
+.explain-btn .q{width:22px;height:22px;border-radius:50%;background:var(--site);color:var(--on-site);display:grid;place-items:center;font-size:13px;line-height:1}
+.explain-btn[aria-expanded="true"]{background:var(--site);color:var(--on-site)}
+.explain-btn[aria-expanded="true"] .q{background:var(--on-site);color:var(--site)}
+.explain{border-radius:var(--r-2);background:var(--site-soft);padding:var(--s-4);display:grid;gap:var(--s-3);border:1.5px dashed color-mix(in srgb,var(--site) 45%,transparent)}
+.explain>div{display:grid;grid-template-columns:32px minmax(0,1fr);gap:var(--s-1) var(--s-3);align-items:start}
+.explain .n{width:32px;height:32px;border-radius:var(--r-2);background:var(--sheet);color:var(--site);display:grid;place-items:center;font-weight:700}
+.explain b{display:block;color:var(--ink);font-size:var(--t-md)}
+.explain p{font-size:var(--t-md);color:var(--ink-2);line-height:1.8;max-width:65ch}
+.term{all:unset;cursor:help;border-bottom:1.5px dotted var(--site);color:inherit;font:inherit}
+.term:hover{background:var(--site-soft)}
+.term:focus-visible{outline:3px solid var(--site);outline-offset:2px;border-radius:2px}
+.gloss{position:fixed;z-index:75;max-width:min(320px,calc(100vw - 32px));background:var(--ink);color:var(--paper);border-radius:var(--r-2);padding:var(--s-3) var(--s-4);box-shadow:var(--shadow);font-size:var(--t-sm);line-height:1.75}
+.gloss b{display:block;font-size:var(--t-md);margin-bottom:2px}
+.plain{border-radius:var(--r-2);border:var(--bw) solid var(--rule);background:var(--sheet);padding:var(--s-4);display:grid;gap:var(--s-3)}
+.plain h3{font-size:var(--t-md);color:var(--site);display:flex;align-items:center;gap:var(--s-2)}
+.houses{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:420px}
+.house{position:relative;display:block;aspect-ratio:1}
+.house svg{position:absolute;inset:0;width:100%;height:100%}
+.house .fill{position:absolute;inset-block:0;inset-inline-start:0;overflow:hidden}
+.house .fill svg{width:var(--hw);height:100%;inset-inline-start:0;inset-inline-end:auto}
+.plain ul{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-2)}
+.plain li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:var(--s-2);font-size:var(--t-md);line-height:1.8;color:var(--ink)}
+.plain li i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;margin-top:4px;background:var(--sunk);color:var(--ink-2)}
+.plain small{color:var(--ink-3);font-size:var(--t-xs)}
+.faq{display:grid;gap:var(--s-2)}
+.faq details{border:var(--bw) solid var(--rule);border-radius:var(--r-2);background:var(--sheet)}
+.faq summary{min-height:48px;display:flex;align-items:center;gap:var(--s-3);padding:var(--s-2) var(--s-4);cursor:pointer;font-weight:700;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";width:24px;height:24px;border-radius:50%;flex:0 0 24px;display:grid;place-items:center;background:var(--site-soft);color:var(--site);font-weight:700}
+.faq details[open] summary::before{content:"−"}
+.faq details p{padding:0 var(--s-4) var(--s-4);padding-inline-start:calc(var(--s-4) + 24px + var(--s-3));color:var(--ink-2);line-height:1.8;max-width:75ch}
+.tour{position:fixed;inset:0;z-index:80}
+.tour .spot{position:fixed;border-radius:var(--r-2);box-shadow:0 0 0 9999px var(--scrim);outline:3px solid var(--warn-m);outline-offset:2px;transition:all var(--d-2) var(--ease);pointer-events:none}
+.tour .tcard{position:fixed;inset-inline:var(--s-4);margin-inline:auto;max-width:420px;background:var(--sheet);border-radius:var(--r-2);box-shadow:var(--shadow);padding:var(--s-4);display:grid;gap:var(--s-2);border-top:4px solid var(--site)}
+.tour .tcard h2{font-size:var(--t-lg)}
+.tour .tcard p{color:var(--ink-2);line-height:1.8}
+.tour .tc-f{display:flex;align-items:center;gap:var(--s-2);margin-top:var(--s-2)}
+.tour .tc-f .note{margin-inline-end:auto}
+.morebtn{display:flex;align-items:center;gap:var(--s-2);min-height:48px;width:100%;border:1.5px solid var(--site);background:var(--site-soft);color:var(--site);border-radius:var(--r-2);font-weight:700;padding:0 var(--s-4);cursor:pointer;margin-bottom:var(--s-3)}
+@media print{.explain-btn,.tour,.gloss{display:none!important}.term{border:0}}
+
 </style>
 </head>
 <body>
@@ -605,6 +649,11 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
     <div class="pb"><ol class="tl" id="tl" aria-label="الإنجازات شهرًا بشهر"></ol></div>
   </section>
 
+  <section class="panel" id="p-faq" data-p="faq" aria-labelledby="h-faq">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 12</span><h2 id="h-faq">أسئلة شائعة</h2><p class="take">إجابات مختصرة عن أكثر ما يسأل عنه الملاك عند قراءة الأرقام.</p></div><div class="ph-act"></div></div>
+    <div class="pb"><div class="faq" id="faqL"></div></div>
+  </section>
+
   <footer>
     <span>المصدر: التقارير الشهرية لمشروع البورادا فيلا (Alborada Villas by ad home) الصادرة عن شركة أورباس الشرق الأوسط العقارية (Urbas Middle East)، وعددها تسعة تقارير: أكتوبر 2025، ومن يناير إلى يونيو 2026، وأغسطس وسبتمبر 2026. أما تقرير يوليو فغير متوفر.</span>
     <span>هذه الصفحة مستقلة وغير تابعة للمطوّر. الوتيرة والتوقعات تقديرات محسوبة من أرقام التقارير، وليست أرقامًا رسمية ولا استشارة قانونية أو مالية.</span>
@@ -630,12 +679,13 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
     <fieldset class="fs"><legend>الكثافة</legend><div class="opts two" id="setDensity"></div></fieldset>
     <fieldset class="fs"><legend>الأرقام</legend><div class="opts two" id="setDigits"></div></fieldset>
     <fieldset class="fs"><legend>اللوحات</legend><span class="note">أظهر أي لوحة أو أخفها، ورتّبها بالأسهم، أو بالسحب على الحاسوب.</span><div class="plist" id="plist"></div></fieldset>
+    <button class="btn ghost" type="button" id="replayTour">أعد الجولة التعريفية</button>
     <button class="btn ghost" type="button" id="reset">استعادة الإعدادات الافتراضية</button>
   </div>
 </aside>
 <aside class="drawer" id="dMore" role="dialog" aria-modal="true" aria-labelledby="dMoreT" dir="rtl" hidden>
   <div class="dh"><div class="grab"></div><div class="dt"><h2 id="dMoreT">جميع اللوحات</h2><button class="iconbtn" type="button" data-close aria-label="إغلاق"><svg class="ico"><use href="#i-x"/></svg></button></div></div>
-  <div class="db"><nav aria-label="جميع اللوحات"><ol class="plist" id="moreL" style="list-style:none;margin:0;padding:0"></ol></nav></div>
+  <div class="db"><button class="morebtn" type="button" id="moreTour"><span aria-hidden="true">؟</span>جولة تعريفية بالصفحة</button><nav aria-label="جميع اللوحات"><ol class="plist" id="moreL" style="list-style:none;margin:0;padding:0"></ol></nav></div>
 </aside>
 <aside class="drawer" id="dBlock" role="dialog" aria-modal="true" aria-labelledby="dBlockT" dir="rtl" hidden>
   <div class="dh"><div class="grab"></div><div class="dt"><h2 id="dBlockT"></h2><span id="dBlockChip"></span><button class="iconbtn" type="button" data-close aria-label="إغلاق"><svg class="ico"><use href="#i-x"/></svg></button></div><span class="note" id="dBlockSub"></span></div>
@@ -648,6 +698,7 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
   <button class="btn ghost" type="button" id="wSkip">تخطَّ</button>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="gloss" id="gloss" role="tooltip" dir="rtl" hidden></div>
 
 <script>
 (function(){
@@ -719,7 +770,7 @@ const tl=[
  ['أغسطس','بدأ تركيب سيراميك الجدران في المرحلة 1، واكتملت جدران السطح في بلوك 22.'],
  ['سبتمبر','اكتملت اللياسة والدهان الداخليان في المرحلة 1، وتمديدات الكهرباء والسباكة لخمسين فيلا في المرحلة 3.']
 ];
-const PANELS=[['mine','بلوكي'],['sources','مصدر الأرقام'],['summary','المشروع باختصار'],['progress','تقدم المشروع'],['pace','وتيرة العمل'],['phases','المراحل الأربع'],['blocks','جميع البلوكات'],['trust','مطابقة المراحل'],['texts','نصوص مكررة'],['photos','صور مكررة'],['timeline','ما الذي اكتمل؟']];
+const PANELS=[['mine','بلوكي'],['sources','مصدر الأرقام'],['summary','المشروع باختصار'],['progress','تقدم المشروع'],['pace','وتيرة العمل'],['phases','المراحل الأربع'],['blocks','جميع البلوكات'],['trust','مطابقة المراحل'],['texts','نصوص مكررة'],['photos','صور مكررة'],['timeline','ما الذي اكتمل؟'],['faq','أسئلة شائعة']];
 const PNAME=id=>PANELS.find(p=>p[0]===id)[1];
 
 /* ================= helpers ================= */
@@ -744,7 +795,7 @@ async function copy(t){try{await navigator.clipboard.writeText(t);return true}ca
 const NOCOPY='تعذّر النسخ؛ انسخ الرابط من شريط العنوان';
 
 /* ================= settings ================= */
-const DEF={block:null,theme:'auto',size:'m',density:'comfy',digits:'latin',order:PANELS.map(p=>p[0]),hidden:[],open:{},welcomed:false};
+const DEF={toured:false,block:null,theme:'auto',size:'m',density:'comfy',digits:'latin',order:PANELS.map(p=>p[0]),hidden:[],open:{},welcomed:false};
 let S=Object.assign({},DEF);
 try{const s=JSON.parse(localStorage.getItem('alb-set')||'null');if(s)S=Object.assign({},DEF,s)}catch(e){}
 try{const old=+localStorage.getItem('alb-blk');if(!S.block&&blocks.some(b=>b.b===old))S.block=old}catch(e){}
@@ -770,6 +821,9 @@ function setupPanels(){
     act.querySelector('[data-tog]').onclick=()=>{S.open[id]=p.classList.contains('closed');save();layoutPanels()};
     act.querySelector('[data-share]').onclick=async()=>{const u=new URL(location.href);u.hash=p.id;toast(await copy(u.toString())?'نُسخ رابط اللوحة':NOCOPY)};
     if(id==='mine')act.querySelector('[data-tog]').remove();
+    if(EXPLAIN[id]){const eb=document.createElement('button');eb.type='button';eb.className='explain-btn';eb.setAttribute('aria-expanded','false');eb.setAttribute('aria-controls',p.id+'-ex');eb.innerHTML='<span class="q" aria-hidden="true">؟</span><span>اشرحها لي</span>';
+      p.querySelector('.ph-l').appendChild(eb);const ex=document.createElement('div');ex.className='explain';ex.id=p.id+'-ex';ex.hidden=true;body.prepend(ex);
+      eb.onclick=()=>{const on=ex.hidden;if(on){fillExplain(id);if(p.classList.contains('closed')){S.open[id]=true;save();layoutPanels()}}ex.hidden=!on;eb.setAttribute('aria-expanded',on);eb.lastChild.textContent=on?'أخفِ الشرح':'اشرحها لي'}}
   });
 }
 function layoutPanels(){
@@ -797,6 +851,8 @@ document.addEventListener('keydown',e=>{if(document.querySelector('.lb'))return;
   if(e.key==='Tab'&&openD){const f=[...openD.querySelectorAll('button,a,select,input,[tabindex="0"]')].filter(x=>!x.disabled&&x.offsetParent);if(!f.length)return;const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
 $$('.drawer .dh').forEach(h=>{let y=null;h.addEventListener('touchstart',e=>{y=e.touches[0].clientY},{passive:true});h.addEventListener('touchend',e=>{if(y!=null&&e.changedTouches[0].clientY-y>60)closeDrawer();y=null})});
 $('#openMore').onclick=e=>openDrawer('#dMore',e.currentTarget);
+$('#moreTour').onclick=()=>{closeDrawer(true);setTimeout(startTour,280)};
+$('#replayTour').onclick=()=>{closeDrawer(true);setTimeout(startTour,280)};
 $('#openSet').onclick=e=>{buildSettings();openDrawer('#dSet',e.currentTarget)};
 
 /* ================= lightbox with previous / next ================= */
@@ -909,6 +965,7 @@ function drawMine(){
   else{const b=blocks.find(x=>x.b===S.block),ph=phases[b.p-1],[sc,sl,sy]=status(b),q=MC[b.b],ru=REUSE.find(r=>r[0]===b.b),st=stalls(b);
     take.innerHTML=`بلوك ${b.b}: ${chip(sc,sl,sy)}`;
     body.innerHTML=`<div class="mhead"><span class="mbig">${pct(last(b))}</span><span class="note">${ph.name} · ${villas(b.u)} · وفق تقرير سبتمبر</span></div>
+     ${plainHTML(b)}
      <div class="mmeta">
       <div class="mm eta"><span class="stamp" aria-hidden="true">تقديري<small>غير رسمي</small></span><span class="k">موعد الاكتمال المتوقع لبلوكك</span><span class="v">${eta(b)}${stuck(b)?'<small>البلوك شبه متوقف، فلا يمكن تقدير موعد اكتماله</small>':`<small>على الأرجح بين ${ym(q[0])} و${ym(q[2])}</small>`}</span>
         <div class="eta-note" role="note"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg><div><b>تنبيه مهم: هذا الموعد تقدير، وليس موعدًا رسميًا من الشركة.</b>
@@ -926,9 +983,9 @@ function drawMine(){
     $('#mShare').onclick=async()=>{const u=new URL(location.href);u.searchParams.set('block',b.b);u.hash='p-mine';toast(await copy(u.toString())?'نُسخ رابط بلوكك':NOCOPY)};
   }
   body.querySelectorAll('[data-b]').forEach(x=>x.onclick=()=>setBlock(+x.dataset.b));
-  digits(body);digits(take);
+  glossify(body);digits(body);digits(take);
 }
-function setBlock(n){S.block=n;S.welcomed=true;save();syncURL();$('#welcome').hidden=true;drawMine();drawBlocks();toast('اخترت بلوك '+n)}
+function setBlock(n){const first=!S.welcomed;S.block=n;S.welcomed=true;save();syncURL();$('#welcome').hidden=true;drawMine();drawBlocks();refreshExplains();toast('اخترت بلوك '+n);if(first)maybeTour()}
 
 /* ================= block detail drawer ================= */
 function openBlock(n,from){
@@ -944,7 +1001,7 @@ function openBlock(n,from){
    <b style="font-size:var(--t-sm)">صفحة البلوك في كل تقرير</b><span class="note">اضغط على أي صفحة لتكبيرها، وتنقّل بين الأشهر بزرَّي السابق والتالي.</span>
    ${thumbs(pages,t=>`<b>${M[t.mo]}</b>${t.v!=null?t.v.toFixed(2)+'%':'لم تُذكر'}`)}
    <button class="btn ${S.block===n?'ghost':''}" type="button" id="dSetMine">${S.block===n?'✓ هذا بلوكي':'اجعله بلوكي'}</button>`;
-  wireThumbs($('#dBlockB'),pages);
+  wireThumbs($('#dBlockB'),pages);glossify($('#dBlockB'));
   openDrawer('#dBlock',from);
   const v={},pv={};SRC.forEach((k,i)=>{v[k]=b.v[i];pv[k]=ph.v[k]});
   requestAnimationFrame(()=>{lineChart('c-sheet',{label:'نسبة بلوك '+n+' شهرًا بشهر',series:[{name:ph.name,c:ph.c,w:1.5,v:pv,dim:1},{name:'بلوك '+n,c:'--site',w:2.5,v,area:1,label:last(b).toFixed(0)+'%'}],gaps:[6],x0:0,x1:8,y0:0,y1:70,yt:[0,20,40,60],h:200,xt:[[0,'يناير'],[3,'أبريل'],[6,'يوليو'],[8,'سبتمبر']]});digits($('#dBlock'))});
@@ -963,7 +1020,7 @@ function drawBlocks(){
   $('#seg').innerHTML=VIEWS.map(([k,l])=>`<button type="button" role="tab" aria-selected="${k===view}" data-v="${k}" tabindex="${k===view?0:-1}">${l}</button>`).join('');
   $('#seg').querySelectorAll('button').forEach(b=>b.onclick=()=>{view=b.dataset.v;try{sessionStorage.setItem('alb-view',view)}catch(e){}drawBlocks();$('#seg [aria-selected="true"]').focus()});
   $('#seg').onkeydown=e=>{const i=VIEWS.findIndex(v=>v[0]===view);if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const n=(i+(e.key==='ArrowLeft'?1:-1)+VIEWS.length)%VIEWS.length;view=VIEWS[n][0];drawBlocks();$('#seg [aria-selected="true"]').focus()}};
-  $('#viewNote').textContent=VIEWS.find(v=>v[0]===view)[2];
+  $('#viewNote').textContent=VIEWS.find(v=>v[0]===view)[2];glossify($('#viewNote'));
   const bv=$('#bview');let h='';
   if(view==='progress')h=`<div class="bt">${grouped((a,b)=>last(b)-last(a),b=>row(b,spark(b),`${pct(last(b))}<small>${status(b)[1]}</small>`))}</div>`;
   if(view==='stage')h=`<div class="ladkey" style="padding-inline:calc(76px + var(--s-5)) var(--s-2)" aria-hidden="true">${STAGE_N.map(x=>`<span>${x}</span>`).join('')}</div><div class="bt">${[...blocks].sort((a,b)=>STAGE[b.b]-STAGE[a.b]||last(b)-last(a)).map(b=>row(b,ladderHTML(b.b),'')).join('')}</div>`;
@@ -1032,17 +1089,146 @@ function buildSettings(){
 /* ================= welcome ================= */
 function welcome(){if(S.block||S.welcomed)return;const w=$('#welcome');$('#wGrid').innerHTML=blocks.map(b=>`<button type="button" data-b="${b.b}" aria-pressed="false">${b.b}</button>`).join('');
   $('#wGrid').querySelectorAll('button').forEach(x=>x.onclick=()=>setBlock(+x.dataset.b));
-  $('#wSkip').onclick=()=>{S.welcomed=true;save();w.hidden=true};setTimeout(()=>{w.hidden=false;digits(w)},600)}
+  $('#wSkip').onclick=()=>{S.welcomed=true;save();w.hidden=true;maybeTour()};setTimeout(()=>{w.hidden=false;digits(w)},600)}
+
+
+/* ================= plain-language layer ================= */
+const WAFI_URL=document.querySelector('#wafi a.btn').href;
+const NUMF=['','واحدة','اثنتين','ثلاث','أربع','خمس','ست','سبع','ثماني','تسع','عشر'];
+function stepsText(v){const h=Math.round(v/5)/2,n=Math.floor(h),half=h%1!==0;
+  if(n===0)return half?'نصف خطوة':'أقل من نصف خطوة';
+  const s=n===1?'خطوة واحدة':n===2?'خطوتين':n===10?'عشر خطوات':NUMF[n]+' خطوات';return s+(half?' ونصف':'')}
+function yearsText(m){const y=Math.round(m/6)/2,n=Math.floor(y),half=y%1!==0;
+  if(y>10)return 'أكثر من عشر سنوات';if(n===0)return 'ستة أشهر';
+  const s=n===1?'سنة':n===2?'سنتين':NUMF[n]+' سنوات';return s+(half?' ونصف':'')}
+const HOUSE='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5V21H3z" fill="FILL" stroke="STROKE" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 21v-5h4v5" fill="none" stroke="DOOR" stroke-width="1.5"/></svg>';
+function housesHTML(v){let h='';for(let i=0;i<10;i++){const f=Math.max(0,Math.min(1,(v-i*10)/10));
+  h+=`<span class="house">${HOUSE.replace('FILL','var(--h0)').replace('STROKE','var(--rule)').replace('DOOR','var(--rule)')}${f>0?`<span class="fill" style="width:${f*100}%;--hw:${f>0?100/f:100}%">${HOUSE.replace('FILL','var(--site)').replace('STROKE','var(--site)').replace('DOOR','var(--on-site)')}</span>`:''}</span>`}
+  return `<div class="houses" role="img" aria-label="${v.toFixed(0)} من 100، أي نحو ${stepsText(v)} من عشر">${h}</div>`}
+function plainHTML(b){const st=status(b)[0],v=last(b),m=MC[b.b][1],stage=STAGE_N[STAGE[b.b]-1];
+  const mood={good:['✓','وضعه جيد: يتقدم بانتظام من شهر إلى آخر.','var(--good)'],ser:['▲','يتقدم، لكن ببطء أكثر من غيره.','var(--ser)'],crit:['■','يكاد يكون متوقفًا منذ أشهر.','var(--crit)']}[st];
+  return `<div class="plain"><h3>بلوكك بكلام بسيط</h3>${housesHTML(v)}
+   <ul><li><i aria-hidden="true">%</i><span>من كل عشر خطوات في بناء بلوكك، أُنجز منها نحو <b>${stepsText(v)}</b>.</span></li>
+   <li><i aria-hidden="true">⚒</i><span>العمل الجاري الآن: <b>${stage}</b>.</span></li>
+   <li><i aria-hidden="true" style="color:${mood[2]}">${mood[0]}</i><span>${mood[1]}</span></li>
+   <li><i aria-hidden="true">⏱</i><span>${stuck(b)?'لا يمكن تقدير موعد اكتماله لأنه شبه متوقف.':`إذا استمر بالسرعة الحالية، فقد يحتاج إلى نحو <b>${yearsText(m)}</b> حتى يكتمل.<small style="display:block">هذا تقدير غير رسمي، وليس موعدًا من الشركة.</small>`}</span></li></ul></div>`}
+
+/* "explain it to me" content: what it shows, how to read it, what it means for you */
+const myB=()=>S.block?blocks.find(x=>x.b===S.block):null;
+const EXPLAIN={
+ mine:{w:'ملخص حالة بلوكك وحده، لا المشروع كله.',h:'الرقم الكبير هو نسبة ما أُنجز من أعمال بلوكك. والبيوت العشرة تمثّل البناء كاملًا، والملوّن منها هو المنجَز. والشريط ذو المربعات الستة يوضح مراحل البناء من الهيكل إلى التشطيب، والمربع المخطَّط هو المرحلة الجارية الآن.',
+   y:()=>{const b=myB();return b?`بلوكك (بلوك ${b.b}) أنجز ${last(b).toFixed(2)}% من أعماله. وموعد اكتماله المكتوب هنا تقدير غير رسمي، فالشركة لم تعلن مواعيد لتسليم البلوكات.`:'اختر رقم بلوكك من الأزرار ليظهر لك ملخصه.'}},
+ sources:{w:'من أين جاءت أرقام هذه الصفحة.',h:'كل غلاف يمثل تقريرًا شهريًا أرسلته الشركة، والرقم أسفله نسبة إنجاز المشروع في ذلك التقرير. أما بطاقة وافي فتعرض البيانات الرسمية المسجلة لدى الهيئة العامة للعقار.',
+   y:()=>'إذا أردت التحقق من أي رقم، فاضغط على التقرير وافتح صفحة بلوكك فيه.'},
+ summary:{w:'صورة عامة عن المشروع كله، لا عن بلوك بعينه.',h:'الدائرة توضح الجزء المنجز من المشروع. والبطاقات الأربع تعرض: النسبة الحالية، ومقدار التقدم في كل شهر، والموعد التقديري للاكتمال، وعدد البلوكات شبه المتوقفة.',
+   y:()=>'أنجز المشروع قرابة ثلث العمل، ويتقدم بنحو 1% كل شهر؛ أي أن كل سنة تضيف إليه نحو 11% إلى 12% فقط.'},
+ progress:{w:'كيف ارتفعت نسبة المشروع من شهر إلى آخر.',h:'كل نقطة على الخط تمثل نسبة شهر. وكلما كان الخط أشد صعودًا كان العمل أسرع. والمنطقة الرمادية هي شهر يوليو الذي لم يصدر له تقرير.',
+   y:()=>'الشريط أسفل الرسم يوضح متى يبلغ المشروع 100% إذا استمر بالسرعة الحالية، وهو تقدير غير رسمي. وللمقارنة: التاريخ المسجل في وافي لنهاية المشروع هو 1 يونيو 2028.'},
+ pace:{w:'مقدار ما زادته نسبة المشروع في كل شهر.',h:'كل عمود يمثل شهرًا، وطوله مقدار الزيادة فيه. الأعمدة الزرقاء لمطلع السنة، والبرتقالية للأشهر الأخيرة.',
+   y:()=>'العمود القصير يعني شهرًا تقدّم فيه العمل قليلًا، وأقصرها عمود مايو.'},
+ phases:{w:'المشروع مقسّم إلى أربع مراحل، ولكل مرحلة بلوكات تضم عددًا من الفلل.',h:'كل بطاقة تعرض نسبة مرحلة واحدة. والخطوط الملونة في الرسم توضح تقدم كل مرحلة شهرًا بشهر.',
+   y:()=>{const b=myB();if(!b)return 'اختر بلوكك لتعرف المرحلة التي يتبعها.';const ph=phases[b.p-1];return `بلوكك يتبع ${ph.name}، ونسبة هذه المرحلة ${ph.v[8].toFixed(2)}%، في حين أن نسبة بلوكك ${last(b).toFixed(2)}%.`}},
+ blocks:{w:'مقارنة جميع البلوكات بعضها ببعض.',h:'اختر طريقة العرض من الأزرار في الأعلى: «الإنجاز» للنسبة الحالية، و«المرحلة» لموقع البناء، و«الوتيرة» لمعرفة هل تسارع العمل أم تباطأ، و«التوقف» للأشهر التي لم يتقدم فيها، و«الاكتمال» للموعد التقديري، و«الترتيب» لموقع البلوك بين البقية.',
+   y:()=>{const b=myB();if(!b)return 'اضغط على أي بلوك لترى تفاصيله وصفحاته في التقارير.';const r=[...blocks].sort((x,y)=>last(y)-last(x)).findIndex(x=>x.b===b.b)+1;return `بلوكك في المرتبة ${r} من 16 من حيث نسبة الإنجاز، وصفّه مظلَّل بالأخضر. اضغط على أي بلوك لترى تفاصيله.`}},
+ trust:{w:'اختبار بسيط لاتساق أرقام التقارير.',h:'يُفترض أن تكون نسبة المرحلة قريبة من متوسط نسب بلوكاتها. فإذا ارتفع العمود الأحمر فوق الخط، فمعناه أن التقرير أعطى المرحلة نسبة أعلى مما تقوله أرقام بلوكاتها.',
+   y:()=>'الفرق الكبير لا يعني بالضرورة وجود خطأ، لكنه يستحق الاستيضاح من الشركة.'},
+ texts:{w:'جمل وردت بنصها في أكثر من تقرير.',h:'كل بطاقة تعرض الجملة المكررة، وأسفلها أسماء التقارير التي وردت فيها.',
+   y:()=>'تكرار الجملة نفسها قد يعني أن وصف ذلك الشهر لم يُحدَّث بالكامل.'},
+ photos:{w:'صور ظهرت متطابقة في تقريرين على أنها من أعمال الشهر.',h:'كل بطاقة تعرض الصورة المكررة، وفوقها اسما التقريرين اللذين ظهرت فيهما. اضغط على الصورة لتكبيرها.',
+   y:()=>{const b=myB(),r=b&&REUSE.find(x=>x[0]===b.b);return r?`بلوكك من البلوكات التي تكررت صورها: ظهرت صورة تقرير ${M[r[2]]} نفسها في تقرير ${M[r[1]]}.`:'الصورة المكررة لا تُثبت تقدم العمل في الشهر الجديد.'}},
+ timeline:{w:'أهم ما اكتمل في كل شهر وفق التقارير.',h:'اقرأ من الأعلى إلى الأسفل، من الأقدم إلى الأحدث. والدائرة المتقطعة تعني شهرًا لا تقرير له.',
+   y:()=>'هذه الإنجازات منقولة من التقارير كما وردت.'}
+};
+function fillExplain(id){const ex=$('#p-'+id+'-ex');if(!ex)return;const e=EXPLAIN[id];
+  ex.innerHTML=[['ماذا تعرض؟',e.w],['كيف تقرؤها؟',e.h],['ماذا تعني لك؟',e.y()]].map(([t,d],i)=>`<div><span class="n" aria-hidden="true">${i+1}</span><span><b>${t}</b><p>${d}</p></span></div>`).join('');
+  glossify(ex);digits(ex)}
+function refreshExplains(){$$('.explain').forEach(ex=>{if(!ex.hidden)fillExplain(ex.id.slice(2,-3))})}
+
+/* glossary: tap a dotted word to see its meaning */
+const GLOSS=[
+ ['نسبة الإنجاز','نسبة الإنجاز','الجزء الذي أُنجز من العمل كله؛ و100% تعني أن العمل اكتمل.'],
+ ['وتيرة','الوتيرة','سرعة تقدم العمل، وتُقاس هنا بمقدار ما تزيده النسبة في الشهر الواحد.'],
+ ['لياسة','اللياسة','طبقة من الإسمنت تُغطّى بها الجدران قبل الدهان، وتكون داخلية وخارجية.'],
+ ['تشطيب','التشطيب','المرحلة الأخيرة من البناء: البلاط والسيراميك والأبواب والدهان النهائي والتركيبات.'],
+ ['هيكل','الهيكل','الهيكل الخرساني للمبنى: الأساسات والأعمدة والأسقف.'],
+ ['تمديدات','تمديدات الكهرباء والسباكة','الأسلاك والأنابيب التي تُمدّ داخل الجدران والأسقف قبل اللياسة.'],
+ ['ملحق','دور الملحق','دور صغير فوق السطح يضم عادةً غرفة ودورة مياه.'],
+ ['جبسية','الأسقف الجبسية','أسقف من ألواح الجبس تُركّب أسفل السقف الخرساني لإخفاء التمديدات وتجميل الغرفة.'],
+ ['تقدير','تقدير','رقم محسوب من بيانات سابقة لتوقّع المستقبل، وليس رقمًا رسميًا، وقد يتغير.'],
+ ['وافي','منصة وافي','منصة تابعة للهيئة العامة للعقار تُسجَّل فيها مشاريع البيع على الخارطة، وتُحفظ فيها أموال المشترين في حساب ضمان خاص بالمشروع لا يُصرف إلا بقدر ما يُنجز.'],
+ ['الخارطة','البيع على الخارطة','شراء الوحدة قبل اكتمال بنائها، على أن تُسلَّم بعد انتهاء المشروع.'],
+ ['تاون هاوس','تاون هاوس','منزل متلاصق مع منازل أخرى من جانب أو جانبين، وغالبًا ما يكون أصغر من الفيلا المستقلة.'],
+ ['مرجَّح','متوسط مرجَّح','متوسط يُعطى فيه البلوك الأكبر وزنًا أكبر؛ فالبلوك الذي فيه 48 فيلا يؤثر أكثر من البلوك الذي فيه 10 فلل.'],
+ ['بلوك','البلوك','مجموعة من الفلل المتجاورة تُبنى معًا ولها رقم. وفي المشروع 16 بلوكًا موزعة على أربع مراحل.',1]
+];
+const AR='؀-ۿ';
+const GRX=GLOSS.map(([stem])=>new RegExp(`(^|[^${AR}])((?:[وفبلك]?ال|[وفبلك])?${stem}[${AR}]{0,3})(?![${AR}])`));
+let glossOnce=new Set();
+function glossify(root){if(!root)return;const scope=root.closest?.('.explain,.plain,.faq,.panel,.drawer')||root;const done=scope.__g||(scope.__g=new Set());
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentNode.closest('button,a,q,svg,small,.chip,.term,.ladkey,.stamp,.mbig,.k,h2,h3,.sheetno,.gmon,.proj-ax,summary,.houses,.tip,table')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  const nodes=[];let n;while(n=w.nextNode())nodes.push(n);
+  nodes.forEach(node=>{for(let i=0;i<GLOSS.length;i++){if(done.has(i)||(GLOSS[i][3]&&glossOnce.has(i)))continue;const m=GRX[i].exec(node.nodeValue);if(!m)continue;
+    const start=m.index+m[1].length,word=m[2];const after=node.splitText(start);after.splitText(word.length);
+    const t=document.createElement('button');t.type='button';t.className='term';t.dataset.g=i;t.textContent=word;t.setAttribute('aria-label',word+': اضغط لمعرفة المعنى');after.replaceWith(t);
+    done.add(i);if(GLOSS[i][3])glossOnce.add(i);node=t.previousSibling;if(!node||node.nodeType!==3)break}})}
+const gp=$('#gloss');let gOwner=null;
+function hideGloss(){gp.hidden=true;gOwner?.setAttribute('aria-expanded','false');gOwner=null}
+document.addEventListener('click',e=>{const t=e.target.closest('.term');if(!t){if(!e.target.closest('#gloss'))hideGloss();return}
+  if(gOwner===t){hideGloss();return}hideGloss();const g=GLOSS[+t.dataset.g];gp.innerHTML=`<b>${g[1]}</b>${g[2]}`;digits(gp);gp.hidden=false;gOwner=t;t.setAttribute('aria-expanded','true');t.setAttribute('aria-describedby','gloss');
+  const r=t.getBoundingClientRect(),pw=gp.offsetWidth,ph=gp.offsetHeight;let x=Math.min(innerWidth-pw-16,Math.max(16,r.left+r.width/2-pw/2)),y=r.bottom+8;if(y+ph>innerHeight-16)y=r.top-ph-8;gp.style.left=x+'px';gp.style.top=Math.max(8,y)+'px'});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!gp.hidden){hideGloss()}});
+addEventListener('scroll',()=>{if(!gp.hidden)hideGloss()},{passive:true});
+
+/* FAQ */
+const FAQ=[
+ ['ما المقصود بـ«البلوك»؟','البلوك مجموعة من الفلل المتجاورة تُبنى معًا ولها رقم. وفي المشروع 16 بلوكًا موزعة على أربع مراحل، ولكل بلوك نسبة إنجاز خاصة به في التقارير.'],
+ ['هل نسبة بلوكي تعني أن فيلتي وصلت إلى النسبة نفسها؟','ليس بالضرورة؛ فنسبة البلوك متوسط لجميع فلله، وقد تتقدم فيلا وتتأخر أخرى داخل البلوك نفسه.'],
+ ['ما الفرق بين نسبة البلوك ونسبة المرحلة ونسبة المشروع؟','نسبة البلوك تخص مجموعة فلل بعينها، ونسبة المرحلة تجمع بلوكاتها، أما نسبة المشروع فتخص المشروع كله، وهي أقل بكثير من نسب المراحل. ولا توضح التقارير سبب ذلك، وقد يكون السبب أن المشروع مسجل في وافي بـ596 وحدة، في حين تغطي التقارير 360 فيلا فقط.'],
+ ['لماذا تختلف نسبة وافي (26%) عن نسبة تقرير سبتمبر (29.35%)؟','لا نعرف السبب يقينًا؛ فقد يكون تحديث وافي أقدم من تقرير سبتمبر، أو تُحسب النسبتان بطريقتين مختلفتين. وصفحة المشروع في وافي لا تُظهر تاريخ آخر تحديث للنسبة.'],
+ ['هل موعد الاكتمال المذكور في الصفحة رسمي؟','لا؛ فهو تقدير حسبناه من وتيرة العمل في التقارير السابقة، لأن التقارير لا تذكر أي موعد لتسليم البلوكات. والتاريخ الرسمي الوحيد المعلن هو تاريخ نهاية المشروع في منصة وافي: 1 يونيو 2028.'],
+ ['ماذا تعني «شبه متوقف» و«بطيء» و«يسير بانتظام»؟','هذه أوصاف مبنية على سرعة كل بلوك: «يسير بانتظام» إذا كان التقدير أن يكتمل خلال سنتين ونصف تقريبًا، و«بطيء» إذا احتاج إلى أكثر من ذلك، و«شبه متوقف» إذا احتاج إلى أكثر من خمس سنوات بالسرعة الحالية.'],
+ ['لماذا لا يوجد تقرير لشهر يوليو؟','لم يصلنا تقرير لهذا الشهر، لذا يظهر في الرسوم فراغًا رماديًا، ووُزّعت زيادة الفترة من يونيو إلى أغسطس على الشهرين.'],
+ ['كيف أشارك صفحة بلوكي مع غيري؟','من بطاقة «بلوكي» اضغط «شارك رابط بلوكي»، فيُنسخ رابط يفتح الصفحة مباشرة على بلوكك، ثم الصقه في واتساب أو أي تطبيق آخر.'],
+ ['هل تتبع هذه الصفحة الشركة المطوّرة؟','لا؛ فهي صفحة مستقلة تجمع أرقام التقارير الشهرية في مكان واحد وتعرضها بطريقة أوضح، ولا تتبع الشركة ولا أي جهة أخرى.']
+];
+function drawFaq(){$('#faqL').innerHTML=FAQ.map(([q,a])=>`<details><summary>${q}</summary><p>${a}</p></details>`).join('');glossify($('#faqL'))}
+
+/* guided tour (first visit, skippable) */
+const TOUR=[
+ {sel:()=>'#p-mine',t:'بطاقة بلوكك',d:'هنا نسبة إنجاز بلوكك وحالته، مع شرح مبسّط بالصور، وموعد اكتمال تقديري غير رسمي.'},
+ {sel:()=>'#p-summary .explain-btn',t:'زر «اشرحها لي»',d:'تحت عنوان كل لوحة زر «اشرحها لي»؛ اضغطه ليظهر لك شرح بسيط لما تعرضه اللوحة. والكلمات التي تحتها خط منقّط اضغط عليها لتعرف معناها.'},
+ {sel:()=>innerWidth<1200?'.bnav':'.index',t:'التنقل بين الأقسام',d:'من هنا تنتقل بسرعة إلى أي قسم في الصفحة.'},
+ {sel:()=>'#openSet',t:'الإعدادات',d:'ومن هنا تغيّر بلوكك وحجم الخط والمظهر، أو تعيد هذه الجولة متى شئت.'}
+];
+let tourEl=null;
+function maybeTour(){if(!S.toured)setTimeout(startTour,500)}
+function endTour(){tourEl?.remove();tourEl=null;S.toured=true;save();document.removeEventListener('keydown',tourKey,true)}
+function tourKey(e){if(e.key==='Escape'){e.preventDefault();endTour()}else if(e.key==='Tab'){const f=[...tourEl.querySelectorAll('button')];const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}}
+function startTour(){if(tourEl)return;tourEl=document.createElement('div');tourEl.className='tour';tourEl.dir='rtl';tourEl.setAttribute('role','dialog');tourEl.setAttribute('aria-modal','true');tourEl.setAttribute('aria-labelledby','tourT');
+  tourEl.innerHTML='<div class="spot"></div><div class="tcard"><h2 id="tourT"></h2><p></p><div class="tc-f"><span class="note"></span><button class="btn ghost" type="button" data-skip>تخطَّ الجولة</button><button class="btn" type="button" data-next>التالي</button></div></div>';
+  document.body.appendChild(tourEl);document.addEventListener('keydown',tourKey,true);
+  let i=0;const spot=tourEl.querySelector('.spot'),card=tourEl.querySelector('.tcard');
+  const step=()=>{const T=TOUR[i],tg=document.querySelector(T.sel());card.querySelector('h2').textContent=T.t;card.querySelector('p').textContent=T.d;card.querySelector('.note').textContent=`${i+1} من ${TOUR.length}`;
+    card.querySelector('[data-next]').textContent=i===TOUR.length-1?'إنهاء':'التالي';digits(card);
+    if(!tg||!tg.getClientRects().length){spot.style.cssText='display:none'}else{
+      const fixed=getComputedStyle(tg).position==='fixed'||tg.closest('.top,.bnav');if(!fixed){document.documentElement.style.scrollBehavior='auto';tg.scrollIntoView({block:tg.offsetHeight>innerHeight*0.55?'start':'center'});document.documentElement.style.scrollBehavior=''}
+      requestAnimationFrame(()=>{const r=tg.getBoundingClientRect(),top=Math.max(4,r.top-6),bot=Math.min(innerHeight-4,r.bottom+6);spot.style.cssText=`display:block;left:${r.left-6}px;top:${top}px;width:${r.width+12}px;height:${bot-top}px`;
+        const low=(top+bot)/2>innerHeight*0.5;card.style.top=low?'calc(var(--top-h) + 16px)':'auto';card.style.bottom=low?'auto':'calc(16px + env(safe-area-inset-bottom,0px))'})}
+    card.querySelector('[data-next]').focus()};
+  tourEl.querySelector('[data-next]').onclick=()=>{if(i<TOUR.length-1){i++;step()}else endTour()};
+  tourEl.querySelector('[data-skip]').onclick=endTour;step()}
 
 /* ================= boot ================= */
 function charts(){drawRing();drawOverall();drawPace();drawPhases();if(view==='rank')drawBump();digits($('main'))}
 function redraw(){requestAnimationFrame(charts)}
-function renderAll(){if(S.digits!=='arab'){drawShelf();drawMine();drawBlocks();drawDeep();charts();restoreLatin();return}drawShelf();drawMine();drawBlocks();drawDeep();charts();digits(document.body)}
+function renderAll(){if(S.digits!=='arab'){drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();charts();restoreLatin();return}drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();charts();digits(document.body)}
 /* switching back to 123: static text was converted in place, so reload it from the markup */
 function restoreLatin(){if(converted)location.reload()}
 applyLook();setupPanels();layoutPanels();
-drawShelf();drawMine();drawBlocks();drawDeep();charts();if(S.digits==='arab')digits(document.body)
-syncURL();welcome();
+drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();charts();
+$$('.panel .take,.panel .lead,.panel .note,.panel .srcnote,.panel .callout,.panel .disc,.panel .rp,.panel .tl,.wafi dl').forEach(glossify);
+if(S.digits==='arab')digits(document.body)
+syncURL();welcome();if(S.welcomed&&!S.toured&&!new URLSearchParams(location.search).get('block'))maybeTour();
 let rt,lw=innerWidth;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(()=>{charts();if((lw<600)!==(innerWidth<600))layoutPanels();lw=innerWidth},140)}).observe($('main'));
 matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',redraw);
 new MutationObserver(redraw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
