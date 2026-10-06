@@ -1,470 +1,588 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#3f6b1f">
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#3c6a1c" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f120d" media="(prefers-color-scheme: dark)">
+<meta name="description" content="سجل مستقل لملاك البورادا فيلا: كم وصل كل بلوك، وهل يتقدم أم متوقف، ومتى يُتوقع يكتمل. كل الأرقام من نشرات المطوّر الشهرية.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_SA">
+<meta property="og:site_name" content="سجل البورادا فيلا">
+<meta property="og:title" content="سجل البورادا فيلا: كم وصل بلوكك؟">
+<meta property="og:description" content="سجل مستقل لملاك البورادا فيلا: كم وصل كل بلوك، وهل يتقدم أم متوقف، ومتى يُتوقع يكتمل. كل الأرقام من نشرات المطوّر الشهرية.">
+<meta property="og:url" content="https://raljohani.github.io/alborada-villas-tracker/">
+<meta property="og:image" content="https://raljohani.github.io/alborada-villas-tracker/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://raljohani.github.io/alborada-villas-tracker/">
 <title>سجل البورادا فيلا</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap">
 <style>
-/* Layout: mobile-first "site app" — sticky top bar, stacked cards, bottom tab bar on phones/tablets; block tiles open a bottom sheet (drawer on wide screens). */
+/* Layout: engineer's site notebook — survey-grid paper, numbered "لوحات" (sheets) with a title block, my-block first.
+   Mobile: one column + bottom bar. Tablet: 12-col grid, half panels pair up. ≥1200: sticky index sidebar. ≥1600: sticky "my block" rail. */
 :root{
-  --bg:#eef0ea; --card:#f9faf6; --ink:#151a13; --ink-2:#465042; --ink-3:#7a8374;
-  --rule:#d8dcd1; --site:#3f6b1f; --site-2:#5a8f2e; --site-soft:#e1ead5; --on-site:#ffffff;
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
-  --good:#0ca30c; --warn:#b07800; --serious:#d9662f; --crit:#d03b3b;
-  --t0:#e6e9e0; --t1:#cde2fb; --t2:#9ec5f4; --t3:#6da7ec; --t4:#3987e5; --t5:#256abf; --t6:#104281;
-  --shadow:0 1px 2px rgba(20,30,10,.06),0 6px 20px rgba(20,30,10,.06);
-  --f:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
-  --r:14px; --nav-h:64px;
+  /* color */
+  --paper:#f3f4ef; --sheet:#fbfbf7; --sunk:#eceee6; --ink:#141912; --ink-2:#434c3e; --ink-3:#5f6859;
+  --rule:#d5d9cd; --grid:rgba(63,107,31,.07); --site:#3c6a1c; --site-soft:#e2ebd5; --on-site:#ffffff;
+  --good:#1f6b12; --warn:#7a5200; --ser:#a3441a; --crit:#b3262a;
+  --good-m:#0ca30c; --warn-m:#e0a000; --ser-m:#ec835a; --crit-m:#d03b3b;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#c98500;
+  --h1:#cde2fb; --h2:#9ec5f4; --h3:#6da7ec; --h4:#3987e5; --h5:#256abf; --h6:#104281; --h0:#e4e7de;
+  --scrim:rgba(10,14,8,.48);
+  /* type */
+  --font:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  --root:100%;
+  --t-xs:.75rem; --t-sm:.875rem; --t-md:1rem; --t-lg:clamp(1.0625rem,.98rem + .4vw,1.1875rem);
+  --t-xl:clamp(1.25rem,1.1rem + .7vw,1.5rem); --t-2xl:clamp(1.5rem,1.25rem + 1.2vw,2.125rem); --t-3xl:clamp(2.25rem,1.8rem + 2.2vw,3.25rem);
+  --lh:1.7; --lh-tight:1.35;
+  /* space (4px base) */
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px; --s-7:48px; --s-8:64px;
+  --pad:var(--s-5); --gap:var(--s-4);
+  /* shape */
+  --r-1:4px; --r-2:8px; --r-pill:999px; --bw:1px;
+  --shadow:0 1px 0 rgba(20,25,18,.04),0 8px 24px -12px rgba(20,25,18,.18);
+  /* motion */
+  --d-1:120ms; --d-2:240ms; --ease:cubic-bezier(.2,.7,.2,1);
+  --nav-h:64px; --top-h:60px;
+  color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#111410; --card:#1a1e17; --ink:#eef1ea; --ink-2:#b8c0b1; --ink-3:#858e7e;
-  --rule:#2c3428; --site:#8fc25a; --site-2:#a6d277; --site-soft:#233019; --on-site:#10140d;
+  --paper:#0f120d; --sheet:#171b15; --sunk:#20251d; --ink:#eef1ea; --ink-2:#bfc7b8; --ink-3:#97a08f;
+  --rule:#2d3428; --grid:rgba(143,194,90,.06); --site:#8fc25a; --site-soft:#22301a; --on-site:#0f140b;
+  --good:#5fd35f; --warn:#f5b62a; --ser:#f0905f; --crit:#f07575;
+  --good-m:#3fbf3f; --warn-m:#f5b62a; --ser-m:#ec835a; --crit-m:#e66767;
   --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
-  --good:#3fbf3f; --warn:#fab219; --serious:#ec835a; --crit:#e66767;
-  --t0:#252a22; --t1:#123a6e; --t2:#184f95; --t3:#1c5cab; --t4:#2a78d6; --t5:#5598e7; --t6:#9ec5f4;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark}}
+  --h1:#123a6e; --h2:#184f95; --h3:#1c5cab; --h4:#2a78d6; --h5:#5598e7; --h6:#9ec5f4; --h0:#252a22;
+  --scrim:rgba(0,0,0,.6); --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 30px -12px rgba(0,0,0,.6); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#111410; --card:#1a1e17; --ink:#eef1ea; --ink-2:#b8c0b1; --ink-3:#858e7e;
-  --rule:#2c3428; --site:#8fc25a; --site-2:#a6d277; --site-soft:#233019; --on-site:#10140d;
+  --paper:#0f120d; --sheet:#171b15; --sunk:#20251d; --ink:#eef1ea; --ink-2:#bfc7b8; --ink-3:#97a08f;
+  --rule:#2d3428; --grid:rgba(143,194,90,.06); --site:#8fc25a; --site-soft:#22301a; --on-site:#0f140b;
+  --good:#5fd35f; --warn:#f5b62a; --ser:#f0905f; --crit:#f07575;
+  --good-m:#3fbf3f; --warn-m:#f5b62a; --ser-m:#ec835a; --crit-m:#e66767;
   --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
-  --good:#3fbf3f; --warn:#fab219; --serious:#ec835a; --crit:#e66767;
-  --t0:#252a22; --t1:#123a6e; --t2:#184f95; --t3:#1c5cab; --t4:#2a78d6; --t5:#5598e7; --t6:#9ec5f4;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark}
+  --h1:#123a6e; --h2:#184f95; --h3:#1c5cab; --h4:#2a78d6; --h5:#5598e7; --h6:#9ec5f4; --h0:#252a22;
+  --scrim:rgba(0,0,0,.6); --shadow:0 1px 0 rgba(0,0,0,.3),0 10px 30px -12px rgba(0,0,0,.6); color-scheme:dark}
+:root[data-size="s"]{--root:93.75%} :root[data-size="l"]{--root:112.5%}
+:root[data-density="compact"]{--pad:var(--s-4); --gap:var(--s-3)}
+
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.7;-webkit-text-size-adjust:100%}
-h1,h2,h3,p{margin:0}
-h1,h2,h3{line-height:1.35;text-wrap:balance;font-weight:700}
-.num{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
-button{font:inherit;color:inherit}
-:focus-visible{outline:2px solid var(--site);outline-offset:2px;border-radius:6px}
+html{font-size:var(--root);scroll-behavior:smooth;scroll-padding-top:calc(var(--top-h) + var(--s-3))}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:var(--t-md);line-height:var(--lh);-webkit-text-size-adjust:100%;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+h1,h2,h3,p,figure{margin:0}
+h1,h2,h3{line-height:var(--lh-tight);font-weight:700;text-wrap:balance}
+button,select,input{font:inherit;color:inherit}
+.num,svg text{font-variant-numeric:tabular-nums}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+:focus-visible{outline:3px solid var(--site);outline-offset:2px;border-radius:var(--r-1)}
+.sr{position:absolute!important;inset-inline-start:0;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.skip{min-height:44px;display:inline-flex;align-items:center;position:fixed;inset-inline-start:var(--s-3);top:calc(env(safe-area-inset-top,0px) + var(--s-2));z-index:100;background:var(--ink);color:var(--paper);padding:var(--s-2) var(--s-4);border-radius:var(--r-2);transform:translateY(-200%);transition:transform var(--d-1) var(--ease)}
+.skip:focus{transform:none}
+.ico{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.ico.sm{width:18px;height:18px}
 
-/* app bar */
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--rule)}
-.bar-in{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:10px;display:flex;align-items:center;gap:12px}
-.logo{width:34px;height:34px;border-radius:10px;background:var(--site);display:grid;place-items:center;flex:0 0 auto}
-.logo svg{width:20px;height:20px}
-.bar-t{display:flex;flex-direction:column;line-height:1.25;min-width:0}
-.bar-t b{font-size:15px}
-.bar-t span{font-size:12px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.topnav{margin-inline-start:auto;display:none;gap:4px}
-.topnav a{font-size:14px;color:var(--ink-2);text-decoration:none;padding:6px 12px;border-radius:999px}
-.topnav a.on{background:var(--site-soft);color:var(--site);font-weight:600}
+/* ---------- top bar ---------- */
+.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:var(--bw) solid var(--rule);padding-top:env(safe-area-inset-top,0px)}
+.top-in{max-width:1560px;margin:0 auto;padding-inline:var(--s-4);height:var(--top-h);display:flex;align-items:center;gap:var(--s-3)}
+.mark{width:36px;height:36px;border-radius:var(--r-2);background:var(--site);color:var(--on-site);display:grid;place-items:center;flex:0 0 auto}
+.brand{display:flex;flex-direction:column;line-height:1.3;min-width:0}
+.brand h1{font-size:var(--t-md)}
+.brand span{font-size:var(--t-xs);color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.iconbtn{margin-inline-start:auto;flex:0 0 44px;width:44px;height:44px;border-radius:var(--r-2);border:var(--bw) solid var(--rule);background:var(--sheet);display:grid;place-items:center;cursor:pointer;color:var(--ink)}
+.iconbtn:hover{border-color:var(--site);color:var(--site)}
 
-/* layout */
-main{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:16px calc(var(--nav-h) + 32px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
-.card{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0;box-shadow:var(--shadow)}
-.sec-h{display:flex;flex-direction:column;gap:2px}
-.sec-h .k{font-size:12px;font-weight:600;color:var(--site);letter-spacing:.02em}
-.sec-h h2{font-size:clamp(19px,4.6vw,24px)}
-.sec-h p{font-size:14px;color:var(--ink-2);max-width:62ch}
-.note{font-size:13px;color:var(--ink-3)}
-.row2{display:grid;grid-template-columns:1fr;gap:16px}
-.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,currentColor 12%,transparent);white-space:nowrap}
-.chip i{width:7px;height:7px;border-radius:50%;background:currentColor}
-.c-crit{color:var(--crit)} .c-ser{color:var(--serious)} .c-warn{color:var(--warn)} .c-good{color:var(--good)}
+/* ---------- shell ---------- */
+.shell{max-width:1560px;margin:0 auto;padding-inline:var(--s-4);padding-block:var(--s-4) calc(var(--nav-h) + var(--s-6) + env(safe-area-inset-bottom,0px))}
+.index{display:none}
+main{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);min-width:0}
 
-/* hero */
-.hero{display:grid;grid-template-columns:1fr;gap:18px;align-items:center}
-.ring-wrap{position:relative;width:min(260px,70vw);aspect-ratio:1;margin-inline:auto;max-width:100%}
-.ring-wrap svg{width:100%;height:100%;display:block}
-.ring-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:0}
-.ring-c .v{font-size:clamp(36px,10vw,46px);font-weight:700;line-height:1;letter-spacing:-.02em}
-.ring-c .l{font-size:13px;color:var(--ink-2)}
-.ring-c .s{font-size:12px;color:var(--ink-3);margin-top:4px}
-.hero-t{display:flex;flex-direction:column;gap:12px;min-width:0}
-.hero-t .k{font-size:12px;font-weight:600;color:var(--site)}
-.hero-t h1{font-size:clamp(24px,6.4vw,34px)}
-.hero-t p{color:var(--ink-2);font-size:15.5px}
-.hero-t p b{color:var(--ink)}
-.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.kpi{background:var(--bg);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px;min-width:0}
-.kpi .k{font-size:12px;color:var(--ink-3);line-height:1.4}
-.kpi .v{font-size:22px;font-weight:700;line-height:1.2}
-.kpi .n{font-size:12px;color:var(--ink-2);line-height:1.4}
-.kpi.bad .v{color:var(--crit)}
+/* ---------- panel (sheet with title block) ---------- */
+.panel{background:var(--sheet);border:var(--bw) solid var(--rule);border-radius:var(--r-2);box-shadow:var(--shadow);min-width:0;container-type:inline-size;position:relative}
+.ph{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s-1) var(--s-3);padding:var(--pad);padding-bottom:var(--s-4);align-items:start}
+.ph-l{display:flex;flex-direction:column;gap:var(--s-1);min-width:0}
+.sheetno{font-size:var(--t-xs);font-weight:600;color:var(--site);letter-spacing:.02em;display:flex;align-items:center;gap:var(--s-2)}
+.sheetno::after{content:"";height:1px;width:28px;background:currentColor;opacity:.5}
+.ph h2{font-size:var(--t-xl)}
+.take{font-size:var(--t-md);color:var(--ink-2);max-width:65ch}
+.take b{color:var(--ink)}
+.ph-act{display:flex;gap:var(--s-1)}
+.pbtn{width:44px;height:44px;border:0;background:none;border-radius:var(--r-2);cursor:pointer;display:grid;place-items:center;color:var(--ink-3)}
+.pbtn:hover{background:var(--sunk);color:var(--ink)}
+.pbtn .chev{transition:transform var(--d-2) var(--ease)}
+.panel.closed .pbtn .chev{transform:rotate(-90deg)}
+[dir="rtl"] .panel.closed .pbtn .chev{transform:rotate(90deg)}
+.pb{padding:0 var(--pad) var(--pad);display:flex;flex-direction:column;gap:var(--s-4);min-width:0}
+.panel.closed .pb{display:none}
+.lead{font-size:var(--t-sm);color:var(--ink-2);max-width:65ch}
+.note{font-size:var(--t-xs);color:var(--ink-3);line-height:1.6}
 
-/* how-to */
-.steps{display:grid;grid-template-columns:1fr;gap:10px;margin:0;padding:0;list-style:none;counter-reset:st}
-.steps li{counter-increment:st;display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:start;font-size:14px;color:var(--ink-2)}
-.steps li::before{content:counter(st);font-weight:700;width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--site-soft);color:var(--site)}
-.steps b{color:var(--ink);display:block}
-.disc{border-radius:10px;background:var(--bg);padding:10px 12px;font-size:13px;color:var(--ink-2)}
+/* chips: text + symbol + color */
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:var(--t-xs);font-weight:600;padding:3px 10px;border-radius:var(--r-pill);white-space:nowrap;background:color-mix(in srgb,currentColor 12%,transparent);line-height:1.6}
+.chip .sym{font-size:12px;line-height:1}
+.c-good{color:var(--good)} .c-warn{color:var(--warn)} .c-ser{color:var(--ser)} .c-crit{color:var(--crit)}
 
-/* charts */
-.chart{position:relative;min-width:0;width:100%}
+/* ---------- my block ---------- */
+.mine-pick{display:flex;flex-direction:column;gap:var(--s-3)}
+.blockgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-2)}
+.blockgrid button{min-height:44px;border:var(--bw) solid var(--rule);background:var(--sheet);border-radius:var(--r-2);cursor:pointer;font-weight:600}
+.blockgrid button:hover{border-color:var(--site)}
+.blockgrid button[aria-pressed="true"]{background:var(--site);color:var(--on-site);border-color:var(--site)}
+.mhead{display:flex;align-items:baseline;gap:var(--s-3);flex-wrap:wrap}
+.mbig{font-size:var(--t-3xl);font-weight:700;line-height:1}
+.mmeta{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-2)}
+.mm{background:var(--sunk);border-radius:var(--r-2);padding:var(--s-3);min-width:0}
+.mm .k{font-size:var(--t-xs);color:var(--ink-3);display:block}
+.mm .v{font-size:var(--t-lg);font-weight:700;line-height:1.35}
+.mm .v small{font-size:var(--t-xs);font-weight:400;color:var(--ink-2);display:block}
+.ladder{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
+.ladder i{height:10px;border-radius:2px;background:var(--h0)}
+.ladder i.done{background:var(--site)}
+.ladder i.now{background:repeating-linear-gradient(45deg,var(--site) 0 3px,var(--site-soft) 3px 6px)}
+.ladkey{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;font-size:var(--t-xs);color:var(--ink-3);text-align:center;line-height:1.3}
+.warnbox{border-radius:var(--r-2);background:color-mix(in srgb,var(--crit-m) 10%,var(--sheet));padding:var(--s-3) var(--s-4);font-size:var(--t-sm);color:var(--ink-2);border-inline-start:3px solid var(--crit-m)}
+.warnbox b{color:var(--crit)}
+.btn{min-height:44px;border:0;background:var(--site);color:var(--on-site);font-weight:700;padding:var(--s-2) var(--s-5);border-radius:var(--r-2);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2)}
+.btn.ghost{background:none;color:var(--site);border:var(--bw) solid var(--site)}
+.btn:hover{filter:brightness(1.06)}
+.row{display:flex;gap:var(--s-2);flex-wrap:wrap}
+
+/* ---------- summary ---------- */
+.sum{display:grid;grid-template-columns:120px minmax(0,1fr);gap:var(--s-4);align-items:center}
+.ring{position:relative;width:120px;aspect-ratio:1}
+.ring svg{width:100%;height:100%;display:block}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:var(--t-xl)}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-2)}
+.kpi{background:var(--sunk);border-radius:var(--r-2);padding:var(--s-3);display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi .k{font-size:var(--t-xs);color:var(--ink-3)}
+.kpi .v{font-size:var(--t-xl);font-weight:700;line-height:1.2}
+.kpi .d{font-size:var(--t-xs);font-weight:600;display:flex;flex-wrap:wrap;gap:0 4px;align-items:center;line-height:1.5}
+.disc{font-size:var(--t-xs);color:var(--ink-2);background:var(--sunk);border-radius:var(--r-2);padding:var(--s-2) var(--s-3)}
+
+/* ---------- charts ---------- */
+.chart{position:relative;min-width:0}
 .chart svg{display:block;width:100%;height:auto;overflow:visible}
-.ax{fill:var(--ink-3);font-family:var(--f);font-size:11px}
-.grid{stroke:var(--rule);stroke-width:1}
-.legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:13px;color:var(--ink-2)}
-.legend span{display:inline-flex;align-items:center;gap:6px}
-.legend i{width:16px;height:3px;border-radius:2px;display:inline-block}
-.legend i.dash{background:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 7px)!important;height:2px}
-.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:6px 10px;border-radius:8px;white-space:nowrap;transform:translate(-50%,calc(-100% - 10px));opacity:0;transition:opacity .12s;z-index:5;line-height:1.55}
+.chart svg:focus-visible{outline-offset:4px}
+.ax{fill:var(--ink-3);font-family:var(--font);font-size:12px}
+.gl{stroke:var(--rule);stroke-width:1}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:var(--t-xs);padding:6px 10px;border-radius:var(--r-2);white-space:nowrap;transform:translate(-50%,calc(-100% - 10px));opacity:0;transition:opacity var(--d-1);z-index:5;line-height:1.6}
 .tip.on{opacity:1}
-.callout{border-radius:10px;background:color-mix(in srgb,var(--crit) 9%,var(--card));padding:12px 14px;font-size:14px;color:var(--ink-2)}
+.legend{display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-4);font-size:var(--t-xs);color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:16px;height:3px;border-radius:2px;display:inline-block;background:currentColor}
+.legend i.dash{background:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 7px);height:2px}
+.legend i.gap{width:10px;height:10px;border-radius:50%;border:1.5px dashed var(--ink-3);background:none}
+.proj{display:flex;flex-direction:column;gap:var(--s-2)}
+.proj-bar{position:relative;height:28px;border-radius:var(--r-1);background:var(--h0);direction:ltr}
+.proj-bar .done{position:absolute;inset-block:0;left:0;background:var(--site);border-radius:var(--r-1) 0 0 var(--r-1)}
+.proj-bar .mk{position:absolute;top:-4px;bottom:-4px;width:2px;transform:translateX(-1px)}
+.proj-ax{display:flex;justify-content:space-between;font-size:var(--t-xs);color:var(--ink-3);direction:ltr}
+.callout{border-radius:var(--r-2);background:var(--sunk);padding:var(--s-3) var(--s-4);font-size:var(--t-sm);color:var(--ink-2);border-inline-start:3px solid var(--crit-m)}
 .callout b{color:var(--crit)}
+.phs{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-2)}
+.phc{background:var(--sunk);border-radius:var(--r-2);padding:var(--s-3);display:flex;flex-direction:column;gap:4px;border-inline-start:4px solid var(--c);min-width:0}
+.phc .n{font-size:var(--t-sm);font-weight:600}
+.phc .n small{font-size:var(--t-xs);font-weight:400;color:var(--ink-3)}
+.phc .v{font-size:var(--t-xl);font-weight:700;line-height:1.2}
+.phc .d{font-size:var(--t-xs);color:var(--ink-2)}
+.pbar{height:6px;border-radius:var(--r-pill);background:var(--h0);overflow:hidden;direction:ltr}
+.pbar b{display:block;height:100%;background:var(--c);border-radius:var(--r-pill)}
 
-/* phases */
-.phs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ph{border-radius:12px;background:var(--bg);padding:12px;display:flex;flex-direction:column;gap:6px;min-width:0;position:relative;overflow:hidden}
-.ph::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:4px;background:var(--c)}
-.ph .n{font-size:13px;font-weight:600}
-.ph .n small{font-weight:400;color:var(--ink-3)}
-.ph .v{font-size:24px;font-weight:700;line-height:1.1}
-.ph .d{font-size:12px;color:var(--ink-2)}
-.pbar{height:6px;border-radius:999px;background:var(--t0);overflow:hidden;direction:ltr}
-.pbar b{display:block;height:100%;border-radius:999px;background:var(--c)}
-
-/* blocks */
-.mybar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--site-soft);border-radius:12px;padding:10px 12px}
-.mybar b{color:var(--site)}
-.mybar button{margin-inline-start:auto;border:0;background:var(--site);color:var(--on-site);border-radius:999px;padding:6px 14px;font-weight:600;font-size:13px;cursor:pointer}
-.legend-t{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:var(--ink-2);align-items:center}
-.ramp{display:inline-flex;direction:ltr;border-radius:4px;overflow:hidden}
-.ramp b{width:16px;height:10px;display:inline-block}
-.grp{display:flex;flex-direction:column;gap:8px}
-.grp h3{font-size:14px;color:var(--ink-2);font-weight:600;display:flex;gap:8px;align-items:center}
-.grp h3 i{width:10px;height:10px;border-radius:3px;background:var(--c)}
-.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.tile{border:1px solid var(--rule);background:var(--card);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;cursor:pointer;text-align:start;min-width:0;position:relative;transition:transform .15s,border-color .15s}
-.tile:hover{border-color:var(--site)}
-.tile:active{transform:scale(.98)}
-.tile.mine{border:2px solid var(--site)}
-.tile .top{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
-.tile .nm{font-weight:700;font-size:15px}
-.tile .u{font-size:11px;color:var(--ink-3)}
-.tile .v{font-size:20px;font-weight:700;line-height:1}
-.tile .spark{height:30px;width:100%}
-.tile .ft{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11px;color:var(--ink-3)}
-.tile .heat{position:absolute;inset-block-start:0;inset-inline:12px;height:3px;border-radius:0 0 3px 3px}
-.mine-tag{font-size:10px;font-weight:700;background:var(--site);color:var(--on-site);border-radius:999px;padding:1px 7px}
-
-/* forecast */
-.fc{display:flex;flex-direction:column;gap:6px}
-.fc-row{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;font-size:13px;cursor:pointer;padding:6px 8px;border-radius:10px;border:0;background:none;text-align:start;width:100%}
-.fc-row:hover{background:var(--bg)}
-.fc-row.mine{background:var(--site-soft)}
-.fc-track{position:relative;height:14px;border-radius:999px;background:var(--t0)}
-.fc-bar{position:absolute;inset-block:0;inset-inline-start:0;border-radius:999px}
-.fc-y{font-size:12px;color:var(--ink-2);white-space:nowrap;min-width:84px;text-align:end}
-
-/* flags */
-.flags{display:grid;grid-template-columns:1fr;gap:10px}
-.flag{border-radius:12px;background:var(--bg);padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0;border-inline-start:4px solid var(--c)}
-.flag h3{font-size:16px}
-.flag p{font-size:14px;color:var(--ink-2)}
-.flag .ev{font-size:12px;color:var(--ink);background:var(--card);padding:7px 10px;border-radius:8px}
-
-/* timeline */
-.tl{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory;margin-inline:-4px;padding-inline:4px}
-.tl-i{flex:0 0 min(78%,260px);scroll-snap-align:start;background:var(--bg);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
-.tl-i .m{font-weight:700;color:var(--site);font-size:14px}
-.tl-i p{font-size:13.5px;color:var(--ink-2)}
-.tl-i.gap{background:none;border:1px dashed var(--rule)}
-.tl-i.gap .m{color:var(--ink-3)}
-
-/* wafi & questions */
-ol.qs{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:10px;font-size:14.5px}
-.btn{border:0;background:var(--site);color:var(--on-site);font-weight:700;font-size:15px;padding:12px 18px;border-radius:12px;cursor:pointer;width:100%}
-footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:6px;padding-inline:4px}
-
-/* deep analytics */
-.trust{display:grid;grid-template-columns:1fr;gap:10px}
-.tr{background:var(--bg);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
-.tr-h{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.tr-h b{font-size:15px}
-.gapbars{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;align-items:center;height:64px;position:relative}
-.gapbars::before{content:"";position:absolute;inset-inline:0;top:50%;border-top:1px dashed var(--ink-3);opacity:.5}
-.gb{position:relative;height:100%}
-.gb i{position:absolute;inset-inline:15%;border-radius:3px}
-.gb span{position:absolute;inset-inline:0;bottom:-16px;text-align:center;font-size:10px;color:var(--ink-3)}
-.gapax{height:14px}
-.reuse{display:grid;grid-template-columns:1fr;gap:12px}
-.ru{background:var(--bg);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
-.ru button{border:0;padding:0;background:none;cursor:zoom-in;display:block}
-.ru img{width:100%;height:auto;display:block}
-.ru .cap{display:flex;justify-content:space-between;gap:8px;padding:8px 12px;font-size:13px;color:var(--ink-2);flex-wrap:wrap}
-.ru .cap b{color:var(--ink)}
-.pair{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);padding:4px 12px 0}
-.rep{display:flex;flex-direction:column;gap:8px}
-.rp{background:var(--bg);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
-.rp q{font-size:13.5px;color:var(--ink);quotes:"«" "»"}
-.rp span{font-size:12px;color:var(--ink-3)}
-.ladder-l{display:flex;flex-direction:column;gap:6px}
-.lad{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center;font-size:13px;cursor:pointer;border:0;background:none;padding:4px 6px;border-radius:8px;text-align:start;width:100%}
-.lad:hover{background:var(--bg)}
-.lad.mine{background:var(--site-soft)}
-.steps6{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
-.steps6 i{height:10px;border-radius:3px;background:var(--t0)}
-.steps6 i.done{background:var(--site)}
-.steps6 i.now{background:repeating-linear-gradient(45deg,var(--site) 0 3px,var(--site-soft) 3px 6px)}
-.ladkey{display:grid;grid-template-columns:64px repeat(6,1fr);gap:3px;font-size:10px;color:var(--ink-3);text-align:center;line-height:1.3}
-.spd{display:flex;flex-direction:column;gap:4px}
-.sp{display:grid;grid-template-columns:64px 1fr 112px;gap:10px;align-items:center;font-size:13px;border:0;background:none;padding:5px 6px;border-radius:8px;cursor:pointer;text-align:start;width:100%}
-.sp:hover{background:var(--bg)}
-.sp.mine{background:var(--site-soft)}
-.sp-t{position:relative;height:14px;direction:ltr}
-.sp-t .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--ink-3)}
-.sp-t i{position:absolute;top:2px;bottom:2px;border-radius:3px}
-.sp-v{font-size:12px;text-align:end;white-space:nowrap}
+/* ---------- blocks table with views ---------- */
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;background:var(--sunk);border-radius:var(--r-2)}
+.seg::-webkit-scrollbar{display:none}
+.seg button{min-height:44px;padding:0 var(--s-2);border:0;border-radius:6px;background:none;cursor:pointer;font-size:var(--t-sm);color:var(--ink-2);font-weight:600}
+.seg button[aria-selected="true"]{background:var(--sheet);color:var(--ink);box-shadow:var(--shadow)}
+.bt{display:flex;flex-direction:column}
+.br{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:var(--s-3);align-items:center;min-height:48px;padding:var(--s-1) var(--s-2);border:0;border-bottom:var(--bw) solid var(--rule);background:none;text-align:start;cursor:pointer;width:100%}
+.br:last-child{border-bottom:0}
+.br:hover{background:var(--sunk)}
+.br.mine{background:var(--site-soft)}
+.br .nm{font-weight:700;font-size:var(--t-sm);display:flex;flex-direction:column;line-height:1.3}
+.br .nm small{font-weight:400;font-size:var(--t-xs);color:var(--ink-3)}
+.br .val{font-size:var(--t-sm);font-weight:700;text-align:end;white-space:nowrap}
+.br .val small{display:block;font-weight:400;font-size:var(--t-xs);color:var(--ink-3)}
+.grp{font-size:var(--t-xs);font-weight:700;color:var(--ink-3);padding:var(--s-3) var(--s-2) var(--s-1);display:flex;gap:var(--s-2);align-items:center}
+.grp i{width:10px;height:10px;border-radius:2px;background:var(--c)}
+.spark{width:100%;height:32px;display:block}
+.trk{position:relative;height:14px;border-radius:var(--r-pill);background:var(--h0);direction:ltr}
+.trk .mid{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:var(--ink-3)}
+.trk i{position:absolute;top:0;bottom:0;border-radius:var(--r-pill)}
+.trk .dot{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid var(--sheet)}
+.stag{display:flex;gap:3px;direction:ltr}
+.stag i{flex:1;height:14px;border-radius:2px;background:var(--h0);max-width:22px}
+.stag i.s{background:var(--crit-m)}
 .bump-ctl{display:flex;gap:6px;flex-wrap:wrap}
-.bump-ctl button{border:1px solid var(--rule);background:var(--card);border-radius:999px;padding:4px 12px;font-size:12px;cursor:pointer}
-.bump-ctl button.on{background:var(--site);color:var(--on-site);border-color:var(--site)}
-.stag{display:inline-flex;gap:3px;direction:ltr}
-.stag i{width:8px;height:8px;border-radius:2px;background:var(--t0)}
-.stag i.s{background:var(--crit)}
-.fc-rng{position:absolute;inset-block:2px;border-radius:999px;opacity:.35}
-.fc-dot{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid var(--card)}
-@media (min-width:640px){.trust{grid-template-columns:1fr 1fr}.reuse{grid-template-columns:1fr 1fr}}
-@media (min-width:1080px){.trust{grid-template-columns:repeat(4,1fr)}.reuse{grid-template-columns:repeat(3,1fr)}}
+.bump-ctl button{min-width:44px;min-height:40px;border:var(--bw) solid var(--rule);background:var(--sheet);border-radius:var(--r-pill);cursor:pointer;font-size:var(--t-sm)}
+.bump-ctl button[aria-pressed="true"]{background:var(--site);color:var(--on-site);border-color:var(--site)}
 
-/* bottom nav (phones/tablets) */
-.bnav{position:fixed;inset-inline:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--rule);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* ---------- deep panels ---------- */
+.trust{display:grid;grid-template-columns:1fr;gap:var(--s-2)}
+.tr{background:var(--sunk);border-radius:var(--r-2);padding:var(--s-3);display:flex;flex-direction:column;gap:var(--s-2)}
+.tr-h{display:flex;justify-content:space-between;align-items:center;gap:var(--s-2);flex-wrap:wrap}
+.gapbars{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;height:64px;position:relative}
+.gapbars::before{content:"";position:absolute;inset-inline:0;top:50%;border-top:1px dashed var(--ink-3);opacity:.6}
+.gb{position:relative}
+.gb i{position:absolute;inset-inline:15%;border-radius:2px}
+.gmon{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;font-size:var(--t-xs);color:var(--ink-3);text-align:center}
+.reuse{display:grid;grid-template-columns:1fr;gap:var(--s-3)}
+.ru{background:var(--sunk);border-radius:var(--r-2);overflow:hidden}
+.ru button{border:0;padding:0;background:none;cursor:zoom-in;display:block;width:100%}
+.ru img{width:100%;height:auto;aspect-ratio:808/300;object-fit:contain;display:block;background:#fff}
+.ru .pair{display:flex;justify-content:space-between;padding:var(--s-2) var(--s-3) 0}
+.ru figcaption{display:flex;justify-content:space-between;gap:var(--s-2);padding:var(--s-2) var(--s-3);font-size:var(--t-sm);color:var(--ink-2);flex-wrap:wrap}
+.rp{background:var(--sunk);border-radius:var(--r-2);padding:var(--s-3);display:flex;flex-direction:column;gap:4px}
+.rp q{font-size:var(--t-sm);color:var(--ink);quotes:"«" "»"}
+.rp span{font-size:var(--t-xs);color:var(--ink-3)}
+.flags{display:grid;grid-template-columns:1fr;gap:var(--s-3)}
+.flag{background:var(--sunk);border-radius:var(--r-2);padding:var(--s-4);display:flex;flex-direction:column;gap:var(--s-2);border-inline-start:4px solid var(--c);min-width:0}
+.flag h3{font-size:var(--t-lg)}
+.flag p{font-size:var(--t-sm);color:var(--ink-2)}
+.flag .ev{font-size:var(--t-xs);background:var(--sheet);padding:var(--s-2) var(--s-3);border-radius:var(--r-1);color:var(--ink)}
+details.more summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--site);font-weight:600;font-size:var(--t-sm);list-style:none}
+details.more summary::-webkit-details-marker{display:none}
+details.more[open] summary{margin-bottom:var(--s-3)}
+.tl{display:flex;gap:var(--s-3);overflow-x:auto;padding-bottom:var(--s-2);scroll-snap-type:x mandatory;mask-image:linear-gradient(to left,#000 85%,transparent);-webkit-mask-image:linear-gradient(to left,#000 85%,transparent)}
+.tl-i{flex:0 0 min(80%,260px);scroll-snap-align:start;background:var(--sunk);border-radius:var(--r-2);padding:var(--s-3);display:flex;flex-direction:column;gap:4px}
+.tl-i b{color:var(--site);font-size:var(--t-sm)}
+.tl-i p{font-size:var(--t-sm);color:var(--ink-2)}
+.tl-i.gap{background:none;border:1.5px dashed var(--rule)}
+.tl-i.gap b{color:var(--ink-3)}
+ol.qs{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:var(--s-3);font-size:var(--t-md)}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:var(--s-3);counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:32px 1fr;gap:var(--s-3);font-size:var(--t-sm);color:var(--ink-2)}
+.steps li::before{content:counter(s);width:32px;height:32px;border-radius:var(--r-2);display:grid;place-items:center;background:var(--site-soft);color:var(--site);font-weight:700}
+.steps b{display:block;color:var(--ink)}
+footer{grid-column:1/-1;font-size:var(--t-xs);color:var(--ink-3);display:flex;flex-direction:column;gap:var(--s-2);padding:var(--s-4) var(--s-1)}
+
+/* ---------- bottom nav ---------- */
+.bnav{position:fixed;inset-inline:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--sheet) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:var(--bw) solid var(--rule);padding-bottom:env(safe-area-inset-bottom,0px)}
 .bnav-in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);height:var(--nav-h)}
-.bnav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;color:var(--ink-3);text-decoration:none;font-weight:500}
-.bnav a svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.bnav a.on{color:var(--site);font-weight:700}
+.bnav a,.bnav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:var(--t-xs);color:var(--ink-3);text-decoration:none;font-weight:600;border:0;background:none;cursor:pointer;min-height:44px}
+.bnav .on{color:var(--site)}
 
-/* sheet */
-.scrim{position:fixed;inset:0;background:rgba(8,10,7,.45);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
+/* ---------- drawers / sheets ---------- */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:40;opacity:0;pointer-events:none;transition:opacity var(--d-2) var(--ease)}
 .scrim.on{opacity:1;pointer-events:auto}
-.sheet{position:fixed;z-index:41;background:var(--card);inset-inline:0;bottom:0;max-height:90vh;border-radius:20px 20px 0 0;transform:translateY(105%);transition:transform .28s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;box-shadow:0 -10px 40px rgba(0,0,0,.2);padding-bottom:env(safe-area-inset-bottom,0px)}
-.sheet.on{transform:none}
-.sh-h{padding:8px 16px 10px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule)}
-.grab{width:40px;height:5px;border-radius:999px;background:var(--rule);margin:2px auto 4px}
-.sh-top{display:flex;align-items:center;gap:10px}
-.sh-top h2{font-size:20px}
-.sh-top .x{margin-inline-start:auto;border:0;background:var(--bg);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1}
-.sh-b{overflow-y:auto;padding:14px 16px 20px;display:flex;flex-direction:column;gap:14px;-webkit-overflow-scrolling:touch}
-.ms{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ms div{background:var(--bg);border-radius:10px;padding:10px}
-.ms .k{font-size:12px;color:var(--ink-3)}
-.ms .v{font-size:19px;font-weight:700}
-.log{display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-2)}
-.log div{display:grid;grid-template-columns:62px 1fr;gap:8px}
-.log span{color:var(--site);font-weight:600}
-.setmine{border:1px solid var(--site);background:none;color:var(--site);font-weight:700;border-radius:12px;padding:10px;cursor:pointer}
-.setmine.on{background:var(--site);color:var(--on-site)}
-.gal{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
-.gal button{flex:0 0 150px;border:1px solid var(--rule);background:var(--bg);border-radius:10px;padding:0;cursor:zoom-in;scroll-snap-align:start;display:flex;flex-direction:column;overflow:hidden}
+.drawer{position:fixed;z-index:41;background:var(--sheet);inset-inline:0;bottom:0;max-height:90vh;border-radius:16px 16px 0 0;transform:translateY(105%);transition:transform var(--d-2) var(--ease);display:flex;flex-direction:column;box-shadow:0 -10px 40px rgba(0,0,0,.25);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer.on{transform:none}
+.dh{padding:var(--s-2) var(--s-4) var(--s-3);border-bottom:var(--bw) solid var(--rule);display:flex;flex-direction:column;gap:var(--s-2)}
+.grab{width:40px;height:5px;border-radius:var(--r-pill);background:var(--rule);margin:2px auto 4px}
+.dt{display:flex;align-items:center;gap:var(--s-3)}
+.dt h2{font-size:var(--t-xl)}
+.dt .iconbtn{margin-inline-start:auto}
+.db{overflow-y:auto;padding:var(--s-4);display:flex;flex-direction:column;gap:var(--s-5);-webkit-overflow-scrolling:touch}
+.fs{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--s-2)}
+.fs legend{font-weight:700;font-size:var(--t-md);padding:0;margin-bottom:var(--s-1)}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--sunk);padding:4px;border-radius:var(--r-2)}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts label{position:relative}
+.opts input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.opts span{display:grid;place-items:center;min-height:40px;border-radius:6px;font-size:var(--t-sm);font-weight:600;color:var(--ink-2)}
+.opts input:checked+span{background:var(--sheet);color:var(--ink);box-shadow:var(--shadow)}
+.opts input:focus-visible+span{outline:3px solid var(--site)}
+select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rule);border-radius:var(--r-2);background:var(--sheet)}
+.plist{display:flex;flex-direction:column;border:var(--bw) solid var(--rule);border-radius:var(--r-2)}
+.pi{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:var(--s-2);align-items:center;padding:var(--s-1) var(--s-2);border-bottom:var(--bw) solid var(--rule);background:var(--sheet)}
+.pi:last-child{border-bottom:0}
+.pi.drag{opacity:.4}
+.pi label{display:flex;align-items:center;gap:var(--s-2);min-height:44px;cursor:pointer;font-size:var(--t-sm)}
+.pi input[type=checkbox]{width:20px;height:20px;accent-color:var(--site)}
+.pi .handle{cursor:grab;color:var(--ink-3);display:none}
+.pi .mv{width:40px;height:40px;border:0;background:none;border-radius:var(--r-1);cursor:pointer;color:var(--ink-2)}
+.pi .mv:hover{background:var(--sunk)}
+.ms{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-2)}
+.gal{display:flex;gap:var(--s-3);overflow-x:auto;padding-bottom:var(--s-2);scroll-snap-type:x mandatory}
+.gal button{flex:0 0 150px;min-height:44px;border:var(--bw) solid var(--rule);background:var(--sunk);border-radius:var(--r-2);padding:0;cursor:zoom-in;scroll-snap-align:start;overflow:hidden;display:flex;flex-direction:column}
 .gal img{width:100%;height:110px;object-fit:cover;object-position:top;display:block;background:var(--rule)}
-.gal span{font-size:12px;padding:5px 6px;text-align:center}
-.lb{position:fixed;inset:0;background:rgba(8,10,7,.92);z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:calc(16px + env(safe-area-inset-top,0px)) 12px calc(16px + env(safe-area-inset-bottom,0px))}
-.lb img{max-width:min(100%,1000px);max-height:78vh;object-fit:contain;border-radius:8px;background:#fff}
-.lb .lbb{display:flex;gap:10px;align-items:center;color:#fff;font-size:14px;flex-wrap:wrap;justify-content:center}
-.lb button{background:#fff;color:#111;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;font-weight:600}
+.gal span{font-size:var(--t-xs);padding:4px 6px;text-align:center}
+.log{display:flex;flex-direction:column;gap:var(--s-2);font-size:var(--t-sm);color:var(--ink-2)}
+.log div{display:grid;grid-template-columns:64px 1fr;gap:var(--s-2)}
+.log span{color:var(--site);font-weight:600}
+.lb{position:fixed;inset:0;background:rgba(8,10,7,.92);z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s-3);padding:calc(var(--s-4) + env(safe-area-inset-top,0px)) var(--s-3) calc(var(--s-4) + env(safe-area-inset-bottom,0px))}
+.lb img{max-width:min(100%,1000px);max-height:78vh;object-fit:contain;border-radius:var(--r-2);background:#fff}
+.lb .lbb{display:flex;gap:var(--s-3);align-items:center;color:#fff;font-size:var(--t-sm);flex-wrap:wrap;justify-content:center}
+.lb button{min-height:44px;background:#fff;color:#111;border:0;border-radius:var(--r-pill);padding:0 var(--s-5);cursor:pointer;font-weight:600}
+.toast{position:fixed;inset-inline:var(--s-4);bottom:calc(var(--nav-h) + var(--s-4) + env(safe-area-inset-bottom,0px));z-index:70;margin-inline:auto;max-width:420px;background:var(--ink);color:var(--paper);border-radius:var(--r-2);padding:var(--s-3) var(--s-4);font-size:var(--t-sm);text-align:center;opacity:0;transform:translateY(8px);transition:opacity var(--d-2),transform var(--d-2);pointer-events:none}
+.toast.on{opacity:1;transform:none}
+.welcome{position:fixed;inset-inline:var(--s-3);bottom:calc(var(--nav-h) + var(--s-3) + env(safe-area-inset-bottom,0px));z-index:35;max-width:460px;margin-inline:auto;background:var(--sheet);border:var(--bw) solid var(--site);border-radius:var(--r-2);box-shadow:var(--shadow);padding:var(--s-4);display:flex;flex-direction:column;gap:var(--s-3)}
+.welcome h2{font-size:var(--t-lg)}
 
-/* ---------- tablet (iPad portrait and up) ---------- */
-@media (min-width:640px){
-  main{gap:20px}
-  .card{padding:22px}
-  .tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .phs{grid-template-columns:repeat(4,1fr)}
-  .steps{grid-template-columns:repeat(3,1fr)}
-  .steps li{grid-template-columns:1fr}
-  .flags{grid-template-columns:1fr 1fr}
+/* ---------- container queries (components that appear at many widths) ---------- */
+@container (min-width:520px){
+  .seg{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .sum{grid-template-columns:150px minmax(0,1fr)}
+  .ring{width:150px}
   .kpis{grid-template-columns:repeat(4,1fr)}
-  .btn{width:auto;align-self:flex-start}
+  .phs{grid-template-columns:repeat(4,1fr)}
+  .mmeta{grid-template-columns:repeat(4,1fr)}
+  .blockgrid{grid-template-columns:repeat(8,1fr)}
+  .flags{grid-template-columns:1fr 1fr}
+  .reuse{grid-template-columns:1fr 1fr}
+  .trust{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:repeat(3,1fr)}
+}
+@container (min-width:860px){
+  .reuse{grid-template-columns:repeat(3,1fr)}
+  .flags{grid-template-columns:repeat(3,1fr)}
+  .trust{grid-template-columns:repeat(4,1fr)}
+}
+
+/* ---------- breakpoints: 600 / 900 / 1200 / 1600 ---------- */
+@media (min-width:600px){
+  .shell{padding-inline:var(--s-5)}
+  main{grid-template-columns:repeat(12,minmax(0,1fr))}
+  .panel{grid-column:span 12}
   .ms{grid-template-columns:repeat(4,1fr)}
 }
-@media (min-width:820px){
-  .hero{grid-template-columns:260px 1fr;gap:28px}
-  .kpis{grid-column:1/-1;grid-template-columns:repeat(4,1fr)}
-  .tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .row2{grid-template-columns:1fr 1fr}
-  .sheet{left:0;right:auto;top:0;bottom:0;width:min(460px,90vw);max-height:none;border-radius:0 20px 20px 0;transform:translateX(-105%);padding-top:env(safe-area-inset-top,0px)}
+@media (min-width:900px){
+  .panel.half{grid-column:span 6}
+  .drawer{inset-inline-start:auto;inset-inline-end:auto;left:0;right:auto;top:0;bottom:0;width:min(480px,92vw);max-height:none;border-radius:0 16px 16px 0;transform:translateX(-105%);padding-top:env(safe-area-inset-top,0px)}
+  .drawer.on{transform:none}
   .grab{display:none}
+  .pi .handle{display:inline-flex}
 }
-/* ---------- desktop / iPad landscape ---------- */
-@media (min-width:1080px){
-  .topnav{display:flex}
+@media (min-width:1200px){
   .bnav{display:none}
-  main{padding-block:24px 48px}
-  .hero{grid-template-columns:280px 1fr 300px}
-  .kpis{grid-column:auto;grid-template-columns:1fr}
-  .tiles{grid-template-columns:repeat(6,minmax(0,1fr))}
-  .flags{grid-template-columns:repeat(3,1fr)}
+  .top-in{max-width:1520px;padding-inline:var(--s-5)}
+  .toast,.welcome{bottom:var(--s-5)}
+  .shell{display:grid;grid-template-columns:232px minmax(0,1fr);gap:var(--s-5);padding-block:var(--s-5) var(--s-7);max-width:1520px}
+  .index{display:block;position:sticky;top:calc(var(--top-h) + var(--s-5));align-self:start;max-height:calc(100vh - var(--top-h) - var(--s-6));overflow-y:auto}
+  .index ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+  .index a{display:grid;grid-template-columns:34px 1fr;gap:var(--s-2);align-items:center;min-height:44px;padding:0 var(--s-3);border-radius:var(--r-2);color:var(--ink-2);text-decoration:none;font-size:var(--t-sm)}
+  .index a span{font-size:var(--t-xs);color:var(--ink-3)}
+  .index a:hover{background:var(--sheet)}
+  .index a.on{background:var(--sheet);color:var(--ink);font-weight:700;box-shadow:var(--shadow)}
+  .index a.on span{color:var(--site)}
+  .index h2{font-size:var(--t-xs);color:var(--ink-3);padding:0 var(--s-3) var(--s-2);font-weight:600}
 }
-@media (prefers-reduced-motion:reduce){.sheet,.scrim,.tile{transition:none}}
-</style></head><body>
+@media (min-width:1600px){
+  .shell,.top-in{max-width:1840px}
+  .shell{grid-template-columns:232px minmax(0,1fr) 340px}
+  #p-mine{position:fixed;top:calc(var(--top-h) + var(--s-5));left:max(var(--s-5),calc((100vw - 1840px) / 2 + var(--s-5)));width:340px;max-height:calc(100vh - var(--top-h) - var(--s-7));overflow-y:auto;z-index:5}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;scroll-behavior:auto!important}}
 
-<header class="bar" dir="rtl">
-  <div class="bar-in">
-    <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
-    <div class="bar-t"><b>البورادا فيلا</b><span>متابعة تقدم المشروع · آخر تحديث 6 أكتوبر 2026</span></div>
-    <nav class="topnav" aria-label="أقسام الصفحة">
-      <a href="#summary" data-s="summary">الملخص</a><a href="#progress" data-s="progress">التقدم</a><a href="#blocks" data-s="blocks">البلوكات</a><a href="#notes" data-s="notes">ملاحظات</a><a href="#ask" data-s="ask">اسأل المطوّر</a>
-    </nav>
+/* ---------- print (A4) ---------- */
+@media print{
+  @page{size:A4;margin:14mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html{font-size:87.5%}
+  body{background:#fff;color:#000;background-image:none}
+  .panel{container-type:normal}
+  .chart svg{width:100%!important;height:auto!important}
+  .top,.bnav,.index,.ph-act,.drawer,.scrim,.welcome,.toast,.skip,.seg,.bump-ctl,#copy,#wa,.blockgrid,.mine-pick .row{display:none!important}
+  .shell{display:block;padding:0;max-width:none}
+  main{display:block}
+  .panel{box-shadow:none;border:1px solid #bbb;break-inside:avoid;page-break-inside:avoid;margin-bottom:10mm}
+  .panel + .panel{break-before:page;page-break-before:always}
+  .panel.closed .pb{display:flex!important}
+  .tl{mask-image:none;-webkit-mask-image:none;flex-wrap:wrap;overflow:visible}
+  .gal{flex-wrap:wrap;overflow:visible}
+  a{color:#000}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M5 15l4-4 3 3 7-7"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="18" r="1"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></symbol>
+</svg>
+
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
+
+<header class="top" dir="rtl">
+  <div class="top-in">
+    <div class="mark" aria-hidden="true"><svg class="ico sm"><use href="#i-home"/></svg></div>
+    <div class="brand"><h1>سجل البورادا فيلا</h1><span>آخر تحديث 6 أكتوبر 2026 · النشرات حتى سبتمبر</span></div>
+    <button class="iconbtn" id="openSet" type="button" aria-label="الإعدادات" aria-haspopup="dialog"><svg class="ico"><use href="#i-gear"/></svg></button>
   </div>
 </header>
 
-<main dir="rtl" lang="ar">
+<div class="shell" dir="rtl">
+  <nav class="index" aria-label="فهرس اللوحات"><h2>فهرس اللوحات</h2><ol id="indexL"></ol></nav>
 
-<!-- SUMMARY -->
-<section class="card" id="summary">
-  <div class="hero">
-    <div class="ring-wrap"><svg viewBox="0 0 200 200" id="ring" role="img" aria-label="نسبة إنجاز المشروع 29.35 بالمئة"></svg>
-      <div class="ring-c"><span class="v num">29.35%</span><span class="l">نسبة إنجاز المشروع</span><span class="s">سبتمبر 2026</span></div>
-    </div>
-    <div class="hero-t">
-      <span class="k">مشروع البورادا فيلا · ضاحية الفرسان، الرياض</span>
-      <h1>المشروع يتقدّم، لكن أبطأ مما تقوله الأرقام</h1>
-      <p>هذه الصفحة تجمع <b>9 نشرات شهرية</b> أرسلها المطوّر للملاك من أكتوبر 2025 إلى سبتمبر 2026. المشروع يتقدم حوالي <b>1% فقط كل شهر</b>، وسرعة العمل <b>نزلت ربعها</b> في آخر 3 أشهر. فيه بلوكان شبه واقفين، ونسبة المرحلة الأولى قفزت فجأة بشكل ما تفسره أرقام بلوكاتها.</p>
-    </div>
-    <div class="kpis">
-      <div class="kpi"><span class="k">متوسط التقدم كل شهر</span><span class="v num">1.02%</span><span class="n">من يناير إلى سبتمبر</span></div>
-      <div class="kpi bad"><span class="k">التقدم الشهري مؤخراً</span><span class="v num">0.92%</span><span class="n">كان 1.23% في بداية السنة</span></div>
-      <div class="kpi"><span class="k">متى يكتمل المشروع كله؟</span><span class="v num">2032–33</span><span class="n">لو استمر بنفس السرعة</span></div>
-      <div class="kpi bad"><span class="k">نقاط مهمة تحتاج توضيح</span><span class="v num">5</span><span class="n">نتمنى رداً مكتوباً من المطوّر</span></div>
-    </div>
-  </div>
-</section>
+  <main id="main" lang="ar" tabindex="-1">
 
-<section class="card" id="howto">
-  <div class="sec-h"><span class="k">قبل ما تبدأ</span><h2>كيف تستخدم الصفحة؟</h2></div>
-  <ol class="steps">
-    <li><div><b>شوف الصورة العامة</b>كم وصلت نسبة المشروع، وهل سرعة العمل تزيد أو تقل.</div></li>
-    <li><div><b>اختر بلوكك</b>اضغط على بلوكك من قسم "البلوكات" وتشوف نسبته ومتى يكتمل وصفحته من كل نشرة.</div></li>
-    <li><div><b>أرسل الأسئلة</b>في آخر الصفحة أسئلة جاهزة، انسخها وأرسلها للمطوّر.</div></li>
-  </ol>
-  <div class="disc">صفحة مستقلة، غير تابعة للمطوّر ولا لأي جهة. كل الأرقام منقولة من النشرات الشهرية اللي يرسلها المطوّر للملاك. النقاط المذكورة أسئلة تحتاج توضيح، وليست اتهامات.</div>
-</section>
-
-<!-- PROGRESS -->
-<section class="card" id="progress">
-  <div class="sec-h"><span class="k">نسبة المشروع</span><h2>تقدم المشروع شهراً بشهر</h2><p>الخط الأخضر هو النسب المكتوبة في النشرات. الخطان المتقطعان يوضحان متى يكتمل المشروع لو استمر العمل بنفس السرعة. الدائرة الفاضية شهر يوليو، لأنه بلا نشرة.</p></div>
-  <div class="chart" id="c-overall"><div class="tip"></div></div>
-  <div class="legend">
-    <span><i style="background:var(--site)"></i>حسب النشرات</span>
-    <span style="color:var(--s1)"><i class="dash"></i><span style="color:var(--ink-2)">بسرعة 1.02% شهرياً: منتصف 2032</span></span>
-    <span style="color:var(--s2)"><i class="dash"></i><span style="color:var(--ink-2)">بسرعة 0.92% شهرياً: بداية 2033</span></span>
-  </div>
-</section>
-
-<div class="row2">
-  <section class="card" id="pace">
-    <div class="sec-h"><span class="k">سرعة العمل</span><h2>سرعة العمل تقل</h2><p>كم زادت نسبة المشروع في كل شهر.</p></div>
-    <div class="chart" id="c-pace"><div class="tip"></div></div>
-    <p class="note">في بداية السنة كان المشروع يزيد 1.23% شهرياً في المتوسط، ومن أبريل صار يزيد 0.90% فقط. أضعف شهر كان مايو (0.55%). يوليو بلا نشرة، فقسمنا زيادة يونيو إلى أغسطس على الشهرين.</p>
+  <section class="panel" id="p-mine" data-p="mine" aria-labelledby="h-mine">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 01</span><h2 id="h-mine">بلوكي</h2><p class="take" id="mine-take">اختر بلوكك عشان تشوف نسبته وحالته ومتى يُتوقع يكتمل.</p></div><div class="ph-act"></div></div>
+    <div class="pb" id="mine-body"></div>
   </section>
 
-  <section class="card" id="phases">
-    <div class="sec-h"><span class="k">المراحل</span><h2>المراحل الأربع</h2><p>نسبة كل مرحلة حسب نشرة سبتمبر، والتغير عن يناير.</p></div>
-    <div class="phs" id="phs"></div>
-    <div class="chart" id="c-phases"><div class="tip"></div></div>
-    <div class="callout"><b>قفزة ما لها تفسير:</b> نسبة المرحلة الأولى زادت <span class="num">7.1%</span> في مايو وحده، بينما كل بلوك من بلوكاتها الأربعة زاد أقل من <span class="num">2%</span>. ثم زادت <span class="num">5.5%</span> أخرى في يونيو. حتى أبريل كانت نسبة المرحلة قريبة من متوسط بلوكاتها، ومن مايو صارت أعلى منها بـ5% إلى 8%.</div>
+  <section class="panel" id="p-summary" data-p="summary" aria-labelledby="h-summary">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 02</span><h2 id="h-summary">المشروع باختصار</h2><p class="take">المشروع يتقدم حوالي <b>1% كل شهر</b>، وسرعة العمل <b>نزلت ربعها</b> في آخر 3 أشهر.</p></div><div class="ph-act"></div></div>
+    <div class="pb">
+      <div class="sum">
+        <div class="ring"><svg viewBox="0 0 120 120" id="ring" role="img" aria-label="نسبة إنجاز المشروع 29.35 بالمئة"></svg><b class="num"><span class="ltr">29.35%</span></b></div>
+        <p class="lead">تجمع هذه الصفحة <b>9 نشرات شهرية</b> أرسلها المطوّر للملاك من أكتوبر 2025 إلى سبتمبر 2026. فيه بلوكان شبه واقفين، ونسبة المرحلة الأولى قفزت فجأة بشكل ما تفسره أرقام بلوكاتها.</p>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><span class="k">نسبة المشروع</span><span class="v num"><span class="ltr">29.35%</span></span><span class="d c-good"><span aria-hidden="true">▲</span> زادت <span class="ltr">0.91%</span> عن أغسطس</span></div>
+        <div class="kpi"><span class="k">التقدم الشهري مؤخراً</span><span class="v num"><span class="ltr">0.92%</span></span><span class="d c-crit"><span aria-hidden="true">▼</span> كان <span class="ltr">1.23%</span> بداية السنة</span></div>
+        <div class="kpi"><span class="k">متى يكتمل المشروع؟</span><span class="v num"><span class="ltr">2032–33</span></span><span class="d" style="color:var(--ink-2)">لو استمر بنفس السرعة</span></div>
+        <div class="kpi"><span class="k">نقاط تحتاج توضيح</span><span class="v num">5</span><span class="d c-crit"><span aria-hidden="true">●</span> أولوية عالية</span></div>
+      </div>
+      <p class="disc">صفحة مستقلة، غير تابعة للمطوّر ولا لأي جهة. كل الأرقام منقولة من نشرات المطوّر الشهرية للملاك. النقاط المذكورة أسئلة تحتاج توضيح، وليست اتهامات.</p>
+    </div>
   </section>
+
+  <section class="panel" id="p-progress" data-p="progress" aria-labelledby="h-progress">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 03</span><h2 id="h-progress">تقدم المشروع شهراً بشهر</h2><p class="take">من <b>21.19%</b> في يناير إلى <b>29.35%</b> في سبتمبر.</p></div><div class="ph-act"></div></div>
+    <div class="pb">
+      <div class="chart" id="c-overall"><div class="tip" role="status"></div></div>
+      <div class="legend"><span style="color:var(--site)"><i></i><span style="color:var(--ink-2)">نسبة المشروع حسب النشرات</span></span><span><i class="gap"></i>يوليو: بلا نشرة</span></div>
+      <div class="proj" aria-label="متى يوصل المشروع 100%">
+        <b style="font-size:var(--t-sm)">متى يوصل 100% لو استمر بنفس السرعة؟</b>
+        <div class="proj-bar"><span class="done" style="width:29.35%"></span><span class="mk" style="left:76%;background:var(--s1)"></span><span class="mk" style="left:84%;background:var(--s2)"></span></div>
+        <div class="proj-ax"><span>2026</span><span>2028</span><span>2030</span><span>2032</span><span>2034</span></div>
+        <div class="legend"><span style="color:var(--s1)"><i></i><span style="color:var(--ink-2)">بسرعة <span class="ltr">1.02%</span> شهرياً: منتصف 2032</span></span><span style="color:var(--s2)"><i></i><span style="color:var(--ink-2)">بسرعة <span class="ltr">0.92%</span> شهرياً: بداية 2033</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel half" id="p-pace" data-p="pace" aria-labelledby="h-pace">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 04</span><h2 id="h-pace">سرعة العمل تقل</h2><p class="take">أضعف شهر كان <b>مايو</b>، زاد المشروع فيه <b>0.55%</b> فقط.</p></div><div class="ph-act"></div></div>
+    <div class="pb">
+      <div class="chart" id="c-pace"><div class="tip" role="status"></div></div>
+      <p class="note">في بداية السنة كان المشروع يزيد 1.23% شهرياً، ومن أبريل صار 0.90%. يوليو بلا نشرة، فقسمنا زيادة يونيو إلى أغسطس على الشهرين.</p>
+    </div>
+  </section>
+
+  <section class="panel half" id="p-phases" data-p="phases" aria-labelledby="h-phases">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 05</span><h2 id="h-phases">المراحل الأربع</h2><p class="take">المرحلة الأولى قفزت <b>7.1%</b> في مايو، بينما بلوكاتها زادت أقل من 2%.</p></div><div class="ph-act"></div></div>
+    <div class="pb">
+      <div class="phs" id="phs"></div>
+      <div class="chart" id="c-phases"><div class="tip" role="status"></div></div>
+      <div class="callout"><b>قفزة ما لها تفسير:</b> نسبة المرحلة الأولى زادت 7.1% في مايو وحده، بينما كل بلوك من بلوكاتها زاد أقل من 2%. ثم زادت 5.5% أخرى في يونيو.</div>
+    </div>
+  </section>
+
+  <section class="panel" id="p-blocks" data-p="blocks" aria-labelledby="h-blocks">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 06</span><h2 id="h-blocks">كل البلوكات</h2><p class="take">بلوكا <b>15 و23</b> شبه واقفان، وبلوكا <b>7 و9</b> الأسرع.</p></div><div class="ph-act"></div></div>
+    <div class="pb">
+      <div class="seg" role="tablist" aria-label="طريقة العرض" id="seg"></div>
+      <p class="note" id="viewNote"></p>
+      <div id="bview" role="tabpanel"></div>
+    </div>
+  </section>
+
+  <section class="panel half" id="p-trust" data-p="trust" data-deep="1" aria-labelledby="h-trust">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 07</span><h2 id="h-trust">هل نسبة كل مرحلة تطابق بلوكاتها؟</h2><p class="take">المرحلة 2 <b>متطابقة</b>، والمرحلة 1 فيها <b>فرق كبير من مايو</b>.</p></div><div class="ph-act"></div></div>
+    <div class="pb">
+      <p class="lead">المفروض نسبة المرحلة تساوي تقريباً متوسط بلوكاتها (حسب عدد الفلل). كل عمود فرق شهر: فوق الخط يعني النشرة كتبت للمرحلة نسبة أعلى من بلوكاتها.</p>
+      <div class="trust" id="trustL"></div>
+    </div>
+  </section>
+
+  <section class="panel half" id="p-texts" data-p="texts" data-deep="1" aria-labelledby="h-texts">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 08</span><h2 id="h-texts">كلام يتكرر بين النشرات</h2><p class="take">ملخص يونيو <b>86%</b> منه نفس كلمات ملخص مايو.</p></div><div class="ph-act"></div></div>
+    <div class="pb"><div class="flags" id="repL" style="grid-template-columns:1fr"></div></div>
+  </section>
+
+  <section class="panel" id="p-photos" data-p="photos" data-deep="1" aria-labelledby="h-photos">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 09</span><h2 id="h-photos">صور مكررة من الشهر اللي قبله</h2><p class="take">نشرة يونيو استخدمت <b>نفس صور مايو</b> لكل بلوكات المرحلة الثالثة الست.</p></div><div class="ph-act"></div></div>
+    <div class="pb">
+      <p class="lead">قارنّا كل صور الموقع في النشرات ببعض آلياً. هذي صور ظهرت بالضبط في نشرتين مختلفتين على أنها شغل الشهر. اضغط على أي صورة لتكبيرها.</p>
+      <div class="reuse" id="reuseL"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="p-notes" data-p="notes" aria-labelledby="h-notes">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 10</span><h2 id="h-notes">نقاط تحتاج توضيح من المطوّر</h2><p class="take"><b>5 نقاط</b> بأولوية عالية، وكل نقطة معها الأرقام اللي تثبتها.</p></div><div class="ph-act"></div></div>
+    <div class="pb"><div class="flags" id="flagsHi"></div><details class="more"><summary id="moreSum"></summary><div class="flags" id="flagsLo"></div></details></div>
+  </section>
+
+  <section class="panel" id="p-timeline" data-p="timeline" data-deep="1" aria-labelledby="h-timeline">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 11</span><h2 id="h-timeline">وش انتهى فعلاً؟</h2><p class="take">آخر إنجاز: بدأ <b>التشطيب</b> في المرحلة الأولى.</p></div><div class="ph-act"></div></div>
+    <div class="pb"><div class="tl" id="tl" tabindex="0" aria-label="الإنجازات شهراً بشهر، اسحب لتشوف الباقي"></div></div>
+  </section>
+
+  <section class="panel" id="p-ask" data-p="ask" aria-labelledby="h-ask">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 12</span><h2 id="h-ask">أسئلة جاهزة للمطوّر</h2><p class="take">انسخها وأرسلها واطلب الرد مكتوباً. كل ما زاد عدد الملاك، كان الرد أسرع.</p></div><div class="ph-act"></div></div>
+    <div class="pb">
+      <ol class="qs" id="qs"></ol>
+      <div class="row"><button class="btn" id="copy" type="button"><svg class="ico sm"><use href="#i-copy"/></svg><span>نسخ الأسئلة</span></button><a class="btn ghost" id="wa" target="_blank" rel="noopener">أرسلها عبر واتساب</a></div>
+    </div>
+  </section>
+
+  <section class="panel" id="p-wafi" data-p="wafi" data-deep="1" aria-labelledby="h-wafi">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 13</span><h2 id="h-wafi">تأكد بنفسك من منصة وافي</h2><p class="take">المشروع مسجل في وافي بـ<b>596 وحدة</b>، والنشرات تتكلم عن 360 وحدة فقط.</p></div><div class="ph-act"></div></div>
+    <div class="pb">
+      <p class="lead">"وافي" برنامج تابع للهيئة العامة للعقار، ويشرف على مشاريع البيع على الخارطة. فلوس المشترين تنحفظ في حساب بنكي خاص بالمشروع اسمه "حساب الضمان"، وما تُصرف للمطوّر إلا حسب إنجاز يعتمده مكتب هندسي مستقل.</p>
+      <ol class="steps">
+        <li><div><b>افتح قائمة مشاريع وافي</b>على موقع الهيئة العامة للعقار، وابحث عن "Alborada".</div></li>
+        <li><div><b>قارن الأرقام</b>بالبيانات في هذه الصفحة.</div></li>
+        <li><div><b>إذا لقيت فرق</b>قدّم استفسار أو بلاغ عن طريق وافي نفسها.</div></li>
+      </ol>
+      <a class="btn ghost" href="https://rega.gov.sa/en/rega-services/platforms/wafi-off-plan-sales-and-lease/?currentPage=3&tabActive=Wafi+Projects" target="_blank" rel="noopener" style="align-self:flex-start">افتح قائمة مشاريع وافي</a>
+      <p class="note">لا توقف أي دفعة من نفسك قبل ما تستشير محامي أو مختص.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>المصدر: نشرات Urbas Middle East الشهرية لمشروع Alborada Villas by ad home: أكتوبر 2025، ويناير إلى يونيو، وأغسطس وسبتمبر 2026. نشرة يوليو غير متوفرة.</span>
+    <span>صفحة مستقلة وغير تابعة للمطوّر. التوقعات والتحليل من إعداد Claude لمساعدة الملاك، وهي ليست أرقاماً رسمية ولا استشارة قانونية أو مالية.</span>
+  </footer>
+  </main>
 </div>
 
-<!-- BLOCKS -->
-<section class="card" id="blocks">
-  <div class="sec-h"><span class="k">البلوكات</span><h2>كل البلوكات في مكان واحد</h2><p>كل بطاقة فيها نسبة البلوك في سبتمبر وخط صغير يوضح تقدمه من يناير. اضغط على أي بلوك عشان تشوف تفاصيله وصفحته من كل نشرة.</p></div>
-  <div class="mybar" id="mybar"></div>
-  <div class="legend-t">
-    <span class="ramp"><b style="background:var(--t1)"></b><b style="background:var(--t2)"></b><b style="background:var(--t3)"></b><b style="background:var(--t4)"></b><b style="background:var(--t5)"></b><b style="background:var(--t6)"></b></span><span>لون الشريط: من 15% (فاتح) إلى 60% (غامق)</span>
-    <span class="chip c-crit"><i></i>شبه واقف</span><span class="chip c-ser"><i></i>بطيء</span><span class="chip c-good"><i></i>شغله ماشي</span>
-  </div>
-  <div id="tiles" class="grp-wrap" style="display:flex;flex-direction:column;gap:16px"></div>
-</section>
-
-<section class="card" id="stages">
-  <div class="sec-h"><span class="k">مراحل البناء</span><h2>وين وصل كل بلوك؟</h2><p>بدل النسبة، هذا يوضح المرحلة الحقيقية اللي وصلها كل بلوك حسب كلام نشرة سبتمبر. المربع المخطط هو الشغل اللي جاري الحين.</p></div>
-  <div class="ladkey"><span></span><span>الهيكل</span><span>البناء</span><span>الكهرباء والسباكة</span><span>اللياسة</span><span>الدهان واللياسة الخارجية</span><span>التشطيب</span></div>
-  <div class="ladder-l" id="ladder"></div>
-</section>
-
-<section class="card" id="speed">
-  <div class="sec-h"><span class="k">إنذار مبكر</span><h2>مين صار أسرع ومين صار أبطأ؟</h2><p>نقارن سرعة كل بلوك في آخر 3 أشهر (يونيو إلى سبتمبر) بسرعته في بداية السنة (يناير إلى أبريل). البلوك اللي يبطأ اليوم ممكن يوقف بكرة.</p></div>
-  <div class="spd" id="spd"></div>
-  <div class="legend"><span><i style="background:var(--good)"></i>صار أسرع</span><span><i style="background:var(--crit)"></i>صار أبطأ</span></div>
-</section>
-
-<section class="card" id="stall">
-  <div class="sec-h"><span class="k">كاشف التوقف</span><h2>كم شهر كل بلوك ما تحرك؟</h2><p>كل مربع شهر. المربع الأحمر يعني البلوك زاد أقل من 0.5% في ذلك الشهر، يعني تقريباً ما تحرك.</p></div>
-  <div class="spd" id="stallL"></div>
-</section>
-
-<section class="card" id="ranks">
-  <div class="sec-h"><span class="k">الترتيب</span><h2>ترتيب البلوكات من يناير إلى سبتمبر</h2><p>رقم 1 هو البلوك الأكثر إنجازاً. الخط اللي ينزل يعني البلوك تأخر عن غيره. اختر بلوكاً عشان يبرز خطه.</p></div>
-  <div class="bump-ctl" id="bumpCtl"></div>
-  <div class="chart" id="c-bump"><div class="tip"></div></div>
-</section>
-
-<section class="card" id="forecast">
-  <div class="sec-h"><span class="k">التوقعات</span><h2>متى يكتمل كل بلوك؟</h2><p>جربنا آلاف الاحتمالات لسرعة كل بلوك حسب تذبذبها من شهر لشهر. النقطة هي التاريخ الأقرب للواقع، والشريط الفاتح حوله يوضح النطاق بين التفاؤل والتشاؤم.</p></div>
-  <div class="fc" id="fc"></div>
-  <p class="note">توقع تقريبي يفترض أن سرعة العمل تبقى كما هي. التشطيبات عادة تاخذ وقت أطول من العظم، فالمواعيد الحقيقية غالباً أبعد.</p>
-</section>
-
-<!-- DEEP -->
-<section class="card" id="trust">
-  <div class="sec-h"><span class="k">مؤشر صدق الأرقام</span><h2>هل نسبة كل مرحلة تطابق بلوكاتها؟</h2><p>المفروض نسبة المرحلة تساوي تقريباً متوسط بلوكاتها (حسب عدد الفلل في كل بلوك). كل عمود يوضح الفرق في شهر: فوق الخط يعني النشرة كتبت نسبة للمرحلة أعلى من بلوكاتها، وتحت الخط أقل.</p></div>
-  <div class="trust" id="trustL"></div>
-</section>
-
-<section class="card" id="photos">
-  <div class="sec-h"><span class="k">فحص الصور</span><h2>صور مكررة من الشهر اللي قبله</h2><p>قارنّا كل صور الموقع في النشرات ببعض آلياً. هذي صور ظهرت بالضبط في نشرتين مختلفتين على أنها شغل الشهر. اضغط على أي صورة لتكبيرها.</p></div>
-  <div class="callout"><b>6 بلوكات من 6</b> في المرحلة الثالثة استخدمت نشرة يونيو نفس صور نشرة مايو. وبلوك 22 استخدم في سبتمبر صورة من يونيو.</div>
-  <div class="reuse" id="reuseL"></div>
-</section>
-
-<section class="card" id="texts">
-  <div class="sec-h"><span class="k">فحص النصوص</span><h2>كلام يتكرر بين النشرات</h2><p>جمل ظهرت بنفس الكلمات في أكثر من نشرة، يعني ما تعطي معلومة جديدة عن الشهر.</p></div>
-  <div class="rep" id="repL"></div>
-</section>
-
-<!-- NOTES -->
-<section class="card" id="notes">
-  <div class="sec-h"><span class="k">ملاحظات</span><h2>نقاط تحتاج توضيح من المطوّر</h2><p>من الأهم إلى الأقل. كل نقطة معها الأرقام اللي تثبتها من النشرات.</p></div>
-  <div class="flags" id="flags"></div>
-</section>
-
-<section class="card" id="timeline">
-  <div class="sec-h"><span class="k">الإنجازات</span><h2>وش انتهى فعلاً؟</h2><p>حسب كلام النشرات. اسحب يميناً ويساراً.</p></div>
-  <div class="tl" id="tl"></div>
-</section>
-
-<!-- ASK -->
-<section class="card" id="ask">
-  <div class="sec-h"><span class="k">اسأل المطوّر</span><h2>أسئلة جاهزة للمطوّر</h2><p>انسخها وأرسلها، واطلب الرد مكتوب. كل ما زاد عدد الملاك اللي يرسلون نفس الأسئلة، كان الرد أوضح وأسرع.</p></div>
-  <ol class="qs" id="qs"></ol>
-  <button class="btn" id="copy" type="button">نسخ الأسئلة</button>
-</section>
-
-<section class="card" id="wafi">
-  <div class="sec-h"><span class="k">التحقق</span><h2>تأكد بنفسك من منصة وافي</h2><p>"وافي" برنامج تابع للهيئة العامة للعقار، ويشرف على مشاريع البيع على الخارطة في السعودية. فلوس المشترين تنحفظ في حساب بنكي خاص بالمشروع اسمه "حساب الضمان"، وما تُصرف للمطوّر إلا حسب الإنجاز اللي يعتمده مكتب هندسي مستقل.</p></div>
-  <ol class="steps">
-    <li><div><b>ادخل منصة وافي</b>من موقع الهيئة العامة للعقار rega.gov.sa، وابحث عن المشروع باسم "البورادا".</div></li>
-    <li><div><b>قارن الأرقام</b>شوف حالة المشروع والبيانات المسجلة، وقارنها بالنسب في هذه الصفحة.</div></li>
-    <li><div><b>إذا لقيت فرق</b>تقدر تقدم استفسار أو بلاغ عن طريق وافي نفسها.</div></li>
-  </ol>
-  <p class="note">ولا توقف أي دفعة من نفسك قبل ما تستشير محامي أو مختص.</p>
-</section>
-
-<footer>
-  <span>المصدر: نشرات Urbas Middle East الشهرية لمشروع Alborada Villas by ad home: أكتوبر 2025، ويناير إلى يونيو، وأغسطس وسبتمبر 2026. نشرة يوليو غير متوفرة، ونشرة أكتوبر 2025 لا تذكر نسبة للمشروع كله.</span>
-  <span>صفحة مستقلة وغير تابعة للمطوّر. التوقعات والتحليل من إعداد Claude لمساعدة الملاك، وهي مو أرقام رسمية ولا استشارة قانونية أو مالية.</span>
-</footer>
-</main>
-
-<nav class="bnav" aria-label="التنقل" dir="rtl"><div class="bnav-in">
-  <a href="#summary" data-s="summary"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 8 8h-8z"/></svg>الملخص</a>
-  <a href="#progress" data-s="progress"><svg viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M5 15l4-4 3 3 7-7"/></svg>التقدم</a>
-  <a href="#blocks" data-s="blocks"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>البلوكات</a>
-  <a href="#notes" data-s="notes"><svg viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg>ملاحظات</a>
-  <a href="#ask" data-s="ask"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>اسأل</a>
+<nav class="bnav" aria-label="التنقل السريع" dir="rtl"><div class="bnav-in">
+  <a href="#p-mine" data-go="mine"><svg class="ico"><use href="#i-pin"/></svg>بلوكي</a>
+  <a href="#p-progress" data-go="progress"><svg class="ico"><use href="#i-trend"/></svg>التقدم</a>
+  <a href="#p-notes" data-go="notes"><svg class="ico"><use href="#i-alert"/></svg>ملاحظات</a>
+  <a href="#p-ask" data-go="ask"><svg class="ico"><use href="#i-chat"/></svg>اسأل</a>
+  <button type="button" id="openMore" aria-haspopup="dialog"><svg class="ico"><use href="#i-more"/></svg>المزيد</button>
 </div></nav>
 
 <div class="scrim" id="scrim"></div>
-<aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title" dir="rtl" hidden>
-  <div class="sh-h"><div class="grab"></div><div class="sh-top"><h2 id="sh-title"></h2><span id="sh-chip"></span><button class="x" id="sh-x" type="button" aria-label="إغلاق">✕</button></div><span class="note" id="sh-sub"></span></div>
-  <div class="sh-b" id="sh-b"></div>
+<aside class="drawer" id="dSet" role="dialog" aria-modal="true" aria-labelledby="dSetT" dir="rtl" hidden>
+  <div class="dh"><div class="grab"></div><div class="dt"><h2 id="dSetT">الإعدادات</h2><button class="iconbtn" type="button" data-close aria-label="إغلاق"><svg class="ico"><use href="#i-x"/></svg></button></div></div>
+  <div class="db">
+    <fieldset class="fs"><legend>بلوكي</legend><select class="sel" id="setBlock" aria-label="اختر بلوكك"></select><span class="note">يبرز في كل الرسوم والقوائم، ويُضاف للرابط عشان تشاركه.</span></fieldset>
+    <fieldset class="fs"><legend>المظهر</legend><div class="opts" id="setTheme"></div></fieldset>
+    <fieldset class="fs"><legend>حجم الخط</legend><div class="opts" id="setSize"></div></fieldset>
+    <fieldset class="fs"><legend>الكثافة</legend><div class="opts two" id="setDensity"></div></fieldset>
+    <fieldset class="fs"><legend>الأرقام</legend><div class="opts two" id="setDigits"></div></fieldset>
+    <fieldset class="fs"><legend>اللوحات</legend><span class="note">أظهر أو أخفِ أي لوحة، ورتبها بالأسهم أو بالسحب على الكمبيوتر.</span><div class="plist" id="plist"></div></fieldset>
+    <button class="btn ghost" type="button" id="reset">استعادة الإعدادات الافتراضية</button>
+  </div>
 </aside>
+<aside class="drawer" id="dMore" role="dialog" aria-modal="true" aria-labelledby="dMoreT" dir="rtl" hidden>
+  <div class="dh"><div class="grab"></div><div class="dt"><h2 id="dMoreT">كل اللوحات</h2><button class="iconbtn" type="button" data-close aria-label="إغلاق"><svg class="ico"><use href="#i-x"/></svg></button></div></div>
+  <div class="db"><nav aria-label="كل اللوحات"><ol class="plist" id="moreL" style="list-style:none;margin:0;padding:0"></ol></nav></div>
+</aside>
+<aside class="drawer" id="dBlock" role="dialog" aria-modal="true" aria-labelledby="dBlockT" dir="rtl" hidden>
+  <div class="dh"><div class="grab"></div><div class="dt"><h2 id="dBlockT"></h2><span id="dBlockChip"></span><button class="iconbtn" type="button" data-close aria-label="إغلاق"><svg class="ico"><use href="#i-x"/></svg></button></div><span class="note" id="dBlockSub"></span></div>
+  <div class="db" id="dBlockB"></div>
+</aside>
+<div class="welcome" id="welcome" role="dialog" aria-labelledby="wT" dir="rtl" hidden>
+  <h2 id="wT">أهلاً! ما رقم بلوكك؟</h2>
+  <p class="note">نعرض لك بلوكك أول شي كل ما تفتح الصفحة. تقدر تغيّره من الإعدادات.</p>
+  <div class="blockgrid" id="wGrid"></div>
+  <button class="btn ghost" type="button" id="wSkip">تخطَّ</button>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (function(){
+/* ================= data (unchanged from previous version) ================= */
 const M=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر'];
 const MM=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 const SRC=[0,1,2,3,4,5,7,8];
@@ -493,20 +611,30 @@ const blocks=[
  {b:22,p:4,u:38,v:[23.86,26.16,32.04,35.53,37.23,42.78,44.17,44.17],log:{'يونيو':'البناء قارب يخلص','أغسطس':'خلصت جدران السطح','سبتمبر':'ما فيه أي تقدم، وصفحة البلوك بدون أي شرح'}},
  {b:23,p:4,u:48,v:[17.42,19.10,19.50,19.50,null,null,19.88,19.88],log:{'فبراير':'صب أعمدة الدور الأرضي لـ37 فيلا','مايو':'بدأ تجهيز أسقف الدور الأرضي','سبتمبر':'النسبة شبه ثابتة من مارس، والصور ما زالت للدور الأرضي'}}
 ];
+const MC={1:[26,27,28],2:[24,26,28],3:[22,23,25],5:[18,19,21],4:[15,17,19],6:[19,20,22],7:[12,15,18],8:[20,22,24],9:[13,15,17],10:[18,20,22],12:[36,42,49],13:[20,24,28],14:[32,36,41],15:[88,101,116],22:[19,22,26],23:[239,240,240]};
+const STAGE={1:6,2:6,3:6,5:6,4:4,6:4,7:4,8:4,9:5,10:4,12:3,13:4,14:4,15:3,22:2,23:1};
+const STAGE_N=['الهيكل','البناء','الكهرباء والسباكة','اللياسة','الدهان واللياسة الخارجية','التشطيب'];
+const REUSE=[[9,4,5,2,'reuse/r9-4-5.jpg'],[10,4,5,2,'reuse/r10-4-5.jpg'],[12,4,5,1,'reuse/r12-4-5.jpg'],[13,4,5,1,'reuse/r13-4-5.jpg'],[14,4,5,2,'reuse/r14-4-5.jpg'],[15,4,5,2,'reuse/r15-4-5.jpg'],[22,5,8,1,'reuse/r22-5-8.jpg']];
+const REP=[
+ ['ملخص نشرة مايو ونشرة يونيو','86% من كلمات ملخص يونيو هي نفس كلمات ملخص مايو، وفيها جملة أن المرحلة الرابعة "خلّصت الأساسات وبدأت تصب الأعمدة"، وهذا حصل في يناير.','مايو · يونيو'],
+ ['بلوك 7','Architectural works continue across the remaining villas at advanced stages of execution','مايو · يونيو · أغسطس · سبتمبر'],
+ ['بلوك 8','Construction activities continue at a steady pace across the block','أغسطس · سبتمبر'],
+ ['بلوك 2','"خلصت اللياسة الخارجية لـ24 فيلا" مذكورة كإنجاز في يونيو، ثم مرة ثانية كإنجاز جديد في سبتمبر.','يونيو · سبتمبر'],
+ ['بلوك 14','نسبة 44.45% بنفس الرقم في ثلاث نشرات متتالية.','أبريل · مايو · يونيو']
+];
 const flags=[
- ['crit','أولوية عالية','قفزة المرحلة الأولى','في مايو وحده زادت نسبة المرحلة 7.1%، بينما بلوكاتها الأربعة زادت 1.3% بالمتوسط. وفي يونيو زادت 5.5% أخرى. النشرات ما تشرح سبب هذا الفرق.','المرحلة: أبريل 48.50% ← مايو 55.56% ← يونيو 61.10% · البلوكات في مايو زادت بين 0.9% و1.7% فقط'],
- ['crit','أولوية عالية','صور مكررة من الشهر اللي قبله','الفحص الآلي للصور وجد أن نشرة يونيو استخدمت نفس صور مايو لكل بلوكات المرحلة الثالثة الست، ونشرة سبتمبر استخدمت صورة من يونيو لبلوك 22.','بلوكات 9 و10 و12 و13 و14 و15: صور يونيو = صور مايو · بلوك 22: صورة سبتمبر = صورة يونيو'],
- ['crit','أولوية عالية','بلوك 23 بدون تقدم يُذكر من مارس','فيه 48 فيلا، وهو أكبر بلوك في المشروع. زاد 0.38% فقط خلال 6 أشهر، وصور سبتمبر ما زالت تُظهر الدور الأرضي.','مارس 19.50% ← أبريل 19.50% ← أغسطس 19.88% ← سبتمبر 19.88%'],
- ['crit','أولوية عالية','بلوك 15 شبه واقف','النشرات تذكر له شغل كل شهر، لكن نسبته زادت أقل من 1% من مارس.','مارس 22.81% ← يونيو 22.94% ← سبتمبر 23.61%'],
- ['crit','أولوية عالية','بلوك 12 رجع للخلف','نسبته نزلت 5.6% في مارس بدون أي تفسير، واليوم نسبته تقريباً نفس رقم فبراير.','فبراير 34.01% ← مارس 28.38% ← سبتمبر 34.89%'],
- ['ser','متوسطة','الشغل صار أبطأ','كان المشروع يزيد 1.23% كل شهر في بداية السنة، والحين يزيد 0.92% بس. مع أن التشطيبات اللي جاية عادة تاخذ وقت أطول.','يناير–أبريل: 1.23% شهرياً · يونيو–سبتمبر: 0.92% شهرياً'],
- ['ser','متوسطة','المرحلة الرابعة ما تطابق بلوكاتها','زادت 6.7% بين أبريل ويونيو مع أن بلوك 23 ما تحرك. لو حسبناها من بلوك 22 وحده، المفروض تزيد حوالي 3% بس. وفي سبتمبر ما تغيرت أبداً.','المرحلة: أبريل 26.5% ← يونيو 33.2% · بلوك 22 زاد 7.25% · بلوك 23 ما تحرك'],
- ['ser','متوسطة','نسبة المشروع ما تطابق المراحل','متوسط المراحل الأربع حوالي 50.6%، لكن نسبة المشروع كله المكتوبة 29.35%. النشرات ما توضح وش يدخل في نسبة المشروع.','متوسط المراحل 50.6% · نسبة المشروع 29.35%'],
- ['ser','متوسطة','بيان تسليم بدون تاريخ','كل نشرة فيها صفحة عنوانها "بيان تسليم المشروع"، لكن ما فيها أي تاريخ تسليم ولا النسبة المفروض الوصول لها.','الصفحة موجودة في كل النشرات · بدون أي تاريخ'],
- ['ser','متوسطة','نفس الأرقام تتكرر','نسبة بلوك 14 بقت 44.45% ثلاثة أشهر ورا بعض، مع أن نشرة مايو تقول إنهم صبوا جدار السطح. ونفس الشي في بلوك 13 وبلوك 15 بين مايو ويونيو.','بلوك 14: أبريل = مايو = يونيو = 44.45% · بلوك 13 وبلوك 15: مايو = يونيو'],
- ['ser','متوسطة','جملة مكررة من يناير','ملخص مايو ويونيو يقول إن المرحلة الرابعة "خلّصت الأساسات وبدأت تصب الأعمدة"، وهذا حصل فعلاً في يناير. يبدو أن الملخص ما تحدّث.','الأساسات خلصت في يناير · نفس الجملة مكررة في مايو ويونيو'],
- ['warn','بسيطة','نشرة يوليو ناقصة','ما وصلت نشرة لشهر يوليو.','الناقص: يوليو 2026'],
- ['warn','بسيطة','أخطاء في الكتابة','صفحة بلوك 6 مكتوب عليها "المرحلة 1 / بلوك 5" في 4 نشرات، وصورة الغلاف نفسها مكررة في 4 نشرات.','عنوان خاطئ 4 مرات · نفس صورة الغلاف 4 مرات']
+ ['crit','صور مكررة من الشهر اللي قبله','الفحص الآلي للصور وجد أن نشرة يونيو استخدمت نفس صور مايو لكل بلوكات المرحلة الثالثة الست، ونشرة سبتمبر استخدمت صورة من يونيو لبلوك 22.','بلوكات 9 و10 و12 و13 و14 و15: صور يونيو = صور مايو · بلوك 22: صورة سبتمبر = صورة يونيو'],
+ ['crit','قفزة المرحلة الأولى','في مايو وحده زادت نسبة المرحلة 7.1%، بينما بلوكاتها الأربعة زادت 1.3% بالمتوسط. وفي يونيو زادت 5.5% أخرى. النشرات ما تشرح سبب هذا الفرق.','المرحلة: أبريل 48.50% ← مايو 55.56% ← يونيو 61.10% · البلوكات في مايو زادت بين 0.9% و1.7% فقط'],
+ ['crit','بلوك 23 بدون تقدم يُذكر من مارس','فيه 48 فيلا، وهو أكبر بلوك في المشروع. زاد 0.38% فقط خلال 6 أشهر، وصور سبتمبر ما زالت تُظهر الدور الأرضي.','مارس 19.50% ← أبريل 19.50% ← أغسطس 19.88% ← سبتمبر 19.88%'],
+ ['crit','بلوك 15 شبه واقف','النشرات تذكر له شغل كل شهر، لكن نسبته زادت أقل من 1% من مارس.','مارس 22.81% ← يونيو 22.94% ← سبتمبر 23.61%'],
+ ['crit','بلوك 12 رجع للخلف','نسبته نزلت 5.6% في مارس بدون أي تفسير، واليوم نسبته تقريباً نفس رقم فبراير.','فبراير 34.01% ← مارس 28.38% ← سبتمبر 34.89%'],
+ ['ser','الشغل صار أبطأ','كان المشروع يزيد 1.23% كل شهر في بداية السنة، والحين يزيد 0.92% بس، مع أن التشطيبات اللي جاية عادة تاخذ وقت أطول.','يناير–أبريل: 1.23% شهرياً · يونيو–سبتمبر: 0.92% شهرياً'],
+ ['ser','المرحلة الرابعة ما تطابق بلوكاتها','زادت 6.7% بين أبريل ويونيو مع أن بلوك 23 ما تحرك. لو حسبناها من بلوك 22 وحده، المفروض تزيد حوالي 3% بس. وفي سبتمبر ما تغيرت أبداً.','المرحلة: أبريل 26.5% ← يونيو 33.2% · بلوك 22 زاد 7.25% · بلوك 23 ما تحرك'],
+ ['ser','نسبة المشروع ما تطابق المراحل','متوسط المراحل الأربع حوالي 50.6%، لكن نسبة المشروع كله 29.35%. وافي تذكر 596 وحدة والنشرات 360 فقط، وهذا ممكن يفسر الفرق.','متوسط المراحل 50.6% · نسبة المشروع 29.35% · 596 وحدة في وافي'],
+ ['ser','بيان تسليم بدون تاريخ','كل نشرة فيها صفحة عنوانها "بيان تسليم المشروع"، لكن ما فيها أي تاريخ تسليم ولا النسبة المفروض الوصول لها.','الصفحة موجودة في كل النشرات · بدون أي تاريخ'],
+ ['ser','نفس الأرقام تتكرر','نسبة بلوك 14 بقت 44.45% ثلاثة أشهر ورا بعض، مع أن نشرة مايو تقول إنهم صبوا جدار السطح. ونفس الشي في بلوكي 13 و15 بين مايو ويونيو.','بلوك 14: أبريل = مايو = يونيو = 44.45%'],
+ ['warn','نشرة يوليو ناقصة','ما وصلت نشرة لشهر يوليو.','الناقص: يوليو 2026'],
+ ['warn','أخطاء في الكتابة','صفحة بلوك 6 مكتوب عليها "المرحلة 1 / بلوك 5" في 4 نشرات، وصورة الغلاف نفسها مكررة في 4 نشرات.','عنوان خاطئ 4 مرات · نفس صورة الغلاف 4 مرات']
 ];
 const tl=[
  ['أكتوبر 2025','المرحلة 1: خلص سقف الدور الأرضي و80% من أعمدة الدور الأول. المرحلة 2: 88% من الأساسات. المرحلة 3: تسوية 27% من الأرض. المرحلة 4: بداية الشغل.'],
@@ -531,208 +659,287 @@ const qs=[
  'منصة وافي تذكر أن المشروع 596 وحدة، والنشرات تتكلم عن 360 وحدة فقط. وين الـ236 وحدة الباقية، ومتى تبدأ؟',
  'وش اسم المكتب الهندسي المشرف على المشروع؟ وتقدرون ترسلون لي آخر تقرير إنجاز معتمد منه ومن منصة وافي؟'
 ];
+const PANELS=[['mine','بلوكي'],['summary','المشروع باختصار'],['progress','تقدم المشروع'],['pace','سرعة العمل'],['phases','المراحل الأربع'],['blocks','كل البلوكات'],['trust','مطابقة المراحل'],['texts','كلام مكرر'],['photos','صور مكررة'],['notes','نقاط تحتاج توضيح'],['timeline','وش انتهى فعلاً'],['ask','أسئلة للمطوّر'],['wafi','منصة وافي']];
 
-const MC={1:[26,27,28],2:[24,26,28],3:[22,23,25],5:[18,19,21],4:[15,17,19],6:[19,20,22],7:[12,15,18],8:[20,22,24],9:[13,15,17],10:[18,20,22],12:[36,42,49],13:[20,24,28],14:[32,36,41],15:[88,101,116],22:[19,22,26],23:[239,240,240]};
-const STAGE={1:6,2:6,3:6,5:6,4:4,6:4,7:4,8:4,9:5,10:4,12:3,13:4,14:4,15:3,22:2,23:1};
-const STAGE_N=['الهيكل','البناء','الكهرباء والسباكة','اللياسة','الدهان واللياسة الخارجية','التشطيب'];
-const REUSE=[[9,4,5,2,'reuse/r9-4-5.jpg'],[10,4,5,2,'reuse/r10-4-5.jpg'],[12,4,5,1,'reuse/r12-4-5.jpg'],[13,4,5,1,'reuse/r13-4-5.jpg'],[14,4,5,2,'reuse/r14-4-5.jpg'],[15,4,5,2,'reuse/r15-4-5.jpg'],[22,5,8,1,'reuse/r22-5-8.jpg']];
-const REP=[
- ['ملخص نشرة مايو ونشرة يونيو','86% من كلمات ملخص يونيو هي نفس كلمات ملخص مايو، وفيها جملة أن المرحلة الرابعة "خلّصت الأساسات وبدأت تصب الأعمدة"، وهذا حصل في يناير.','مايو · يونيو'],
- ['بلوك 7','Architectural works continue across the remaining villas at advanced stages of execution','مايو · يونيو · أغسطس · سبتمبر'],
- ['بلوك 8','Construction activities continue at a steady pace across the block','أغسطس · سبتمبر'],
- ['بلوك 2','"خلصت اللياسة الخارجية لـ24 فيلا" مذكورة كإنجاز في يونيو، ثم مذكورة مرة ثانية كإنجاز جديد في سبتمبر.','يونيو · سبتمبر'],
- ['بلوك 14','نسبة 44.45% بنفس الرقم في ثلاث نشرات متتالية.','أبريل · مايو · يونيو']
-];
-
-/* helpers */
-const $=s=>document.querySelector(s);
+/* ================= helpers ================= */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const NS='http://www.w3.org/2000/svg';
 const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
 const last=b=>b.v[b.v.length-1];
-const rate=b=>(last(b)-b.v[0])/8;
-const eta=b=>{const q=MC[b.b];return q[1]>120?null:q[1]};
+const vAt=(b,k)=>{const i=SRC.indexOf(k);if(b.v[i]!=null)return b.v[i];for(let j=i-1;j>=0;j--)if(b.v[j]!=null)return b.v[j];return null};
+const rate=b=>(last(b)-b.v[0])/8, early=b=>(b.v[3]-b.v[0])/3, recent=b=>(last(b)-vAt(b,5))/3;
+const stalls=b=>{const vv=SRC.map(k=>vAt(b,k));return vv.slice(1).map((v,i)=>v-vv[i]<0.5)};
 const ym=m=>{const d=new Date(2026,8+m,1);return MM[d.getMonth()]+' '+d.getFullYear()};
-const status=b=>{const r=rate(b);return r<0.8?['crit','شبه واقف']:r<1.6?['ser','بطيء']:['good','شغله ماشي']};
-const shade=v=>'--t'+Math.max(1,Math.min(6,1+Math.floor((v-15)/8)));
-let mine=null;try{const s=+localStorage.getItem('alb-blk');if(blocks.some(b=>b.b===s))mine=s}catch(e){}
-function tipper(box){const t=box.querySelector('.tip');return{show(x,y,h){t.innerHTML=h;const w=box.clientWidth;t.style.left=Math.max(70,Math.min(w-70,x))+'px';t.style.top=y+'px';t.classList.add('on')},hide(){t.classList.remove('on')}}}
+const stuck=b=>MC[b.b][1]>120;
+/* one source of truth for status (display rule): near-stalled if median forecast > 60 months; slow if > 30 months; else on track */
+const status=b=>MC[b.b][1]>60?['crit','شبه واقف','■']:MC[b.b][1]>30?['ser','بطيء','▲']:['good','شغله ماشي','✓'];
+const chip=(k,t,s)=>`<span class="chip c-${k}"><span class="sym" aria-hidden="true">${s}</span>${t}</span>`;
+const pct=v=>`<span class="ltr">${v.toFixed(2)}%</span>`;
+const eta=b=>stuck(b)?'ما يُعرف':MC[b.b][1]>48?'حوالي '+ym(MC[b.b][1]).split(' ')[1]:ym(MC[b.b][1]);
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2200)}
+async function copy(t){try{await navigator.clipboard.writeText(t);return true}catch(e){return false}}
 
-/* ring */
-function drawRing(){
-  const s=$('#ring');s.innerHTML='';const R=86,C=2*Math.PI*R;
-  el('circle',{cx:100,cy:100,r:R,fill:'none',stroke:css('--t0'),'stroke-width':16},s);
-  const a=el('circle',{cx:100,cy:100,r:R,fill:'none',stroke:css('--site'),'stroke-width':16,'stroke-linecap':'round','stroke-dasharray':`${C*0.2935} ${C}`,transform:'rotate(-90 100 100)'},s);
-  [25,50,75].forEach(p=>{const an=(p/100)*2*Math.PI;const x=100+Math.sin(an)*R,y=100-Math.cos(an)*R;el('circle',{cx:x,cy:y,r:2,fill:css('--card')},s)});
+/* ================= settings ================= */
+const DEF={block:null,theme:'auto',size:'m',density:'comfy',digits:'latin',order:PANELS.map(p=>p[0]),hidden:[],open:{},welcomed:false};
+let S=Object.assign({},DEF);
+try{const s=JSON.parse(localStorage.getItem('alb-set')||'null');if(s)S=Object.assign({},DEF,s)}catch(e){}
+try{const old=+localStorage.getItem('alb-blk');if(!S.block&&blocks.some(b=>b.b===old))S.block=old}catch(e){}
+const qp=new URLSearchParams(location.search);const qb=+qp.get('block');if(blocks.some(b=>b.b===qb)){S.block=qb;S.welcomed=true}
+PANELS.forEach(p=>{if(!S.order.includes(p[0]))S.order.push(p[0])});
+function save(){try{localStorage.setItem('alb-set',JSON.stringify(S))}catch(e){}}
+function syncURL(){try{const u=new URL(location.href);S.block?u.searchParams.set('block',S.block):u.searchParams.delete('block');history.replaceState(null,'',u)}catch(e){}}
+function applyLook(){const r=document.documentElement;if(S.theme==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',S.theme);
+  S.size==='m'?r.removeAttribute('data-size'):r.setAttribute('data-size',S.size);
+  S.density==='compact'?r.setAttribute('data-density','compact'):r.removeAttribute('data-density')}
+const AD='٠١٢٣٤٥٦٧٨٩';
+function digits(root=document.body){if(S.digits!=='arab')return;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){if(/[0-9]/.test(n.nodeValue)&&!n.parentNode.closest('q,script,style,.keepnum'))n.nodeValue=n.nodeValue.replace(/[0-9]/g,d=>AD[d]).replace(/(\d|[٠-٩])\.(?=[٠-٩])/g,'$1٫')}}
+
+/* ================= panels: header actions, order, collapse ================= */
+const isPhone=()=>innerWidth<600;
+function panelOpen(id){const p=$('#p-'+id);if(S.open[id]!=null)return S.open[id];return !(p.dataset.deep&&isPhone())}
+function setupPanels(){
+  $$('.panel').forEach(p=>{const id=p.dataset.p;const act=p.querySelector('.ph-act');
+    const body=p.querySelector('.pb');if(!body.id)body.id=p.id+'-b';
+    act.innerHTML=`<button class="pbtn" type="button" data-share aria-label="انسخ رابط هذه اللوحة"><svg class="ico sm"><use href="#i-link"/></svg></button><button class="pbtn" type="button" data-tog aria-controls="${body.id}" aria-label="طي أو فتح اللوحة"><svg class="ico sm chev"><use href="#i-chev"/></svg></button>`;
+    act.querySelector('[data-tog]').onclick=()=>{S.open[id]=p.classList.contains('closed');save();layoutPanels()};
+    act.querySelector('[data-share]').onclick=async()=>{const u=new URL(location.href);u.hash=p.id;const ok=await copy(u.toString());toast(ok?'تم نسخ رابط اللوحة':'ما قدرنا ننسخ، انسخ الرابط من شريط العنوان')};
+    if(id==='mine')act.querySelector('[data-tog]').remove();
+  });
 }
+function layoutPanels(){
+  S.order.forEach((id,i)=>{const p=$('#p-'+id);if(!p)return;p.style.order=i;p.hidden=S.hidden.includes(id);const o=panelOpen(id);p.classList.toggle('closed',!o);const t=p.querySelector('[data-tog]');if(t)t.setAttribute('aria-expanded',o)});
+  $('footer').style.order=99;
+  const vis=S.order.filter(id=>!S.hidden.includes(id));
+  $('#indexL').innerHTML=vis.map(id=>{const p=$('#p-'+id);return `<li><a href="#p-${id}" data-go="${id}"><span>${p.querySelector('.sheetno').textContent.replace('لوحة ','')}</span>${PANELS.find(x=>x[0]===id)[1]}</a></li>`}).join('');
+  $('#moreL').innerHTML=vis.map(id=>{const p=$('#p-'+id);return `<li class="pi" style="grid-template-columns:auto 1fr"><span class="note">${p.querySelector('.sheetno').textContent}</span><a href="#p-${id}" data-go="${id}" style="min-height:44px;display:flex;align-items:center;color:var(--ink);text-decoration:none;font-weight:600">${PANELS.find(x=>x[0]===id)[1]}</a></li>`}).join('');
+  $('#moreL').querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>closeDrawer()));
+  spy();digits($('#indexL'));
+}
+document.addEventListener('click',e=>{const a=e.target.closest('a[data-go]');if(!a)return;const id=a.dataset.go;const p=$('#p-'+id);if(p&&p.classList.contains('closed')){S.open[id]=true;save();layoutPanels()}});
 
-/* responsive line chart */
+/* scroll spy */
+let io;function spy(){io?.disconnect();const links=()=>$$('[data-go]');
+  io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.dataset.p;links().forEach(a=>a.classList.toggle('on',a.dataset.go===id));links().forEach(a=>a.dataset.go===id?a.setAttribute('aria-current','true'):a.removeAttribute('aria-current'))}})},{rootMargin:'-40% 0px -55% 0px'});
+  $$('.panel').forEach(p=>io.observe(p))}
+
+/* ================= drawers (focus trap) ================= */
+let openD=null,lastF=null;
+function openDrawer(id,from){closeDrawer(true);const d=$(id);lastF=from||document.activeElement;d.hidden=false;openD=d;requestAnimationFrame(()=>{d.classList.add('on');$('#scrim').classList.add('on')});document.body.style.overflow='hidden';setTimeout(()=>d.querySelector('[data-close]').focus({preventScroll:true}),30)}
+function closeDrawer(quiet){if(!openD)return;const d=openD;openD=null;d.classList.remove('on');$('#scrim').classList.remove('on');document.body.style.overflow='';setTimeout(()=>{if(!d.classList.contains('on'))d.hidden=true},260);if(!quiet)lastF?.focus?.({preventScroll:true})}
+$('#scrim').onclick=()=>closeDrawer();
+$$('[data-close]').forEach(b=>b.onclick=()=>closeDrawer());
+document.addEventListener('keydown',e=>{if(document.querySelector('.lb'))return;if(e.key==='Escape'&&openD){closeDrawer();return}
+  if(e.key==='Tab'&&openD){const f=[...openD.querySelectorAll('button,a,select,input,[tabindex="0"]')].filter(x=>!x.disabled&&x.offsetParent);if(!f.length)return;const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
+$$('.drawer .dh').forEach(h=>{let y=null;h.addEventListener('touchstart',e=>{y=e.touches[0].clientY},{passive:true});h.addEventListener('touchend',e=>{if(y!=null&&e.changedTouches[0].clientY-y>60)closeDrawer();y=null})});
+$('#openMore').onclick=e=>openDrawer('#dMore',e.currentTarget);
+$('#openSet').onclick=e=>{buildSettings();openDrawer('#dSet',e.currentTarget)};
+function openLb(src,cap){const d=document.createElement('div');d.className='lb';d.setAttribute('role','dialog');d.setAttribute('aria-label',cap);
+  d.innerHTML=`<img src="${src}" alt="${cap}"><div class="lbb"><span>${cap}</span><button type="button">إغلاق</button></div>`;const prev=document.activeElement;
+  const close=()=>{d.remove();document.removeEventListener('keydown',esc,true);prev?.focus?.()};const esc=e=>{if(e.key==='Escape'){e.stopPropagation();close()}};
+  d.addEventListener('click',e=>{if(e.target===d||e.target.tagName==='BUTTON')close()});document.addEventListener('keydown',esc,true);document.body.appendChild(d);d.querySelector('button').focus()}
+
+/* ================= charts ================= */
+let tipOwner=null;
+document.addEventListener('pointerdown',e=>{if(tipOwner&&!tipOwner.box.contains(e.target)){tipOwner.hide();tipOwner=null}});
+function tipper(box){const t=box.querySelector('.tip');const o={box,show(x,y,h){t.innerHTML=h;digits(t);const w=box.clientWidth;t.style.left=Math.max(80,Math.min(w-80,x))+'px';t.style.top=y+'px';t.classList.add('on');tipOwner=o},hide(){t.classList.remove('on')}};return o}
+function srTable(box,cap,head,rows){box.querySelector('div.sr')?.remove();const w=document.createElement('div');w.className='sr';const t=document.createElement('table');w.appendChild(t);t.innerHTML=`<caption>${cap}</caption><thead><tr>${head.map(h=>`<th scope="col">${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map((c,i)=>i?`<td>${c}</td>`:`<th scope="row">${c}</th>`).join('')}</tr>`).join('')}</tbody>`;box.appendChild(w)}
 function lineChart(id,o){
   const box=document.getElementById(id);box.querySelector('svg')?.remove();const T=tipper(box);
-  const W=Math.max(280,box.clientWidth),narrow=W<520,H=o.h||(narrow?220:280),pl=40,pr=narrow?40:56,pt=14,pb=30;
-  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,direction:'ltr',role:'img'});box.insertBefore(svg,box.firstChild);
+  const W=Math.max(260,box.clientWidth),narrow=W<520,H=o.h||(narrow?220:260),pl=40,pr=narrow?44:56,pt=16,pb=30;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,direction:'ltr',role:'img',tabindex:0,'aria-label':o.label+'. استخدم الأسهم لتنقل بين الأشهر.'});box.insertBefore(svg,box.firstChild);
   const X=v=>pl+(v-o.x0)/(o.x1-o.x0)*(W-pl-pr),Y=v=>H-pb-(v-o.y0)/(o.y1-o.y0)*(H-pt-pb);
-  o.yt.forEach(v=>{el('line',{x1:pl,x2:W-pr,y1:Y(v),y2:Y(v),class:'grid'},svg);el('text',{x:pl-6,y:Y(v)+4,'text-anchor':'end',class:'ax'},svg).textContent=v+'%'});
-  const xt=narrow&&o.xtN?o.xtN:o.xt;
-  xt.forEach(([v,l])=>{el('text',{x:X(v),y:H-8,'text-anchor':'middle',class:'ax'},svg).textContent=l});
-  (o.proj||[]).forEach(p=>{el('path',{d:`M${X(p.a)},${Y(p.ay)}L${X(p.b)},${Y(p.by)}`,stroke:css(p.c),'stroke-width':2,'stroke-dasharray':'5 5',fill:'none'},svg);
-    el('circle',{cx:X(p.b),cy:Y(p.by),r:4,fill:css(p.c)},svg)});
+  o.yt.forEach(v=>{el('line',{x1:pl,x2:W-pr,y1:Y(v),y2:Y(v),class:'gl'},svg);el('text',{x:pl-6,y:Y(v)+4,'text-anchor':'end',class:'ax'},svg).textContent=v+'%'});
+  (narrow&&o.xtN?o.xtN:o.xt).forEach(([v,l])=>{el('text',{x:X(v),y:H-8,'text-anchor':'middle',class:'ax'},svg).textContent=l});
+  (o.gaps||[]).forEach(k=>{el('rect',{x:X(k-.5),y:pt,width:X(k+.5)-X(k-.5),height:H-pt-pb,fill:css('--h0'),opacity:.6},svg);el('text',{x:X(k),y:pt+12,'text-anchor':'middle',class:'ax'},svg).textContent='بلا نشرة'});
   o.series.forEach(s=>{const ks=Object.keys(s.v).map(Number).filter(k=>s.v[k]!=null).sort((a,b)=>a-b);
-    if(s.area){el('path',{d:ks.map((k,i)=>(i?'L':'M')+X(k)+','+Y(s.v[k])).join('')+`L${X(ks[ks.length-1])},${Y(o.y0)}L${X(ks[0])},${Y(o.y0)}Z`,fill:css(s.c),opacity:.12},svg)}
-    el('path',{d:ks.map((k,i)=>(i?'L':'M')+X(k)+','+Y(s.v[k])).join(''),stroke:css(s.c),'stroke-width':s.w||2,fill:'none','stroke-linejoin':'round','stroke-linecap':'round'},svg);
-    ks.forEach((k,i)=>{const e=i===ks.length-1;if(!e&&narrow&&o.series.length>2)return;el('circle',{cx:X(k),cy:Y(s.v[k]),r:e?4.5:3,fill:css(s.c),stroke:css('--card'),'stroke-width':2},svg);
-      if(e&&s.label){el('text',{x:X(k)+7,y:Y(s.v[k])+4,fill:css('--ink'),'font-size':11,'font-weight':600,'font-family':css('--f')},svg).textContent=s.label}});
-    (s.gaps||[]).forEach(k=>{el('circle',{cx:X(k),cy:Y((s.v[k-1]+s.v[k+1])/2),r:4,fill:css('--card'),stroke:css('--ink-3'),'stroke-width':1.5,'stroke-dasharray':'2 2'},svg)});
-  });
-  const hit=el('rect',{x:pl,y:pt,width:W-pl-pr,height:H-pt-pb,fill:'transparent'},svg);
+    if(s.area)el('path',{d:ks.map((k,i)=>(i?'L':'M')+X(k)+','+Y(s.v[k])).join('')+`L${X(ks[ks.length-1])},${Y(o.y0)}L${X(ks[0])},${Y(o.y0)}Z`,fill:css(s.c),opacity:.1},svg);
+    el('path',{d:ks.map((k,i)=>(i?'L':'M')+X(k)+','+Y(s.v[k])).join(''),stroke:css(s.c),'stroke-width':s.w||2,fill:'none','stroke-linejoin':'round','stroke-linecap':'round',opacity:s.dim?0.35:1},svg);
+    ks.forEach((k,i)=>{const e=i===ks.length-1;if(!e&&(s.dim||(narrow&&o.series.length>2)))return;el('circle',{cx:X(k),cy:Y(s.v[k]),r:e?4.5:3,fill:css(s.c),stroke:css('--sheet'),'stroke-width':2},svg)});
+    if(s.label){const k=ks[ks.length-1];el('text',{x:X(k)+7,y:Y(s.v[k])+4+(s.dy||0),fill:css('--ink'),'font-size':12,'font-weight':600,'font-family':css('--font')},svg).textContent=s.label}});
   const cross=el('line',{y1:pt,y2:H-pb,stroke:css('--ink-3'),'stroke-width':1,opacity:0},svg);
-  const mv=e=>{const r=svg.getBoundingClientRect();const sx=(e.clientX-r.left)/r.width*W;const k=Math.round(o.x0+(sx-pl)/(W-pl-pr)*(o.x1-o.x0));
-    const av=o.series.filter(s=>s.v[k]!=null);if(!av.length||k<0||k>8){cross.setAttribute('opacity',0);T.hide();return}
-    cross.setAttribute('x1',X(k));cross.setAttribute('x2',X(k));cross.setAttribute('opacity',.5);
-    T.show(X(k)/W*r.width,Y(Math.max(...av.map(s=>s.v[k])))/H*r.height,`<b>${M[k]} 2026</b><br>`+av.map(s=>`${s.name}: <span class="num">${s.v[k].toFixed(2)}%</span>`).join('<br>'))};
-  hit.addEventListener('pointermove',mv);hit.addEventListener('pointerdown',mv);hit.addEventListener('pointerleave',()=>{cross.setAttribute('opacity',0);T.hide()});
+  const show=k=>{const av=o.series.filter(s=>s.v[k]!=null);if(!av.length)return T.hide();const r=svg.getBoundingClientRect();cross.setAttribute('x1',X(k));cross.setAttribute('x2',X(k));cross.setAttribute('opacity',.5);
+    T.show(X(k)/W*r.width,Y(Math.max(...av.map(s=>s.v[k])))/H*r.height,`<b>${M[k]} 2026</b><br>`+av.map(s=>`${s.name}: <span class="ltr">${s.v[k].toFixed(2)}%</span>`).join('<br>'))};
+  const hit=el('rect',{x:pl,y:pt,width:W-pl-pr,height:H-pt-pb,fill:'transparent'},svg);
+  const pick=e=>{const r=svg.getBoundingClientRect();const k=Math.round(o.x0+((e.clientX-r.left)/r.width*W-pl)/(W-pl-pr)*(o.x1-o.x0));if(k>=0&&k<=8)show(k)};
+  hit.addEventListener('pointermove',pick);hit.addEventListener('pointerdown',pick);hit.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'){cross.setAttribute('opacity',0);T.hide()}});
+  let ki=8;svg.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const ks=SRC;let i=ks.indexOf(ki);if(i<0)i=ks.length-1;
+    if(e.key==='ArrowRight'||e.key==='End')i=e.key==='End'?ks.length-1:Math.min(ks.length-1,i+1);else i=e.key==='Home'?0:Math.max(0,i-1);ki=ks[i];show(ki)});
+  svg.addEventListener('focus',()=>show(ki));svg.addEventListener('blur',()=>{cross.setAttribute('opacity',0);T.hide()});
+  srTable(box,o.label,['الشهر',...o.series.map(s=>s.name)],SRC.map(k=>[M[k],...o.series.map(s=>s.v[k]!=null?s.v[k].toFixed(2)+'%':'—')]));
 }
-function drawOverall(){
-  lineChart('c-overall',{series:[{name:'المشروع',c:'--site',w:2.5,v:overall,gaps:[6],area:1,label:'29.35%'}],x0:0,x1:88,y0:0,y1:100,yt:[0,25,50,75,100],
-    xt:[[0,'2026'],[12,'2027'],[24,'2028'],[36,'2029'],[48,'2030'],[60,'2031'],[72,'2032'],[84,'2033']],
-    xtN:[[0,'2026'],[24,'2028'],[48,'2030'],[72,'2032']],
-    proj:[{a:8,ay:29.35,b:77,by:100,c:'--s1'},{a:8,ay:29.35,b:85,by:100,c:'--s2'}]});
+function drawRing(){const s=$('#ring');s.innerHTML='';const R=50,C=2*Math.PI*R;
+  el('circle',{cx:60,cy:60,r:R,fill:'none',stroke:css('--h0'),'stroke-width':12},s);
+  el('circle',{cx:60,cy:60,r:R,fill:'none',stroke:css('--site'),'stroke-width':12,'stroke-linecap':'round','stroke-dasharray':`${C*.2935} ${C}`,transform:'rotate(-90 60 60)'},s)}
+function drawOverall(){lineChart('c-overall',{label:'نسبة إنجاز المشروع من يناير إلى سبتمبر 2026',series:[{name:'المشروع',c:'--site',w:2.5,v:overall,area:1,label:'29.35%'}],gaps:[6],x0:0,x1:8,y0:15,y1:35,yt:[15,20,25,30,35],xt:[0,1,2,3,4,5,6,7,8].map(k=>[k,M[k]]),xtN:[[0,'يناير'],[3,'أبريل'],[6,'يوليو'],[8,'سبتمبر']]})}
+function drawPhases(){
+  $('#phs').innerHTML=phases.map(p=>`<div class="phc" style="--c:var(${p.c})"><span class="n">${p.name} <small>· ${p.units} فيلا</small></span><span class="v"><span class="ltr">${p.v[8].toFixed(1)}%</span></span><div class="pbar"><b style="width:${p.v[8]}%"></b></div><span class="d">+${(p.v[8]-p.v[0]).toFixed(1)}% من يناير</span></div>`).join('');
+  const dy={1:0,2:-2,3:6,4:0};
+  lineChart('c-phases',{label:'نسبة إنجاز المراحل الأربع',series:phases.map(p=>({name:p.name,c:p.c,v:p.v,label:'م'+p.id,dy:dy[p.id]})),gaps:[6],x0:0,x1:8,y0:0,y1:70,yt:[0,20,40,60],xt:[0,1,2,3,4,5,6,7,8].map(k=>[k,M[k].slice(0,5)]),xtN:[[0,'يناير'],[4,'مايو'],[8,'سبتمبر']]});
 }
 function drawPace(){
   const box=$('#c-pace');box.querySelector('svg')?.remove();const T=tipper(box);
   const d=[['يناير','فبراير',0.94],['فبراير','مارس',1.58],['مارس','أبريل',1.16],['أبريل','مايو',0.55],['مايو','يونيو',1.18],['يونيو','أغسطس',0.92,1],['أغسطس','سبتمبر',0.91]];
-  const W=Math.max(280,box.clientWidth),narrow=W<520,H=narrow?200:230,pl=34,pr=6,pt=20,pb=34,max=1.8;
-  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,direction:'ltr'});box.insertBefore(svg,box.firstChild);
+  const W=Math.max(260,box.clientWidth),narrow=W<480,H=narrow?200:220,pl=34,pr=6,pt=22,pb=32,max=1.8;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,direction:'ltr',role:'img','aria-label':'الزيادة الشهرية في نسبة المشروع'});box.insertBefore(svg,box.firstChild);
   const Y=v=>H-pb-v/max*(H-pt-pb),bw=(W-pl-pr)/d.length;
-  [0,0.5,1,1.5].forEach(v=>{el('line',{x1:pl,x2:W-pr,y1:Y(v),y2:Y(v),class:'grid'},svg);el('text',{x:pl-6,y:Y(v)+4,'text-anchor':'end',class:'ax'},svg).textContent=v});
-  d.forEach(([a,b,v,g],i)=>{const w=Math.min(36,bw*.6),x=pl+i*bw+(bw-w)/2,late=i>=3;
-    el('path',{d:`M${x},${Y(0)}V${Y(v)+5}Q${x},${Y(v)} ${x+5},${Y(v)}H${x+w-5}Q${x+w},${Y(v)} ${x+w},${Y(v)+5}V${Y(0)}Z`,fill:css(late?'--s2':'--s1'),opacity:g?.6:1},svg);
-    el('text',{x:x+w/2,y:Y(v)-6,'text-anchor':'middle',fill:css('--ink'),'font-size':11,'font-weight':600,'font-family':css('--f')},svg).textContent=v.toFixed(2);
-    el('text',{x:x+w/2,y:H-10,'text-anchor':'middle',class:'ax'},svg).textContent=narrow?b.slice(0,3):b;
+  [0,0.5,1,1.5].forEach(v=>{el('line',{x1:pl,x2:W-pr,y1:Y(v),y2:Y(v),class:'gl'},svg);el('text',{x:pl-6,y:Y(v)+4,'text-anchor':'end',class:'ax'},svg).textContent=v});
+  d.forEach(([a,b,v,g],i)=>{const w=Math.min(34,bw*.62),x=pl+i*bw+(bw-w)/2,late=i>=3;
+    el('path',{d:`M${x},${Y(0)}V${Y(v)+4}Q${x},${Y(v)} ${x+4},${Y(v)}H${x+w-4}Q${x+w},${Y(v)} ${x+w},${Y(v)+4}V${Y(0)}Z`,fill:css(late?'--s2':'--s1'),opacity:g?.55:1},svg);
+    el('text',{x:x+w/2,y:Y(v)-6,'text-anchor':'middle',fill:css('--ink'),'font-size':12,'font-weight':600,'font-family':css('--font')},svg).textContent=v.toFixed(2);
+    if(!narrow||i%2===0||i===d.length-1)el('text',{x:x+w/2,y:H-8,'text-anchor':'middle',class:'ax'},svg).textContent=b;
     const h=el('rect',{x:pl+i*bw,y:pt,width:bw,height:H-pt-pb,fill:'transparent'},svg);
-    const sh=()=>{const r=svg.getBoundingClientRect();T.show((x+w/2)/W*r.width,Y(v)/H*r.height,`من ${a} إلى ${b}<br>زادت <span class="num">${v.toFixed(2)}%</span>${g?'<br>(متوسط شهرين)':''}`)};
-    h.addEventListener('pointerenter',sh);h.addEventListener('pointerdown',sh);h.addEventListener('pointerleave',T.hide)});
-}
-function drawPhases(){
-  $('#phs').innerHTML=phases.map(p=>`<div class="ph" style="--c:var(${p.c})"><span class="n">${p.name} <small>· ${p.units} فيلا</small></span><span class="v num">${p.v[8].toFixed(1)}%</span><div class="pbar"><b style="width:${p.v[8]}%"></b></div><span class="d">+${(p.v[8]-p.v[0]).toFixed(1)}% من يناير</span></div>`).join('');
-  lineChart('c-phases',{series:phases.map(p=>({name:p.name,c:p.c,v:p.v,label:p.v[8].toFixed(0)+'%'})),x0:0,x1:8,y0:0,y1:70,yt:[0,20,40,60],
-    xt:[0,1,2,3,4,5,6,7,8].map(k=>[k,M[k]]),xtN:[[0,'يناير'],[3,'أبريل'],[5,'يونيو'],[8,'سبتمبر']]});
+    const sh=()=>{const r=svg.getBoundingClientRect();T.show((x+w/2)/W*r.width,Y(v)/H*r.height,`من ${a} إلى ${b}<br>زادت <span class="ltr">${v.toFixed(2)}%</span>${g?'<br>(متوسط شهرين، يوليو بلا نشرة)':''}`)};
+    h.addEventListener('pointerenter',sh);h.addEventListener('pointerdown',sh);h.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')T.hide()})});
+  srTable(box,'الزيادة الشهرية',['الفترة','الزيادة'],d.map(([a,b,v])=>[`${a} إلى ${b}`,v.toFixed(2)+'%']));
 }
 
-/* tiles */
-function spark(b){const W=120,H=30,vs=b.v.map((v,i)=>[SRC[i],v]).filter(x=>x[1]!=null);const lo=Math.min(...vs.map(x=>x[1]))-1,hi=Math.max(...vs.map(x=>x[1]))+1;
-  const X=k=>k/8*(W-4)+2,Y=v=>H-3-(v-lo)/(hi-lo)*(H-6);
-  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" direction="ltr"><path d="${vs.map((x,i)=>(i?'L':'M')+X(x[0])+','+Y(x[1])).join('')}" fill="none" stroke="var(--site)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`}
-function drawTiles(){
-  $('#tiles').innerHTML=phases.map(p=>`<div class="grp" style="--c:var(${p.c})"><h3><i></i>${p.name} · ${p.v[8].toFixed(1)}%</h3><div class="tiles">`+
-    blocks.filter(b=>b.p===p.id).map(b=>{const [sc,sl]=status(b);return `<button class="tile ${b.b===mine?'mine':''}" type="button" data-b="${b.b}"><span class="heat" style="background:var(${shade(last(b))})"></span><span class="top"><span class="nm">بلوك ${b.b}</span>${b.b===mine?'<span class="mine-tag">بلوكي</span>':`<span class="u">${b.u} فيلا</span>`}</span><span class="v num">${last(b).toFixed(1)}%</span>${spark(b)}<span class="ft"><span class="chip c-${sc}"><i></i>${sl}</span></span></button>`}).join('')+'</div></div>').join('');
-  document.querySelectorAll('.tile').forEach(t=>t.addEventListener('click',()=>openSheet(+t.dataset.b,t)));
-  const mb=$('#mybar');
-  if(mine){const b=blocks.find(x=>x.b===mine);const m=eta(b);mb.innerHTML=`<span>بلوكك: <b>بلوك ${mine}</b> · <span class="num">${last(b).toFixed(1)}%</span> · ${m==null?'ما نقدر نتوقع موعد اكتماله':'يكتمل تقريباً '+ym(m)}</span><button type="button">التفاصيل</button>`;mb.querySelector('button').onclick=e=>openSheet(mine,e.target)}
-  else mb.innerHTML='<span>اضغط على بلوكك واختر <b>"هذا بلوكي"</b> عشان يظهر لك هنا كل ما تفتح الصفحة.</span>';
+/* ================= my block ================= */
+function ladderHTML(n){return `<div class="ladder" role="img" aria-label="المرحلة الحالية: ${STAGE_N[STAGE[n]-1]}">${STAGE_N.map((x,i)=>`<i class="${i+1<STAGE[n]?'done':i+1===STAGE[n]?'now':''}"></i>`).join('')}</div>`}
+function drawMine(){
+  const body=$('#mine-body'),take=$('#mine-take');
+  const grid=`<div class="blockgrid" id="mGrid">${blocks.map(b=>`<button type="button" data-b="${b.b}" aria-pressed="${b.b===S.block}">${b.b}</button>`).join('')}</div>`;
+  if(!S.block){take.textContent='اختر بلوكك عشان تشوف نسبته وحالته ومتى يُتوقع يكتمل.';body.innerHTML=`<div class="mine-pick">${grid}</div>`}
+  else{const b=blocks.find(x=>x.b===S.block),ph=phases[b.p-1],[sc,sl,sy]=status(b),q=MC[b.b],ru=REUSE.find(r=>r[0]===b.b);
+    take.innerHTML=`بلوك ${b.b}: ${chip(sc,sl,sy)}`;
+    body.innerHTML=`<div class="mhead"><span class="mbig">${pct(last(b))}</span><span class="note">${ph.name} · ${b.u} فيلا · نشرة سبتمبر</span></div>
+     <div class="mmeta">
+      <div class="mm"><span class="k">يكتمل تقريباً</span><span class="v">${eta(b)}${stuck(b)?'':`<small>بين ${ym(q[0])} و${ym(q[2])}</small>`}</span></div>
+      <div class="mm"><span class="k">سرعته آخر 3 أشهر</span><span class="v" style="color:var(--${recent(b)>=early(b)?'good':'crit'})"><span class="ltr">${recent(b).toFixed(1)}%</span> شهرياً<small>كانت ${early(b).toFixed(1)}% بداية السنة</small></span></div>
+      <div class="mm"><span class="k">أشهر بدون حركة</span><span class="v">${stalls(b).filter(Boolean).length} من ${stalls(b).length}</span></div>
+      <div class="mm"><span class="k">الشغل الحالي</span><span class="v">${STAGE_N[STAGE[b.b]-1]}</span></div>
+     </div>
+     <div><div class="ladkey" aria-hidden="true">${STAGE_N.map(x=>`<span>${x}</span>`).join('')}</div>${ladderHTML(b.b)}</div>
+     ${ru?`<div class="warnbox"><b>صور مكررة:</b> نشرة ${M[ru[2]]} استخدمت صوراً من نشرة ${M[ru[1]]} لهذا البلوك.</div>`:''}
+     <div class="row"><button class="btn" type="button" id="mDetail">التفاصيل وصفحات النشرات</button><button class="btn ghost" type="button" id="mShare">شارك رابط بلوكي</button></div>
+     <details class="more"><summary>غيّر البلوك</summary>${grid}</details>`;
+    $('#mDetail').onclick=e=>openBlock(b.b,e.currentTarget);
+    $('#mShare').onclick=async()=>{const u=new URL(location.href);u.searchParams.set('block',b.b);u.hash='p-mine';toast(await copy(u.toString())?'تم نسخ رابط بلوكك':'ما قدرنا ننسخ، انسخ الرابط من شريط العنوان')};
+  }
+  body.querySelectorAll('[data-b]').forEach(x=>x.onclick=()=>setBlock(+x.dataset.b));
+  digits(body);digits(take);
 }
-function vAt(b,k){const i=SRC.indexOf(k);if(b.v[i]!=null)return b.v[i];for(let j=i-1;j>=0;j--)if(b.v[j]!=null)return b.v[j];return null}
-const early=b=>(b.v[3]-b.v[0])/3, recent=b=>(last(b)-vAt(b,5))/3;
-function stalls(b){const vv=SRC.map(k=>vAt(b,k));return vv.slice(1).map((v,i)=>v-vv[i]<0.5)}
-function drawDeep(){
-  // trust
-  $('#trustL').innerHTML=phases.map(p=>{const gaps=SRC.map(k=>{const bs=blocks.filter(b=>b.p===p.id);const w=bs.reduce((a,b)=>a+b.u*vAt(b,k),0)/bs.reduce((a,b)=>a+b.u,0);return p.v[k]-w});
-    const lab={1:['crit','فرق كبير من مايو'],2:['good','متطابقة'],3:['ser','الفرق يكبر'],4:['ser','متذبذبة']}[p.id];
-    return `<div class="tr"><div class="tr-h"><b>${p.name}</b><span class="chip c-${lab[0]}"><i></i>${lab[1]}</span></div><div class="gapbars">${gaps.map((g,i)=>{const h=Math.min(48,Math.abs(g)*5);const c=Math.abs(g)<3?'var(--ink-3)':(g>0?'var(--crit)':'var(--s1)');return `<div class="gb" title="${M[SRC[i]]}: ${g>0?'+':''}${g.toFixed(1)}%"><i style="background:${c};${g>=0?`bottom:50%;height:${h}%`:`top:50%;height:${h}%`}"></i><span>${M[SRC[i]].slice(0,3)}</span></div>`}).join('')}</div><div class="gapax"></div><span class="note">الفرق في سبتمبر: <b class="num">${gaps[7]>0?'+':''}${gaps[7].toFixed(1)}%</b> · أكبر فرق: <b class="num">${Math.max(...gaps.map(Math.abs)).toFixed(1)}%</b></span></div>`}).join('');
-  // reuse
-  $('#reuseL').innerHTML=REUSE.map(([b,a,c,n,f])=>`<figure class="ru" style="margin:0"><div class="pair"><span>نشرة ${M[c]}</span><span>نشرة ${M[a]}</span></div><button type="button" data-src="${f}" data-cap="بلوك ${b} · نفس الصورة في نشرة ${M[a]} ونشرة ${M[c]}"><img loading="lazy" src="${f}" alt="صورة بلوك ${b} المكررة في نشرتي ${M[a]} و${M[c]}"></button><figcaption class="cap"><b>بلوك ${b}</b><span>${n>1?n+' صور مكررة':'صورة مكررة'} بين ${M[a]} و${M[c]}</span></figcaption></figure>`).join('');
-  $('#reuseL').querySelectorAll('button').forEach(g=>g.addEventListener('click',()=>openLb(g.dataset.src,g.dataset.cap)));
-  $('#repL').innerHTML=REP.map(([t,q,w])=>`<div class="rp"><b>${t}</b><q dir="auto">${q}</q><span>ظهرت في: ${w}</span></div>`).join('');
-  // ladder
-  $('#ladder').innerHTML=[...blocks].sort((a,b)=>STAGE[b.b]-STAGE[a.b]||last(b)-last(a)).map(b=>`<button class="lad ${b.b===mine?'mine':''}" type="button" data-b="${b.b}"><span>بلوك ${b.b}</span><span class="steps6">${STAGE_N.map((n,i)=>`<i class="${i+1<STAGE[b.b]?'done':i+1===STAGE[b.b]?'now':''}" title="${n}"></i>`).join('')}</span></button>`).join('');
-  // speed
-  const sp=blocks.map(b=>({b,e:early(b),r:recent(b)})).sort((x,y)=>(y.r-y.e)-(x.r-x.e));const mx=4;
-  $('#spd').innerHTML=sp.map(({b,e,r})=>{const d=r-e;const w=Math.min(50,Math.abs(d)/mx*50);const c=d>=0?'var(--good)':'var(--crit)';
-    return `<button class="sp ${b.b===mine?'mine':''}" type="button" data-b="${b.b}"><span>بلوك ${b.b}</span><span class="sp-t"><span class="mid"></span><i style="background:${c};${d>=0?`left:50%;width:${w}%`:`right:50%;width:${w}%`}"></i></span><span class="sp-v">من <span class="num">${e.toFixed(1)}%</span> إلى <span class="num" style="color:${c};font-weight:700">${r.toFixed(1)}%</span></span></button>`}).join('');
-  // stall
-  const st=blocks.map(b=>({b,s:stalls(b)})).sort((x,y)=>y.s.filter(Boolean).length-x.s.filter(Boolean).length);
-  $('#stallL').innerHTML=st.map(({b,s})=>`<button class="sp ${b.b===mine?'mine':''}" type="button" data-b="${b.b}"><span>بلوك ${b.b}</span><span class="stag">${s.map((x,i)=>`<i class="${x?'s':''}" title="${M[SRC[i+1]]}"></i>`).join('')}</span><span class="sp-v">${s.filter(Boolean).length} من ${s.length}</span></button>`).join('');
-  document.querySelectorAll('#ladder .lad,#spd .sp,#stallL .sp').forEach(r=>r.addEventListener('click',()=>openSheet(+r.dataset.b,r)));
+function setBlock(n){S.block=n;S.welcomed=true;save();syncURL();$('#welcome').hidden=true;drawMine();drawBlocks();drawBump?.();toast('بلوك '+n+' صار بلوكك')}
+
+/* ================= block detail drawer ================= */
+function openBlock(n,from){
+  const b=blocks.find(x=>x.b===n),ph=phases[b.p-1],[sc,sl,sy]=status(b),q=MC[n];
+  $('#dBlockT').textContent='بلوك '+n;$('#dBlockChip').innerHTML=chip(sc,sl,sy);$('#dBlockSub').textContent=`${ph.name} · ${b.u} فيلا`;
+  $('#dBlockB').innerHTML=`<div class="ms"><div class="mm"><span class="k">نسبة الإنجاز</span><span class="v">${pct(last(b))}</span></div><div class="mm"><span class="k">يكتمل تقريباً</span><span class="v" style="font-size:var(--t-md)">${eta(b)}</span></div><div class="mm"><span class="k">السرعة الآن</span><span class="v"><span class="ltr">${recent(b).toFixed(1)}%</span></span></div><div class="mm"><span class="k">أشهر بدون حركة</span><span class="v">${stalls(b).filter(Boolean).length} / ${stalls(b).length}</span></div></div>
+   <div><div class="ladkey" aria-hidden="true">${STAGE_N.map(x=>`<span>${x}</span>`).join('')}</div>${ladderHTML(n)}</div>
+   <div class="chart" id="c-sheet"><div class="tip" role="status"></div></div>
+   <div class="legend"><span style="color:var(--site)"><i></i><span style="color:var(--ink-2)">بلوك ${n}</span></span><span style="color:var(${ph.c})"><i></i><span style="color:var(--ink-2)">${ph.name} حسب النشرة</span></span></div>
+   <div class="log"><b style="color:var(--ink)">وش قالت النشرات</b>${Object.entries(b.log).map(([k,t])=>`<div><span>${k}</span><p>${t}</p></div>`).join('')}</div>
+   <b style="font-size:var(--t-sm)">صفحة البلوك في كل نشرة</b>
+   <div class="gal">${SRC.map((mo,i)=>`<button type="button" data-src="img/b${n}-m${mo}.jpg" data-cap="بلوك ${n} · نشرة ${M[mo]} 2026"><img loading="lazy" src="img/b${n}-m${mo}.jpg" alt="صفحة بلوك ${n} في نشرة ${M[mo]}"><span>${M[mo]}${b.v[i]!=null?' · '+b.v[i].toFixed(1)+'%':''}</span></button>`).join('')}</div>
+   <button class="btn ${S.block===n?'ghost':''}" type="button" id="dSetMine">${S.block===n?'✓ هذا بلوكي':'اجعله بلوكي'}</button>`;
+  openDrawer('#dBlock',from);
+  const v={},pv={};SRC.forEach((k,i)=>{v[k]=b.v[i];pv[k]=ph.v[k]});
+  requestAnimationFrame(()=>{lineChart('c-sheet',{label:'نسبة بلوك '+n+' شهراً بشهر',series:[{name:ph.name,c:ph.c,w:1.5,v:pv,dim:1},{name:'بلوك '+n,c:'--site',w:2.5,v,area:1,label:last(b).toFixed(0)+'%'}],gaps:[6],x0:0,x1:8,y0:0,y1:70,yt:[0,20,40,60],h:200,xt:[[0,'يناير'],[3,'أبريل'],[6,'يوليو'],[8,'سبتمبر']]});digits($('#dBlockB'))});
+  $('#dBlockB').querySelectorAll('.gal button').forEach(g=>g.onclick=()=>openLb(g.dataset.src,g.dataset.cap));
+  $('#dSetMine').onclick=()=>{setBlock(n);openBlock(n,lastF)};
+}
+
+/* ================= blocks panel with views ================= */
+const VIEWS=[['progress','الإنجاز','نسبة كل بلوك في سبتمبر، والخط الصغير يوضح تقدمه من يناير.'],['stage','وين وصل','المرحلة الحقيقية حسب كلام نشرة سبتمبر. المربع المخطط هو الشغل الجاري.'],['speed','السرعة','سرعة آخر 3 أشهر مقارنة ببداية السنة. الأخضر صار أسرع، والأحمر صار أبطأ.'],['stall','التوقف','كل مربع شهر. الأحمر يعني البلوك زاد أقل من 0.5% في ذلك الشهر.'],['eta','متى يكتمل','جربنا آلاف الاحتمالات لسرعة كل بلوك. النقطة هي الأقرب للواقع، والشريط حولها نطاق التفاؤل والتشاؤم.'],['rank','الترتيب','ترتيب كل بلوك بين البلوكات شهراً بشهر. رقم 1 الأكثر إنجازاً.']];
+let view='progress';try{view=sessionStorage.getItem('alb-view')||view}catch(e){}
+function spark(b){const W=120,H=32,vs=b.v.map((v,i)=>[SRC[i],v]).filter(x=>x[1]!=null);const lo=Math.min(...vs.map(x=>x[1]))-1,hi=Math.max(...vs.map(x=>x[1]))+1;const X=k=>k/8*(W-4)+2,Y=v=>H-3-(v-lo)/(hi-lo)*(H-6);
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${vs.map((x,i)=>(i?'L':'M')+X(x[0])+','+Y(x[1])).join('')}" fill="none" stroke="var(--site)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`}
+function row(b,mid,val){const nm=`<span class="nm">بلوك ${b.b}<small>${b.b===S.block?'بلوكي':b.u+' فيلا'}</small></span>`;return `<button class="br ${b.b===S.block?'mine':''}" type="button" data-b="${b.b}" aria-label="تفاصيل بلوك ${b.b}">${nm}<span style="min-width:0">${mid}</span><span class="val">${val}</span></button>`}
+function grouped(sortFn,fn){return phases.map(p=>`<div class="grp" style="--c:var(${p.c})"><i></i>${p.name}</div>`+blocks.filter(b=>b.p===p.id).sort(sortFn||(()=>0)).map(fn).join('')).join('')}
+function drawBlocks(){
+  $('#seg').innerHTML=VIEWS.map(([k,l])=>`<button type="button" role="tab" aria-selected="${k===view}" data-v="${k}" tabindex="${k===view?0:-1}">${l}</button>`).join('');
+  $('#seg').querySelectorAll('button').forEach(b=>b.onclick=()=>{view=b.dataset.v;try{sessionStorage.setItem('alb-view',view)}catch(e){}drawBlocks();$('#seg [aria-selected="true"]').focus()});
+  $('#seg').onkeydown=e=>{const i=VIEWS.findIndex(v=>v[0]===view);if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const n=(i+(e.key==='ArrowLeft'?1:-1)+VIEWS.length)%VIEWS.length;view=VIEWS[n][0];drawBlocks();$('#seg [aria-selected="true"]').focus()}};
+  $('#viewNote').textContent=VIEWS.find(v=>v[0]===view)[2];
+  const bv=$('#bview');let h='';
+  if(view==='progress')h=`<div class="bt">${grouped((a,b)=>last(b)-last(a),b=>{const[sc,sl,sy]=status(b);return row(b,spark(b),`${pct(last(b))}<small>${sl}</small>`)})}</div>`;
+  if(view==='stage')h=`<div class="ladkey" style="padding-inline:calc(76px + var(--s-5)) var(--s-2)" aria-hidden="true">${STAGE_N.map(x=>`<span>${x}</span>`).join('')}</div><div class="bt">${[...blocks].sort((a,b)=>STAGE[b.b]-STAGE[a.b]||last(b)-last(a)).map(b=>row(b,ladderHTML(b.b),'')).join('')}</div>`;
+  if(view==='speed'){const mx=4;h=`<div class="bt">${blocks.map(b=>({b,d:recent(b)-early(b)})).sort((x,y)=>y.d-x.d).map(({b,d})=>{const w=Math.min(50,Math.abs(d)/mx*50),c=d>=0?'var(--good-m)':'var(--crit-m)';return row(b,`<span class="trk" style="display:block"><span class="mid"></span><i style="background:${c};${d>=0?`left:50%;width:${w}%`:`right:50%;width:${w}%`}"></i></span>`,`<span class="ltr" style="color:var(--${d>=0?'good':'crit'})">${recent(b).toFixed(1)}%</span><small>كانت ${early(b).toFixed(1)}%</small>`)}).join('')}</div>`}
+  if(view==='stall')h=`<div class="bt">${blocks.map(b=>({b,s:stalls(b)})).sort((x,y)=>y.s.filter(Boolean).length-x.s.filter(Boolean).length).map(({b,s})=>row(b,`<span class="stag" role="img" aria-label="${s.filter(Boolean).length} أشهر بدون حركة">${s.map((x,i)=>`<i class="${x?'s':''}" title="${M[SRC[i+1]]}"></i>`).join('')}</span>`,`${s.filter(Boolean).length} من ${s.length}`)).join('')}</div>`;
+  if(view==='eta'){const max=48,pos=m=>Math.min(100,m/max*100);h=`<div class="proj-ax" style="padding-inline:calc(76px + var(--s-5)) 96px"><span>اليوم</span><span>2027</span><span>2028</span><span>+2029</span></div><div class="bt">${[...blocks].sort((a,b)=>MC[a.b][1]-MC[b.b][1]).map(b=>{const q=MC[b.b],st=stuck(b),c=st?'var(--crit-m)':q[1]>30?'var(--ser-m)':'var(--site)';
+    return row(b,`<span class="trk" style="display:block">${st?`<i style="left:0;width:100%;background:repeating-linear-gradient(45deg,var(--crit-m) 0 4px,transparent 4px 8px);opacity:.6"></i>`:`<i style="left:${pos(q[0])}%;width:${Math.max(2,pos(q[2])-pos(q[0]))}%;background:${c};opacity:.35"></i><span class="dot" style="left:${pos(q[1])}%;background:${c}"></span>`}</span>`,eta(b))}).join('')}</div>`}
+  if(view==='rank')h=`<div class="bump-ctl" id="bumpCtl" aria-label="اختر بلوكاً لإبرازه"></div><div class="chart" id="c-bump"><div class="tip" role="status"></div></div>`;
+  bv.innerHTML=h;
+  bv.querySelectorAll('.br').forEach(r=>r.onclick=()=>openBlock(+r.dataset.b,r));
+  if(view==='rank')drawBump();
+  digits(bv);digits($('#viewNote'));
 }
 let bumpSel=null;
-function drawBump(){
-  const box=$('#c-bump');box.querySelector('svg')?.remove();const T=tipper(box);
-  const ranks={};SRC.forEach(k=>{const arr=blocks.map(b=>[b.b,vAt(b,k)??0]).sort((a,c)=>c[1]-a[1]);arr.forEach(([b],i)=>{(ranks[b]=ranks[b]||{})[k]=i+1})});
-  const W=Math.max(280,box.clientWidth),narrow=W<520,H=narrow?380:440,pl=narrow?30:40,pr=narrow?44:56,pt=12,pb=26;
-  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,direction:'ltr'});box.insertBefore(svg,box.firstChild);
+function drawBump(){const box=$('#c-bump');if(!box)return;box.querySelector('svg')?.remove();
+  const ranks={};SRC.forEach(k=>{blocks.map(b=>[b.b,vAt(b,k)??0]).sort((a,c)=>c[1]-a[1]).forEach(([b],i)=>{(ranks[b]=ranks[b]||{})[k]=i+1})});
+  const W=Math.max(260,box.clientWidth),narrow=W<520,H=narrow?380:440,pl=30,pr=46,pt=12,pb=26;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,direction:'ltr',role:'img','aria-label':'ترتيب البلوكات شهراً بشهر'});box.insertBefore(svg,box.firstChild);
   const X=k=>pl+k/8*(W-pl-pr),Y=r=>pt+(r-1)/15*(H-pt-pb);
-  [1,4,8,12,16].forEach(r=>el('text',{x:pl-8,y:Y(r)+4,'text-anchor':'end',class:'ax'},svg).textContent='#'+r);
-  [[0,'يناير'],[3,'أبريل'],[5,'يونيو'],[8,'سبتمبر']].forEach(([k,l])=>el('text',{x:X(k),y:H-6,'text-anchor':'middle',class:'ax'},svg).textContent=l);
-  const hi=bumpSel??mine;
-  blocks.forEach(b=>{const on=b.b===hi;const ks=SRC;const d=ks.map((k,i)=>(i?'L':'M')+X(k)+','+Y(ranks[b.b][k])).join('');
-    el('path',{d,fill:'none',stroke:on?css('--site'):css('--ink-3'),'stroke-width':on?3:1.2,opacity:on?1:(hi?0.25:0.55),'stroke-linejoin':'round'},svg);
-    const r8=ranks[b.b][8];el('text',{x:X(8)+6,y:Y(r8)+4,fill:on?css('--site'):css('--ink-2'),'font-size':11,'font-weight':on?700:400,'font-family':css('--f')},svg).textContent='ب'+b.b;
-    if(on)ks.forEach(k=>el('circle',{cx:X(k),cy:Y(ranks[b.b][k]),r:4,fill:css('--site'),stroke:css('--card'),'stroke-width':2},svg));
-  });
-  $('#bumpCtl').innerHTML=blocks.map(b=>`<button type="button" class="${b.b===hi?'on':''}" data-b="${b.b}">${b.b}</button>`).join('');
-  $('#bumpCtl').querySelectorAll('button').forEach(x=>x.onclick=()=>{bumpSel=+x.dataset.b===bumpSel?null:+x.dataset.b;drawBump()});
-  if(hi){const b=blocks.find(x=>x.b===hi);T.hide()}
-}
-function drawForecast(){
-  const rows=blocks.map(b=>({b,q:MC[b.b]})).sort((x,y)=>x.q[1]-y.q[1]);const max=48;const pos=m=>Math.min(100,m/max*100);
-  $('#fc').innerHTML=`<div class="fc-row" style="cursor:default;padding-block:0"><span></span><span class="ladkey" style="grid-template-columns:repeat(4,1fr);display:grid;direction:ltr"><span>اليوم</span><span>2027</span><span>2028</span><span>2029+</span></span><span></span></div>`+rows.map(({b,q})=>{const stuck=q[1]>120;const col=stuck?'var(--crit)':(q[1]>30?'var(--serious)':'var(--site)');
-    return `<button class="fc-row ${b.b===mine?'mine':''}" type="button" data-b="${b.b}"><span>بلوك ${b.b}</span><span class="fc-track" style="direction:ltr">${stuck?'<span class="fc-bar" style="width:100%;background:repeating-linear-gradient(45deg,var(--crit) 0 4px,transparent 4px 8px);opacity:.6"></span>':`<span class="fc-rng" style="left:${pos(q[0])}%;width:${Math.max(2,pos(q[2])-pos(q[0]))}%;background:${col}"></span><span class="fc-dot" style="left:${pos(q[1])}%;background:${col}"></span>`}</span><span class="fc-y">${stuck?'ما يُعرف':q[1]>max?'حوالي '+ym(q[1]).split(' ')[1]:ym(q[1])}</span></button>`}).join('');
-  document.querySelectorAll('.fc-row[data-b]').forEach(r=>r.addEventListener('click',()=>openSheet(+r.dataset.b,r)));
+  [1,4,8,12,16].forEach(r=>el('text',{x:pl-6,y:Y(r)+4,'text-anchor':'end',class:'ax'},svg).textContent='#'+r);
+  [[0,'يناير'],[4,'مايو'],[8,'سبتمبر']].forEach(([k,l])=>el('text',{x:X(k),y:H-6,'text-anchor':'middle',class:'ax'},svg).textContent=l);
+  const hi=bumpSel??S.block;
+  blocks.forEach(b=>{const on=b.b===hi;el('path',{d:SRC.map((k,i)=>(i?'L':'M')+X(k)+','+Y(ranks[b.b][k])).join(''),fill:'none',stroke:on?css('--site'):css('--ink-3'),'stroke-width':on?3:1.2,opacity:on?1:(hi?0.22:0.5),'stroke-linejoin':'round'},svg);
+    el('text',{x:X(8)+6,y:Y(ranks[b.b][8])+4,fill:on?css('--site'):css('--ink-2'),'font-size':12,'font-weight':on?700:400,'font-family':css('--font')},svg).textContent='ب'+b.b;
+    if(on)SRC.forEach(k=>el('circle',{cx:X(k),cy:Y(ranks[b.b][k]),r:4,fill:css('--site'),stroke:css('--sheet'),'stroke-width':2},svg))});
+  $('#bumpCtl').innerHTML=blocks.map(b=>`<button type="button" aria-pressed="${b.b===hi}" data-b="${b.b}">${b.b}</button>`).join('');
+  $('#bumpCtl').querySelectorAll('button').forEach(x=>x.onclick=()=>{bumpSel=+x.dataset.b===hi?null:+x.dataset.b;drawBump();$(`#bumpCtl [data-b="${x.dataset.b}"]`)?.focus()});
+  srTable(box,'ترتيب البلوكات',['البلوك',...SRC.map(k=>M[k])],blocks.map(b=>['بلوك '+b.b,...SRC.map(k=>'#'+ranks[b.b][k])]));
+  digits(box);
 }
 
-/* sheet */
-let lastFocus=null;
-function openSheet(n,from){
-  lastFocus=from||document.activeElement;const b=blocks.find(x=>x.b===n),ph=phases[b.p-1],m=eta(b),[sc,sl]=status(b);
-  const all=blocks.map(last).sort((a,c)=>c-a),rank=all.indexOf(last(b))+1;
-  $('#sh-title').textContent='بلوك '+n;$('#sh-chip').innerHTML=`<span class="chip c-${sc}"><i></i>${sl}</span>`;$('#sh-sub').textContent=`${ph.name} · ${b.u} فيلا`;
-  $('#sh-b').innerHTML=`<div class="ms"><div><span class="k">نسبة الإنجاز</span><div class="v num">${last(b).toFixed(2)}%</div></div><div><span class="k">يزيد كل شهر</span><div class="v num">${rate(b).toFixed(2)}%</div></div><div><span class="k">ترتيبه</span><div class="v num">${rank} / 16</div></div><div><span class="k">يكتمل تقريباً</span><div class="v" style="font-size:15px">${m==null?'ما نقدر نتوقع':ym(m)}</div></div></div>
-   <div><b style="font-size:14px">وين وصل؟</b><div class="steps6" style="margin-top:6px">${STAGE_N.map((x,i)=>`<i class="${i+1<STAGE[n]?'done':i+1===STAGE[n]?'now':''}"></i>`).join('')}</div><p class="note" style="margin-top:4px">الشغل الحالي: <b>${STAGE_N[STAGE[n]-1]}</b></p></div>
-   <div class="ms"><div><span class="k">السرعة بداية السنة</span><div class="v num">${early(b).toFixed(1)}%</div></div><div><span class="k">السرعة آخر 3 أشهر</span><div class="v num" style="color:${recent(b)>=early(b)?'var(--good)':'var(--crit)'}">${recent(b).toFixed(1)}%</div></div><div><span class="k">أشهر بدون حركة</span><div class="v num">${stalls(b).filter(Boolean).length} / ${stalls(b).length}</div></div><div><span class="k">نطاق الاكتمال</span><div class="v" style="font-size:13px">${MC[n][1]>120?'ما يُعرف':ym(MC[n][0])+'<br>إلى '+ym(MC[n][2])}</div></div></div>
-   ${REUSE.some(r=>r[0]===n)?`<div class="callout"><b>صور مكررة:</b> نشرة ${M[REUSE.find(r=>r[0]===n)[2]]} استخدمت صوراً من نشرة ${M[REUSE.find(r=>r[0]===n)[1]]} لهذا البلوك.</div>`:''}
-   <div class="chart" id="c-sheet"><div class="tip"></div></div>
-   <div class="legend"><span><i style="background:var(--site)"></i>بلوك ${n}</span><span><i style="background:var(${ph.c})"></i>${ph.name} حسب النشرة</span></div>
-   <div class="log"><b style="color:var(--ink)">وش قالت النشرات عن هذا البلوك</b>${Object.entries(b.log).map(([k,t])=>`<div><span>${k}</span><p>${t}</p></div>`).join('')}</div>
-   <div><b style="font-size:14px">صفحة البلوك في كل نشرة</b><p class="note">اسحب لتشوف الأشهر، واضغط على الصورة لتكبيرها.</p></div>
-   <div class="gal">${SRC.map((mo,i)=>`<button type="button" data-src="img/b${n}-m${mo}.jpg" data-cap="بلوك ${n} · نشرة ${M[mo]} 2026"><img loading="lazy" src="img/b${n}-m${mo}.jpg" alt="صفحة بلوك ${n} في نشرة ${M[mo]}"><span>${M[mo]}${b.v[i]!=null?' · '+b.v[i].toFixed(1)+'%':''}</span></button>`).join('')}</div>
-   <button class="setmine ${mine===n?'on':''}" type="button" id="setmine">${mine===n?'✓ هذا بلوكي':'هذا بلوكي'}</button>`;
-  const sh=$('#sheet');sh.hidden=false;requestAnimationFrame(()=>{sh.classList.add('on');$('#scrim').classList.add('on')});
-  document.body.style.overflow='hidden';
-  const v={},pv={};SRC.forEach((k,i)=>{v[k]=b.v[i];pv[k]=ph.v[k]});
-  requestAnimationFrame(()=>lineChart('c-sheet',{series:[{name:'بلوك '+n,c:'--site',w:2.5,v,area:1,label:last(b).toFixed(0)+'%'},{name:ph.name,c:ph.c,w:1.5,v:pv}],x0:0,x1:8,y0:0,y1:70,yt:[0,20,40,60],h:200,xt:[[0,'يناير'],[3,'أبريل'],[5,'يونيو'],[8,'سبتمبر']]}));
-  $('#sh-b').querySelectorAll('.gal button').forEach(g=>g.addEventListener('click',()=>openLb(g.dataset.src,g.dataset.cap)));
-  $('#setmine').onclick=()=>{mine=mine===n?null:n;try{mine?localStorage.setItem('alb-blk',mine):localStorage.removeItem('alb-blk')}catch(e){}drawTiles();drawForecast();drawDeep();drawBump();openSheet(n,lastFocus)};
-  $('#sh-x').focus({preventScroll:true});
-}
-function closeSheet(){const sh=$('#sheet');sh.classList.remove('on');$('#scrim').classList.remove('on');document.body.style.overflow='';setTimeout(()=>{if(!sh.classList.contains('on'))sh.hidden=true},300);lastFocus?.focus?.({preventScroll:true})}
-$('#sh-x').addEventListener('click',closeSheet);$('#scrim').addEventListener('click',closeSheet);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.querySelector('.lb'))closeSheet()});
-// swipe down to close on phones
-(()=>{let y0=null;const h=$('#sheet .sh-h');h.addEventListener('touchstart',e=>{y0=e.touches[0].clientY},{passive:true});h.addEventListener('touchend',e=>{if(y0!=null&&e.changedTouches[0].clientY-y0>60)closeSheet();y0=null})})();
-function openLb(src,cap){const d=document.createElement('div');d.className='lb';d.setAttribute('role','dialog');
-  d.innerHTML=`<img src="${src}" alt="${cap}"><div class="lbb"><span>${cap}</span><button type="button">إغلاق</button></div>`;
-  const close=()=>{d.remove();document.removeEventListener('keydown',esc)};const esc=e=>{if(e.key==='Escape'){e.stopPropagation();close()}};
-  d.addEventListener('click',e=>{if(e.target===d||e.target.tagName==='BUTTON')close()});document.addEventListener('keydown',esc,true);document.body.appendChild(d);d.querySelector('button').focus()}
-
-/* static parts */
-function drawStatic(){
-  $('#flags').innerHTML=flags.map(([s,l,t,p,e])=>`<article class="flag" style="--c:var(--${s})"><span class="chip c-${s}" style="align-self:flex-start"><i></i>${l}</span><h3>${t}</h3><p>${p}</p><div class="ev">${e}</div></article>`).join('');
-  $('#tl').innerHTML=tl.map(([m,t,g])=>`<div class="tl-i ${g?'gap':''}"><span class="m">${m}</span><p>${t}</p></div>`).join('');
+/* ================= deep panels ================= */
+function drawDeep(){
+  $('#trustL').innerHTML=phases.map(p=>{const gaps=SRC.map(k=>{const bs=blocks.filter(b=>b.p===p.id);return p.v[k]-bs.reduce((a,b)=>a+b.u*vAt(b,k),0)/bs.reduce((a,b)=>a+b.u,0)});
+    const lab={1:['crit','فرق كبير من مايو','■'],2:['good','متطابقة','✓'],3:['ser','الفرق يكبر','▲'],4:['ser','متذبذبة','▲']}[p.id];
+    return `<div class="tr"><div class="tr-h"><b>${p.name}</b>${chip(...lab)}</div><div class="gapbars" role="img" aria-label="الفرق في سبتمبر ${gaps[7].toFixed(1)}%">${gaps.map(g=>{const h=Math.min(48,Math.abs(g)*5),c=Math.abs(g)<3?'var(--ink-3)':g>0?'var(--crit-m)':'var(--s1)';return `<div class="gb"><i style="background:${c};${g>=0?`bottom:50%;height:${h}%`:`top:50%;height:${h}%`}"></i></div>`}).join('')}</div><div class="gmon" aria-hidden="true">${SRC.map(k=>`<span>${M[k].slice(0,3)}</span>`).join('')}</div><span class="note">الفرق في سبتمبر: <b class="ltr">${gaps[7]>0?'+':''}${gaps[7].toFixed(1)}%</b> · أكبر فرق: <b class="ltr">${Math.max(...gaps.map(Math.abs)).toFixed(1)}%</b></span></div>`}).join('');
+  $('#reuseL').innerHTML=REUSE.map(([b,a,c,n,f])=>`<figure class="ru"><div class="pair">${chip('warn','نشرة '+M[c],'●')}${chip('good','نشرة '+M[a],'●')}</div><button type="button" data-src="${f}" data-cap="بلوك ${b} · نفس الصورة في نشرة ${M[a]} ونشرة ${M[c]}"><img loading="lazy" width="808" height="300" src="${f}" alt="صورة بلوك ${b} المكررة في نشرتي ${M[a]} و${M[c]}"></button><figcaption><b>بلوك ${b}</b><span>${n>1?n+' صور مكررة':'صورة مكررة'}</span></figcaption></figure>`).join('');
+  $('#reuseL').querySelectorAll('button').forEach(g=>g.onclick=()=>openLb(g.dataset.src,g.dataset.cap));
+  $('#repL').innerHTML=REP.map(([t,q,w])=>`<div class="rp"><b>${t}</b><q dir="auto">${q}</q><span>ظهرت في: ${w}</span></div>`).join('');
+  const lab={crit:['crit','أولوية عالية','■'],ser:['ser','متوسطة','▲'],warn:['warn','بسيطة','●']};
+  const card=([s,t,p,e])=>`<article class="flag" style="--c:var(--${s}-m)">${chip(...lab[s])}<h3>${t}</h3><p>${p}</p><div class="ev">${e}</div></article>`;
+  const hi=flags.filter(f=>f[0]==='crit'),lo=flags.filter(f=>f[0]!=='crit');
+  $('#flagsHi').innerHTML=hi.map(card).join('');$('#flagsLo').innerHTML=lo.map(card).join('');$('#moreSum').textContent=`اعرض ${lo.length} نقاط أخرى (متوسطة وبسيطة)`;
+  $('#tl').innerHTML=tl.map(([m,t,g])=>`<div class="tl-i ${g?'gap':''}"><b>${m}</b><p>${t}</p></div>`).join('');
   $('#qs').innerHTML=qs.map(q=>`<li>${q}</li>`).join('');
-  const b=$('#copy');b.addEventListener('click',()=>{const txt='أسئلة بخصوص مشروع البورادا فيلا:\n'+qs.map((q,i)=>`${i+1}. ${q}`).join('\n');
-    navigator.clipboard?.writeText(txt).then(()=>{b.textContent='✓ تم النسخ';setTimeout(()=>b.textContent='نسخ الأسئلة',1800)}).catch(()=>{const r=document.createRange();r.selectNodeContents($('#qs'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='حدّد النص وانسخه'})});
+  const txt='أسئلة بخصوص مشروع البورادا فيلا:\n'+qs.map((q,i)=>`${i+1}. ${q}`).join('\n');
+  $('#wa').href='https://wa.me/?text='+encodeURIComponent(txt);
+  $('#copy').onclick=async()=>{const b=$('#copy span');if(await copy(txt)){b.textContent='✓ تم النسخ';toast('تم نسخ الأسئلة، الصقها في رسالتك')}else{const r=document.createRange();r.selectNodeContents($('#qs'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='حدّد النص وانسخه'}setTimeout(()=>b.textContent='نسخ الأسئلة',2200)};
 }
-/* nav highlight */
-function navSpy(){const links=[...document.querySelectorAll('[data-s]')];const ids=['summary','progress','blocks','notes','ask'];
-  const map={howto:'summary',pace:'progress',phases:'progress',stages:'blocks',speed:'blocks',stall:'blocks',ranks:'blocks',forecast:'blocks',trust:'notes',photos:'notes',texts:'notes',timeline:'notes',wafi:'ask'};
-  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const id=map[e.target.id]||e.target.id;links.forEach(a=>a.classList.toggle('on',a.dataset.s===id))}})},{rootMargin:'-45% 0px -50% 0px'});
-  document.querySelectorAll('main section[id]').forEach(s=>io.observe(s));}
 
-function charts(){drawRing();drawOverall();drawPace();drawPhases();drawBump()}
-drawStatic();drawTiles();drawForecast();drawDeep();charts();navSpy();
-let rt;const ro=new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(charts,120)});ro.observe(document.querySelector('main'));
-matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',charts);
-new MutationObserver(charts).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+/* ================= settings drawer ================= */
+function opts(id,name,list,cur,on){$(id).innerHTML=list.map(([v,l])=>`<label><input type="radio" name="${name}" id="${name}-${v}" value="${v}" ${v===cur?'checked':''}><span>${l}</span></label>`).join('');$(id).querySelectorAll('input').forEach(i=>i.onchange=()=>on(i.value))}
+function buildSettings(){
+  $('#setBlock').innerHTML='<option value="">بدون</option>'+blocks.map(b=>`<option value="${b.b}" ${b.b===S.block?'selected':''}>بلوك ${b.b}</option>`).join('');
+  $('#setBlock').onchange=e=>{const v=+e.target.value;if(v)setBlock(v);else{S.block=null;save();syncURL();drawMine();drawBlocks()}};
+  opts('#setTheme','th',[['light','فاتح'],['dark','داكن'],['auto','تلقائي']],S.theme,v=>{S.theme=v;save();applyLook();redraw()});
+  opts('#setSize','sz',[['s','صغير'],['m','متوسط'],['l','كبير']],S.size,v=>{S.size=v;save();applyLook();redraw()});
+  opts('#setDensity','dn',[['comfy','مريح'],['compact','مضغوط']],S.density,v=>{S.density=v;save();applyLook()});
+  opts('#setDigits','dg',[['latin','123'],['arab','١٢٣']],S.digits,v=>{S.digits=v;save();renderAll()});
+  const pl=$('#plist');
+  pl.innerHTML=S.order.map((id,i)=>`<div class="pi" draggable="true" data-id="${id}"><span class="handle" aria-hidden="true"><svg class="ico sm"><use href="#i-grip"/></svg></span><label><input type="checkbox" ${S.hidden.includes(id)?'':'checked'} ${id==='mine'?'disabled':''}> ${PANELS.find(p=>p[0]===id)[1]}</label><button class="mv" type="button" data-up aria-label="انقل ${PANELS.find(p=>p[0]===id)[1]} لأعلى" ${i===0?'disabled':''}><svg class="ico sm"><use href="#i-up"/></svg></button><button class="mv" type="button" data-dn aria-label="انقل ${PANELS.find(p=>p[0]===id)[1]} لأسفل" ${i===S.order.length-1?'disabled':''}><svg class="ico sm"><use href="#i-down"/></svg></button></div>`).join('');
+  const move=(id,d)=>{const i=S.order.indexOf(id),j=i+d;if(j<0||j>=S.order.length)return;[S.order[i],S.order[j]]=[S.order[j],S.order[i]];save();layoutPanels();buildSettings();pl.querySelector(`[data-id="${id}"] [${d<0?'data-up':'data-dn'}]`)?.focus()};
+  pl.querySelectorAll('.pi').forEach(r=>{const id=r.dataset.id;
+    r.querySelector('input').onchange=e=>{S.hidden=e.target.checked?S.hidden.filter(x=>x!==id):[...S.hidden,id];save();layoutPanels()};
+    r.querySelector('[data-up]').onclick=()=>move(id,-1);r.querySelector('[data-dn]').onclick=()=>move(id,1);
+    r.addEventListener('dragstart',e=>{r.classList.add('drag');e.dataTransfer.setData('text/plain',id)});r.addEventListener('dragend',()=>r.classList.remove('drag'));
+    r.addEventListener('dragover',e=>e.preventDefault());
+    r.addEventListener('drop',e=>{e.preventDefault();const from=e.dataTransfer.getData('text/plain');if(!from||from===id)return;S.order.splice(S.order.indexOf(from),1);S.order.splice(S.order.indexOf(id),0,from);save();layoutPanels();buildSettings()})});
+  $('#reset').onclick=()=>{const keep=S.block;S=Object.assign({},DEF,{order:PANELS.map(p=>p[0]),hidden:[],open:{},block:keep,welcomed:true});save();applyLook();layoutPanels();buildSettings();renderAll();toast('رجعت الإعدادات الافتراضية')};
+  digits($('#dSet'));
+}
+
+/* ================= welcome ================= */
+function welcome(){if(S.block||S.welcomed)return;const w=$('#welcome');$('#wGrid').innerHTML=blocks.map(b=>`<button type="button" data-b="${b.b}" aria-pressed="false">${b.b}</button>`).join('');
+  $('#wGrid').querySelectorAll('button').forEach(x=>x.onclick=()=>setBlock(+x.dataset.b));
+  $('#wSkip').onclick=()=>{S.welcomed=true;save();w.hidden=true};setTimeout(()=>{w.hidden=false;digits(w)},600)}
+
+/* ================= boot ================= */
+function charts(){drawRing();drawOverall();drawPace();drawPhases();if(view==='rank')drawBump();digits($('main'))}
+function redraw(){requestAnimationFrame(charts)}
+function renderAll(){if(S.digits!=='arab'){drawMine();drawBlocks();drawDeep();charts();return}drawMine();drawBlocks();drawDeep();charts();digits(document.body)}
+applyLook();setupPanels();layoutPanels();renderAll();syncURL();welcome();
+if(S.digits==='arab')digits(document.body);
+let rt,lw=innerWidth;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(()=>{charts();if((lw<600)!==(innerWidth<600)){layoutPanels()}lw=innerWidth},140)}).observe($('main'));
+matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',redraw);
+new MutationObserver(redraw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+if(location.hash){const p=document.querySelector(location.hash);if(p&&p.classList.contains('panel')){S.open[p.dataset.p]=true;layoutPanels();setTimeout(()=>p.scrollIntoView(),50)}}
 })();
 </script>
-</body></html>
+</body>
+</html>
