@@ -146,7 +146,7 @@ main{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:16px calc(
 .fc-row{display:grid;grid-template-columns:64px 1fr auto;gap:10px;align-items:center;font-size:13px;cursor:pointer;padding:6px 8px;border-radius:10px;border:0;background:none;text-align:start;width:100%}
 .fc-row:hover{background:var(--bg)}
 .fc-row.mine{background:var(--site-soft)}
-.fc-track{position:relative;height:10px;border-radius:999px;background:var(--t0);overflow:hidden}
+.fc-track{position:relative;height:14px;border-radius:999px;background:var(--t0)}
 .fc-bar{position:absolute;inset-block:0;inset-inline-start:0;border-radius:999px}
 .fc-y{font-size:12px;color:var(--ink-2);white-space:nowrap;min-width:84px;text-align:end}
 
@@ -169,6 +169,56 @@ main{max-width:1120px;margin:0 auto;padding-inline:16px;padding-block:16px calc(
 ol.qs{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:10px;font-size:14.5px}
 .btn{border:0;background:var(--site);color:var(--on-site);font-weight:700;font-size:15px;padding:12px 18px;border-radius:12px;cursor:pointer;width:100%}
 footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:6px;padding-inline:4px}
+
+/* deep analytics */
+.trust{display:grid;grid-template-columns:1fr;gap:10px}
+.tr{background:var(--bg);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.tr-h{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.tr-h b{font-size:15px}
+.gapbars{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;align-items:center;height:64px;position:relative}
+.gapbars::before{content:"";position:absolute;inset-inline:0;top:50%;border-top:1px dashed var(--ink-3);opacity:.5}
+.gb{position:relative;height:100%}
+.gb i{position:absolute;inset-inline:15%;border-radius:3px}
+.gb span{position:absolute;inset-inline:0;bottom:-16px;text-align:center;font-size:10px;color:var(--ink-3)}
+.gapax{height:14px}
+.reuse{display:grid;grid-template-columns:1fr;gap:12px}
+.ru{background:var(--bg);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.ru button{border:0;padding:0;background:none;cursor:zoom-in;display:block}
+.ru img{width:100%;height:auto;display:block}
+.ru .cap{display:flex;justify-content:space-between;gap:8px;padding:8px 12px;font-size:13px;color:var(--ink-2);flex-wrap:wrap}
+.ru .cap b{color:var(--ink)}
+.pair{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-3);padding:4px 12px 0}
+.rep{display:flex;flex-direction:column;gap:8px}
+.rp{background:var(--bg);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.rp q{font-size:13.5px;color:var(--ink);quotes:"«" "»"}
+.rp span{font-size:12px;color:var(--ink-3)}
+.ladder-l{display:flex;flex-direction:column;gap:6px}
+.lad{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center;font-size:13px;cursor:pointer;border:0;background:none;padding:4px 6px;border-radius:8px;text-align:start;width:100%}
+.lad:hover{background:var(--bg)}
+.lad.mine{background:var(--site-soft)}
+.steps6{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
+.steps6 i{height:10px;border-radius:3px;background:var(--t0)}
+.steps6 i.done{background:var(--site)}
+.steps6 i.now{background:repeating-linear-gradient(45deg,var(--site) 0 3px,var(--site-soft) 3px 6px)}
+.ladkey{display:grid;grid-template-columns:64px repeat(6,1fr);gap:3px;font-size:10px;color:var(--ink-3);text-align:center;line-height:1.3}
+.spd{display:flex;flex-direction:column;gap:4px}
+.sp{display:grid;grid-template-columns:64px 1fr 112px;gap:10px;align-items:center;font-size:13px;border:0;background:none;padding:5px 6px;border-radius:8px;cursor:pointer;text-align:start;width:100%}
+.sp:hover{background:var(--bg)}
+.sp.mine{background:var(--site-soft)}
+.sp-t{position:relative;height:14px;direction:ltr}
+.sp-t .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--ink-3)}
+.sp-t i{position:absolute;top:2px;bottom:2px;border-radius:3px}
+.sp-v{font-size:12px;text-align:end;white-space:nowrap}
+.bump-ctl{display:flex;gap:6px;flex-wrap:wrap}
+.bump-ctl button{border:1px solid var(--rule);background:var(--card);border-radius:999px;padding:4px 12px;font-size:12px;cursor:pointer}
+.bump-ctl button.on{background:var(--site);color:var(--on-site);border-color:var(--site)}
+.stag{display:inline-flex;gap:3px;direction:ltr}
+.stag i{width:8px;height:8px;border-radius:2px;background:var(--t0)}
+.stag i.s{background:var(--crit)}
+.fc-rng{position:absolute;inset-block:2px;border-radius:999px;opacity:.35}
+.fc-dot{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;transform:translate(-50%,-50%);border:2px solid var(--card)}
+@media (min-width:640px){.trust{grid-template-columns:1fr 1fr}.reuse{grid-template-columns:1fr 1fr}}
+@media (min-width:1080px){.trust{grid-template-columns:repeat(4,1fr)}.reuse{grid-template-columns:repeat(3,1fr)}}
 
 /* bottom nav (phones/tablets) */
 .bnav{position:fixed;inset-inline:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--rule);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -267,7 +317,7 @@ footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:
       <div class="kpi"><span class="k">متوسط التقدم كل شهر</span><span class="v num">1.02%</span><span class="n">من يناير إلى سبتمبر</span></div>
       <div class="kpi bad"><span class="k">التقدم الشهري مؤخراً</span><span class="v num">0.92%</span><span class="n">كان 1.23% في بداية السنة</span></div>
       <div class="kpi"><span class="k">متى يكتمل المشروع كله؟</span><span class="v num">2032–33</span><span class="n">لو استمر بنفس السرعة</span></div>
-      <div class="kpi bad"><span class="k">نقاط مهمة تحتاج توضيح</span><span class="v num">4</span><span class="n">نتمنى رداً مكتوباً من المطوّر</span></div>
+      <div class="kpi bad"><span class="k">نقاط مهمة تحتاج توضيح</span><span class="v num">5</span><span class="n">نتمنى رداً مكتوباً من المطوّر</span></div>
     </div>
   </div>
 </section>
@@ -319,10 +369,50 @@ footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:
   <div id="tiles" class="grp-wrap" style="display:flex;flex-direction:column;gap:16px"></div>
 </section>
 
+<section class="card" id="stages">
+  <div class="sec-h"><span class="k">مراحل البناء</span><h2>وين وصل كل بلوك؟</h2><p>بدل النسبة، هذا يوضح المرحلة الحقيقية اللي وصلها كل بلوك حسب كلام نشرة سبتمبر. المربع المخطط هو الشغل اللي جاري الحين.</p></div>
+  <div class="ladkey"><span></span><span>الهيكل</span><span>البناء</span><span>الكهرباء والسباكة</span><span>اللياسة</span><span>الدهان واللياسة الخارجية</span><span>التشطيب</span></div>
+  <div class="ladder-l" id="ladder"></div>
+</section>
+
+<section class="card" id="speed">
+  <div class="sec-h"><span class="k">إنذار مبكر</span><h2>مين صار أسرع ومين صار أبطأ؟</h2><p>نقارن سرعة كل بلوك في آخر 3 أشهر (يونيو إلى سبتمبر) بسرعته في بداية السنة (يناير إلى أبريل). البلوك اللي يبطأ اليوم ممكن يوقف بكرة.</p></div>
+  <div class="spd" id="spd"></div>
+  <div class="legend"><span><i style="background:var(--good)"></i>صار أسرع</span><span><i style="background:var(--crit)"></i>صار أبطأ</span></div>
+</section>
+
+<section class="card" id="stall">
+  <div class="sec-h"><span class="k">كاشف التوقف</span><h2>كم شهر كل بلوك ما تحرك؟</h2><p>كل مربع شهر. المربع الأحمر يعني البلوك زاد أقل من 0.5% في ذلك الشهر، يعني تقريباً ما تحرك.</p></div>
+  <div class="spd" id="stallL"></div>
+</section>
+
+<section class="card" id="ranks">
+  <div class="sec-h"><span class="k">الترتيب</span><h2>ترتيب البلوكات من يناير إلى سبتمبر</h2><p>رقم 1 هو البلوك الأكثر إنجازاً. الخط اللي ينزل يعني البلوك تأخر عن غيره. اختر بلوكاً عشان يبرز خطه.</p></div>
+  <div class="bump-ctl" id="bumpCtl"></div>
+  <div class="chart" id="c-bump"><div class="tip"></div></div>
+</section>
+
 <section class="card" id="forecast">
-  <div class="sec-h"><span class="k">التوقعات</span><h2>متى يكتمل كل بلوك؟</h2><p>حسب سرعة كل بلوك من يناير إلى سبتمبر. البلوكات اللي شغلها ماشي تحتاج من سنة إلى سنتين، وثلاثة بلوكات شبه واقفة ما نقدر نتوقع متى تخلص.</p></div>
+  <div class="sec-h"><span class="k">التوقعات</span><h2>متى يكتمل كل بلوك؟</h2><p>جربنا آلاف الاحتمالات لسرعة كل بلوك حسب تذبذبها من شهر لشهر. النقطة هي التاريخ الأقرب للواقع، والشريط الفاتح حوله يوضح النطاق بين التفاؤل والتشاؤم.</p></div>
   <div class="fc" id="fc"></div>
   <p class="note">توقع تقريبي يفترض أن سرعة العمل تبقى كما هي. التشطيبات عادة تاخذ وقت أطول من العظم، فالمواعيد الحقيقية غالباً أبعد.</p>
+</section>
+
+<!-- DEEP -->
+<section class="card" id="trust">
+  <div class="sec-h"><span class="k">مؤشر صدق الأرقام</span><h2>هل نسبة كل مرحلة تطابق بلوكاتها؟</h2><p>المفروض نسبة المرحلة تساوي تقريباً متوسط بلوكاتها (حسب عدد الفلل في كل بلوك). كل عمود يوضح الفرق في شهر: فوق الخط يعني النشرة كتبت نسبة للمرحلة أعلى من بلوكاتها، وتحت الخط أقل.</p></div>
+  <div class="trust" id="trustL"></div>
+</section>
+
+<section class="card" id="photos">
+  <div class="sec-h"><span class="k">فحص الصور</span><h2>صور مكررة من الشهر اللي قبله</h2><p>قارنّا كل صور الموقع في النشرات ببعض آلياً. هذي صور ظهرت بالضبط في نشرتين مختلفتين على أنها شغل الشهر. اضغط على أي صورة لتكبيرها.</p></div>
+  <div class="callout"><b>6 بلوكات من 6</b> في المرحلة الثالثة استخدمت نشرة يونيو نفس صور نشرة مايو. وبلوك 22 استخدم في سبتمبر صورة من يونيو.</div>
+  <div class="reuse" id="reuseL"></div>
+</section>
+
+<section class="card" id="texts">
+  <div class="sec-h"><span class="k">فحص النصوص</span><h2>كلام يتكرر بين النشرات</h2><p>جمل ظهرت بنفس الكلمات في أكثر من نشرة، يعني ما تعطي معلومة جديدة عن الشهر.</p></div>
+  <div class="rep" id="repL"></div>
 </section>
 
 <!-- NOTES -->
@@ -405,6 +495,7 @@ const blocks=[
 ];
 const flags=[
  ['crit','أولوية عالية','قفزة المرحلة الأولى','في مايو وحده زادت نسبة المرحلة 7.1%، بينما بلوكاتها الأربعة زادت 1.3% بالمتوسط. وفي يونيو زادت 5.5% أخرى. النشرات ما تشرح سبب هذا الفرق.','المرحلة: أبريل 48.50% ← مايو 55.56% ← يونيو 61.10% · البلوكات في مايو زادت بين 0.9% و1.7% فقط'],
+ ['crit','أولوية عالية','صور مكررة من الشهر اللي قبله','الفحص الآلي للصور وجد أن نشرة يونيو استخدمت نفس صور مايو لكل بلوكات المرحلة الثالثة الست، ونشرة سبتمبر استخدمت صورة من يونيو لبلوك 22.','بلوكات 9 و10 و12 و13 و14 و15: صور يونيو = صور مايو · بلوك 22: صورة سبتمبر = صورة يونيو'],
  ['crit','أولوية عالية','بلوك 23 بدون تقدم يُذكر من مارس','فيه 48 فيلا، وهو أكبر بلوك في المشروع. زاد 0.38% فقط خلال 6 أشهر، وصور سبتمبر ما زالت تُظهر الدور الأرضي.','مارس 19.50% ← أبريل 19.50% ← أغسطس 19.88% ← سبتمبر 19.88%'],
  ['crit','أولوية عالية','بلوك 15 شبه واقف','النشرات تذكر له شغل كل شهر، لكن نسبته زادت أقل من 1% من مارس.','مارس 22.81% ← يونيو 22.94% ← سبتمبر 23.61%'],
  ['crit','أولوية عالية','بلوك 12 رجع للخلف','نسبته نزلت 5.6% في مارس بدون أي تفسير، واليوم نسبته تقريباً نفس رقم فبراير.','فبراير 34.01% ← مارس 28.38% ← سبتمبر 34.89%'],
@@ -436,7 +527,21 @@ const qs=[
  'ليش بلوك 15 وبلوك 23 شبه واقفين من مارس 2026؟ ومتى بيرجع الشغل فيهم؟',
  'وش يدخل في نسبة المشروع كله (29.35%)؟ وليش هي أقل بكثير من متوسط المراحل الأربع؟',
  'ليش تكررت نفس النسب بالضبط في بلوكات 13 و14 و15 بين أبريل ويونيو؟ ووين نشرة يوليو؟',
+ 'ليش صور بلوكات المرحلة الثالثة في نشرة يونيو هي نفس صور نشرة مايو؟ وهل عندكم صور فعلية من الموقع لشهر يونيو؟',
+ 'منصة وافي تذكر أن المشروع 596 وحدة، والنشرات تتكلم عن 360 وحدة فقط. وين الـ236 وحدة الباقية، ومتى تبدأ؟',
  'وش اسم المكتب الهندسي المشرف على المشروع؟ وتقدرون ترسلون لي آخر تقرير إنجاز معتمد منه ومن منصة وافي؟'
+];
+
+const MC={1:[26,27,28],2:[24,26,28],3:[22,23,25],5:[18,19,21],4:[15,17,19],6:[19,20,22],7:[12,15,18],8:[20,22,24],9:[13,15,17],10:[18,20,22],12:[36,42,49],13:[20,24,28],14:[32,36,41],15:[88,101,116],22:[19,22,26],23:[239,240,240]};
+const STAGE={1:6,2:6,3:6,5:6,4:4,6:4,7:4,8:4,9:5,10:4,12:3,13:4,14:4,15:3,22:2,23:1};
+const STAGE_N=['الهيكل','البناء','الكهرباء والسباكة','اللياسة','الدهان واللياسة الخارجية','التشطيب'];
+const REUSE=[[9,4,5,2,'reuse/r9-4-5.jpg'],[10,4,5,2,'reuse/r10-4-5.jpg'],[12,4,5,1,'reuse/r12-4-5.jpg'],[13,4,5,1,'reuse/r13-4-5.jpg'],[14,4,5,2,'reuse/r14-4-5.jpg'],[15,4,5,2,'reuse/r15-4-5.jpg'],[22,5,8,1,'reuse/r22-5-8.jpg']];
+const REP=[
+ ['ملخص نشرة مايو ونشرة يونيو','86% من كلمات ملخص يونيو هي نفس كلمات ملخص مايو، وفيها جملة أن المرحلة الرابعة "خلّصت الأساسات وبدأت تصب الأعمدة"، وهذا حصل في يناير.','مايو · يونيو'],
+ ['بلوك 7','Architectural works continue across the remaining villas at advanced stages of execution','مايو · يونيو · أغسطس · سبتمبر'],
+ ['بلوك 8','Construction activities continue at a steady pace across the block','أغسطس · سبتمبر'],
+ ['بلوك 2','"خلصت اللياسة الخارجية لـ24 فيلا" مذكورة كإنجاز في يونيو، ثم مذكورة مرة ثانية كإنجاز جديد في سبتمبر.','يونيو · سبتمبر'],
+ ['بلوك 14','نسبة 44.45% بنفس الرقم في ثلاث نشرات متتالية.','أبريل · مايو · يونيو']
 ];
 
 /* helpers */
@@ -446,7 +551,7 @@ const NS='http://www.w3.org/2000/svg';
 const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
 const last=b=>b.v[b.v.length-1];
 const rate=b=>(last(b)-b.v[0])/8;
-const eta=b=>{const r=rate(b);return r<0.8?null:Math.round((100-last(b))/r)};
+const eta=b=>{const q=MC[b.b];return q[1]>120?null:q[1]};
 const ym=m=>{const d=new Date(2026,8+m,1);return MM[d.getMonth()]+' '+d.getFullYear()};
 const status=b=>{const r=rate(b);return r<0.8?['crit','شبه واقف']:r<1.6?['ser','بطيء']:['good','شغله ماشي']};
 const shade=v=>'--t'+Math.max(1,Math.min(6,1+Math.floor((v-15)/8)));
@@ -526,11 +631,53 @@ function drawTiles(){
   if(mine){const b=blocks.find(x=>x.b===mine);const m=eta(b);mb.innerHTML=`<span>بلوكك: <b>بلوك ${mine}</b> · <span class="num">${last(b).toFixed(1)}%</span> · ${m==null?'ما نقدر نتوقع موعد اكتماله':'يكتمل تقريباً '+ym(m)}</span><button type="button">التفاصيل</button>`;mb.querySelector('button').onclick=e=>openSheet(mine,e.target)}
   else mb.innerHTML='<span>اضغط على بلوكك واختر <b>"هذا بلوكي"</b> عشان يظهر لك هنا كل ما تفتح الصفحة.</span>';
 }
+function vAt(b,k){const i=SRC.indexOf(k);if(b.v[i]!=null)return b.v[i];for(let j=i-1;j>=0;j--)if(b.v[j]!=null)return b.v[j];return null}
+const early=b=>(b.v[3]-b.v[0])/3, recent=b=>(last(b)-vAt(b,5))/3;
+function stalls(b){const vv=SRC.map(k=>vAt(b,k));return vv.slice(1).map((v,i)=>v-vv[i]<0.5)}
+function drawDeep(){
+  // trust
+  $('#trustL').innerHTML=phases.map(p=>{const gaps=SRC.map(k=>{const bs=blocks.filter(b=>b.p===p.id);const w=bs.reduce((a,b)=>a+b.u*vAt(b,k),0)/bs.reduce((a,b)=>a+b.u,0);return p.v[k]-w});
+    const lab={1:['crit','فرق كبير من مايو'],2:['good','متطابقة'],3:['ser','الفرق يكبر'],4:['ser','متذبذبة']}[p.id];
+    return `<div class="tr"><div class="tr-h"><b>${p.name}</b><span class="chip c-${lab[0]}"><i></i>${lab[1]}</span></div><div class="gapbars">${gaps.map((g,i)=>{const h=Math.min(48,Math.abs(g)*5);const c=Math.abs(g)<3?'var(--ink-3)':(g>0?'var(--crit)':'var(--s1)');return `<div class="gb" title="${M[SRC[i]]}: ${g>0?'+':''}${g.toFixed(1)}%"><i style="background:${c};${g>=0?`bottom:50%;height:${h}%`:`top:50%;height:${h}%`}"></i><span>${M[SRC[i]].slice(0,3)}</span></div>`}).join('')}</div><div class="gapax"></div><span class="note">الفرق في سبتمبر: <b class="num">${gaps[7]>0?'+':''}${gaps[7].toFixed(1)}%</b> · أكبر فرق: <b class="num">${Math.max(...gaps.map(Math.abs)).toFixed(1)}%</b></span></div>`}).join('');
+  // reuse
+  $('#reuseL').innerHTML=REUSE.map(([b,a,c,n,f])=>`<figure class="ru" style="margin:0"><div class="pair"><span>نشرة ${M[c]}</span><span>نشرة ${M[a]}</span></div><button type="button" data-src="${f}" data-cap="بلوك ${b} · نفس الصورة في نشرة ${M[a]} ونشرة ${M[c]}"><img loading="lazy" src="${f}" alt="صورة بلوك ${b} المكررة في نشرتي ${M[a]} و${M[c]}"></button><figcaption class="cap"><b>بلوك ${b}</b><span>${n>1?n+' صور مكررة':'صورة مكررة'} بين ${M[a]} و${M[c]}</span></figcaption></figure>`).join('');
+  $('#reuseL').querySelectorAll('button').forEach(g=>g.addEventListener('click',()=>openLb(g.dataset.src,g.dataset.cap)));
+  $('#repL').innerHTML=REP.map(([t,q,w])=>`<div class="rp"><b>${t}</b><q dir="auto">${q}</q><span>ظهرت في: ${w}</span></div>`).join('');
+  // ladder
+  $('#ladder').innerHTML=[...blocks].sort((a,b)=>STAGE[b.b]-STAGE[a.b]||last(b)-last(a)).map(b=>`<button class="lad ${b.b===mine?'mine':''}" type="button" data-b="${b.b}"><span>بلوك ${b.b}</span><span class="steps6">${STAGE_N.map((n,i)=>`<i class="${i+1<STAGE[b.b]?'done':i+1===STAGE[b.b]?'now':''}" title="${n}"></i>`).join('')}</span></button>`).join('');
+  // speed
+  const sp=blocks.map(b=>({b,e:early(b),r:recent(b)})).sort((x,y)=>(y.r-y.e)-(x.r-x.e));const mx=4;
+  $('#spd').innerHTML=sp.map(({b,e,r})=>{const d=r-e;const w=Math.min(50,Math.abs(d)/mx*50);const c=d>=0?'var(--good)':'var(--crit)';
+    return `<button class="sp ${b.b===mine?'mine':''}" type="button" data-b="${b.b}"><span>بلوك ${b.b}</span><span class="sp-t"><span class="mid"></span><i style="background:${c};${d>=0?`left:50%;width:${w}%`:`right:50%;width:${w}%`}"></i></span><span class="sp-v">من <span class="num">${e.toFixed(1)}%</span> إلى <span class="num" style="color:${c};font-weight:700">${r.toFixed(1)}%</span></span></button>`}).join('');
+  // stall
+  const st=blocks.map(b=>({b,s:stalls(b)})).sort((x,y)=>y.s.filter(Boolean).length-x.s.filter(Boolean).length);
+  $('#stallL').innerHTML=st.map(({b,s})=>`<button class="sp ${b.b===mine?'mine':''}" type="button" data-b="${b.b}"><span>بلوك ${b.b}</span><span class="stag">${s.map((x,i)=>`<i class="${x?'s':''}" title="${M[SRC[i+1]]}"></i>`).join('')}</span><span class="sp-v">${s.filter(Boolean).length} من ${s.length}</span></button>`).join('');
+  document.querySelectorAll('#ladder .lad,#spd .sp,#stallL .sp').forEach(r=>r.addEventListener('click',()=>openSheet(+r.dataset.b,r)));
+}
+let bumpSel=null;
+function drawBump(){
+  const box=$('#c-bump');box.querySelector('svg')?.remove();const T=tipper(box);
+  const ranks={};SRC.forEach(k=>{const arr=blocks.map(b=>[b.b,vAt(b,k)??0]).sort((a,c)=>c[1]-a[1]);arr.forEach(([b],i)=>{(ranks[b]=ranks[b]||{})[k]=i+1})});
+  const W=Math.max(280,box.clientWidth),narrow=W<520,H=narrow?380:440,pl=narrow?30:40,pr=narrow?44:56,pt=12,pb=26;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,direction:'ltr'});box.insertBefore(svg,box.firstChild);
+  const X=k=>pl+k/8*(W-pl-pr),Y=r=>pt+(r-1)/15*(H-pt-pb);
+  [1,4,8,12,16].forEach(r=>el('text',{x:pl-8,y:Y(r)+4,'text-anchor':'end',class:'ax'},svg).textContent='#'+r);
+  [[0,'يناير'],[3,'أبريل'],[5,'يونيو'],[8,'سبتمبر']].forEach(([k,l])=>el('text',{x:X(k),y:H-6,'text-anchor':'middle',class:'ax'},svg).textContent=l);
+  const hi=bumpSel??mine;
+  blocks.forEach(b=>{const on=b.b===hi;const ks=SRC;const d=ks.map((k,i)=>(i?'L':'M')+X(k)+','+Y(ranks[b.b][k])).join('');
+    el('path',{d,fill:'none',stroke:on?css('--site'):css('--ink-3'),'stroke-width':on?3:1.2,opacity:on?1:(hi?0.25:0.55),'stroke-linejoin':'round'},svg);
+    const r8=ranks[b.b][8];el('text',{x:X(8)+6,y:Y(r8)+4,fill:on?css('--site'):css('--ink-2'),'font-size':11,'font-weight':on?700:400,'font-family':css('--f')},svg).textContent='ب'+b.b;
+    if(on)ks.forEach(k=>el('circle',{cx:X(k),cy:Y(ranks[b.b][k]),r:4,fill:css('--site'),stroke:css('--card'),'stroke-width':2},svg));
+  });
+  $('#bumpCtl').innerHTML=blocks.map(b=>`<button type="button" class="${b.b===hi?'on':''}" data-b="${b.b}">${b.b}</button>`).join('');
+  $('#bumpCtl').querySelectorAll('button').forEach(x=>x.onclick=()=>{bumpSel=+x.dataset.b===bumpSel?null:+x.dataset.b;drawBump()});
+  if(hi){const b=blocks.find(x=>x.b===hi);T.hide()}
+}
 function drawForecast(){
-  const rows=blocks.map(b=>({b,m:eta(b)})).sort((x,y)=>(x.m??999)-(y.m??999));const max=60;
-  $('#fc').innerHTML=rows.map(({b,m})=>{const w=m==null?100:Math.min(100,m/max*100);const col=m==null?'repeating-linear-gradient(45deg,var(--crit) 0 4px,transparent 4px 8px)':(m>30?'var(--serious)':'var(--site)');
-    return `<button class="fc-row ${b.b===mine?'mine':''}" type="button" data-b="${b.b}"><span>بلوك ${b.b}</span><span class="fc-track"><span class="fc-bar" style="width:${w}%;background:${col}"></span></span><span class="fc-y">${m==null?'ما يُعرف':m>max?String(new Date(2026,8+m,1).getFullYear()):ym(m)}</span></button>`}).join('');
-  document.querySelectorAll('.fc-row').forEach(r=>r.addEventListener('click',()=>openSheet(+r.dataset.b,r)));
+  const rows=blocks.map(b=>({b,q:MC[b.b]})).sort((x,y)=>x.q[1]-y.q[1]);const max=48;const pos=m=>Math.min(100,m/max*100);
+  $('#fc').innerHTML=`<div class="fc-row" style="cursor:default;padding-block:0"><span></span><span class="ladkey" style="grid-template-columns:repeat(4,1fr);display:grid;direction:ltr"><span>اليوم</span><span>2027</span><span>2028</span><span>2029+</span></span><span></span></div>`+rows.map(({b,q})=>{const stuck=q[1]>120;const col=stuck?'var(--crit)':(q[1]>30?'var(--serious)':'var(--site)');
+    return `<button class="fc-row ${b.b===mine?'mine':''}" type="button" data-b="${b.b}"><span>بلوك ${b.b}</span><span class="fc-track" style="direction:ltr">${stuck?'<span class="fc-bar" style="width:100%;background:repeating-linear-gradient(45deg,var(--crit) 0 4px,transparent 4px 8px);opacity:.6"></span>':`<span class="fc-rng" style="left:${pos(q[0])}%;width:${Math.max(2,pos(q[2])-pos(q[0]))}%;background:${col}"></span><span class="fc-dot" style="left:${pos(q[1])}%;background:${col}"></span>`}</span><span class="fc-y">${stuck?'ما يُعرف':q[1]>max?'حوالي '+ym(q[1]).split(' ')[1]:ym(q[1])}</span></button>`}).join('');
+  document.querySelectorAll('.fc-row[data-b]').forEach(r=>r.addEventListener('click',()=>openSheet(+r.dataset.b,r)));
 }
 
 /* sheet */
@@ -540,6 +687,9 @@ function openSheet(n,from){
   const all=blocks.map(last).sort((a,c)=>c-a),rank=all.indexOf(last(b))+1;
   $('#sh-title').textContent='بلوك '+n;$('#sh-chip').innerHTML=`<span class="chip c-${sc}"><i></i>${sl}</span>`;$('#sh-sub').textContent=`${ph.name} · ${b.u} فيلا`;
   $('#sh-b').innerHTML=`<div class="ms"><div><span class="k">نسبة الإنجاز</span><div class="v num">${last(b).toFixed(2)}%</div></div><div><span class="k">يزيد كل شهر</span><div class="v num">${rate(b).toFixed(2)}%</div></div><div><span class="k">ترتيبه</span><div class="v num">${rank} / 16</div></div><div><span class="k">يكتمل تقريباً</span><div class="v" style="font-size:15px">${m==null?'ما نقدر نتوقع':ym(m)}</div></div></div>
+   <div><b style="font-size:14px">وين وصل؟</b><div class="steps6" style="margin-top:6px">${STAGE_N.map((x,i)=>`<i class="${i+1<STAGE[n]?'done':i+1===STAGE[n]?'now':''}"></i>`).join('')}</div><p class="note" style="margin-top:4px">الشغل الحالي: <b>${STAGE_N[STAGE[n]-1]}</b></p></div>
+   <div class="ms"><div><span class="k">السرعة بداية السنة</span><div class="v num">${early(b).toFixed(1)}%</div></div><div><span class="k">السرعة آخر 3 أشهر</span><div class="v num" style="color:${recent(b)>=early(b)?'var(--good)':'var(--crit)'}">${recent(b).toFixed(1)}%</div></div><div><span class="k">أشهر بدون حركة</span><div class="v num">${stalls(b).filter(Boolean).length} / ${stalls(b).length}</div></div><div><span class="k">نطاق الاكتمال</span><div class="v" style="font-size:13px">${MC[n][1]>120?'ما يُعرف':ym(MC[n][0])+'<br>إلى '+ym(MC[n][2])}</div></div></div>
+   ${REUSE.some(r=>r[0]===n)?`<div class="callout"><b>صور مكررة:</b> نشرة ${M[REUSE.find(r=>r[0]===n)[2]]} استخدمت صوراً من نشرة ${M[REUSE.find(r=>r[0]===n)[1]]} لهذا البلوك.</div>`:''}
    <div class="chart" id="c-sheet"><div class="tip"></div></div>
    <div class="legend"><span><i style="background:var(--site)"></i>بلوك ${n}</span><span><i style="background:var(${ph.c})"></i>${ph.name} حسب النشرة</span></div>
    <div class="log"><b style="color:var(--ink)">وش قالت النشرات عن هذا البلوك</b>${Object.entries(b.log).map(([k,t])=>`<div><span>${k}</span><p>${t}</p></div>`).join('')}</div>
@@ -551,7 +701,7 @@ function openSheet(n,from){
   const v={},pv={};SRC.forEach((k,i)=>{v[k]=b.v[i];pv[k]=ph.v[k]});
   requestAnimationFrame(()=>lineChart('c-sheet',{series:[{name:'بلوك '+n,c:'--site',w:2.5,v,area:1,label:last(b).toFixed(0)+'%'},{name:ph.name,c:ph.c,w:1.5,v:pv}],x0:0,x1:8,y0:0,y1:70,yt:[0,20,40,60],h:200,xt:[[0,'يناير'],[3,'أبريل'],[5,'يونيو'],[8,'سبتمبر']]}));
   $('#sh-b').querySelectorAll('.gal button').forEach(g=>g.addEventListener('click',()=>openLb(g.dataset.src,g.dataset.cap)));
-  $('#setmine').onclick=()=>{mine=mine===n?null:n;try{mine?localStorage.setItem('alb-blk',mine):localStorage.removeItem('alb-blk')}catch(e){}drawTiles();drawForecast();openSheet(n,lastFocus)};
+  $('#setmine').onclick=()=>{mine=mine===n?null:n;try{mine?localStorage.setItem('alb-blk',mine):localStorage.removeItem('alb-blk')}catch(e){}drawTiles();drawForecast();drawDeep();drawBump();openSheet(n,lastFocus)};
   $('#sh-x').focus({preventScroll:true});
 }
 function closeSheet(){const sh=$('#sheet');sh.classList.remove('on');$('#scrim').classList.remove('on');document.body.style.overflow='';setTimeout(()=>{if(!sh.classList.contains('on'))sh.hidden=true},300);lastFocus?.focus?.({preventScroll:true})}
@@ -574,12 +724,12 @@ function drawStatic(){
 }
 /* nav highlight */
 function navSpy(){const links=[...document.querySelectorAll('[data-s]')];const ids=['summary','progress','blocks','notes','ask'];
-  const map={howto:'summary',pace:'progress',phases:'progress',forecast:'blocks',timeline:'notes',wafi:'ask'};
+  const map={howto:'summary',pace:'progress',phases:'progress',stages:'blocks',speed:'blocks',stall:'blocks',ranks:'blocks',forecast:'blocks',trust:'notes',photos:'notes',texts:'notes',timeline:'notes',wafi:'ask'};
   const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const id=map[e.target.id]||e.target.id;links.forEach(a=>a.classList.toggle('on',a.dataset.s===id))}})},{rootMargin:'-45% 0px -50% 0px'});
   document.querySelectorAll('main section[id]').forEach(s=>io.observe(s));}
 
-function charts(){drawRing();drawOverall();drawPace();drawPhases()}
-drawStatic();drawTiles();drawForecast();charts();navSpy();
+function charts(){drawRing();drawOverall();drawPace();drawPhases();drawBump()}
+drawStatic();drawTiles();drawForecast();drawDeep();charts();navSpy();
 let rt;const ro=new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(charts,120)});ro.observe(document.querySelector('main'));
 matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',charts);
 new MutationObserver(charts).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
