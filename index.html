@@ -1,0 +1,513 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>سجل البورادا فيلا</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a site-engineer's ledger — survey-grid paper, one column of "sheets", each sheet a numbered drawing with a title block. */
+:root{
+  --bg:#eef0ea; --paper:#f8f9f5; --ink:#161a14; --ink-2:#4a5245; --ink-3:#7c8476;
+  --rule:#d5d9cf; --grid:rgba(60,90,40,.06);
+  --site:#3f6b1f; --site-soft:#e2ebd6;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --good:#0ca30c; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+  --h0:#f0efec; --h1:#cde2fb; --h2:#9ec5f4; --h3:#6da7ec; --h4:#3987e5; --h5:#256abf; --h6:#104281;
+  --f-disp:"IBM Plex Sans Arabic",system-ui,"Segoe UI",Tahoma,sans-serif;
+  --f-body:"IBM Plex Sans Arabic",system-ui,"Segoe UI",Tahoma,sans-serif;
+  --f-num:"IBM Plex Sans Arabic",system-ui,"Segoe UI",Tahoma,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141712; --paper:#1b1f18; --ink:#eef1ea; --ink-2:#b8c0b1; --ink-3:#848d7d;
+  --rule:#2f362b; --grid:rgba(160,200,120,.05); --site:#8fbf5a; --site-soft:#26321d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --h0:#2a2d27; --h1:#104281; --h2:#184f95; --h3:#1c5cab; --h4:#2a78d6; --h5:#5598e7; --h6:#9ec5f4;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141712; --paper:#1b1f18; --ink:#eef1ea; --ink-2:#b8c0b1; --ink-3:#848d7d;
+  --rule:#2f362b; --grid:rgba(160,200,120,.05); --site:#8fbf5a; --site-soft:#26321d;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --h0:#2a2d27; --h1:#104281; --h2:#184f95; --h3:#1c5cab; --h4:#2a78d6; --h5:#5598e7; --h6:#9ec5f4;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:28px 64px;display:flex;flex-direction:column;gap:22px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+h1,h2,h3{font-family:var(--f-disp);font-weight:700;text-wrap:balance;margin:0;line-height:1.3}
+p{margin:0}
+.sheet{background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.tb{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--rule);padding-bottom:12px;flex-wrap:wrap}
+.tb .dwg{font-family:var(--f-num);font-size:11px;letter-spacing:.08em;color:var(--site);border:1px solid var(--site);padding:1px 6px;border-radius:2px}
+.tb h2{font-size:21px}
+.tb .sub{color:var(--ink-3);font-size:13px;margin-inline-start:auto}
+.lead{color:var(--ink-2);max-width:65ch}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:20px;align-items:stretch}
+.hero-l{display:flex;flex-direction:column;gap:12px;min-width:0}
+.eyebrow{font-size:12px;letter-spacing:.06em;color:var(--site);font-weight:600}
+.hero h1{font-size:clamp(28px,5vw,40px)}
+.verdict{font-size:17px;color:var(--ink-2);max-width:52ch}
+.verdict b{color:var(--ink)}
+.meter{position:relative;height:30px;background:var(--h0);border-radius:3px;overflow:hidden;direction:ltr}
+.meter .fill{position:absolute;inset-block:0;left:0;background:var(--site)}
+.meter .tick{position:absolute;inset-block:0;width:1px;background:var(--paper);opacity:.7}
+.meter-cap{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3)}
+.big{display:flex;align-items:baseline;gap:8px}
+.big .v{font-family:var(--f-num);font-size:56px;font-weight:600;line-height:1;letter-spacing:-.02em}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.kpi{background:var(--paper);padding:14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.kpi .k{font-size:12px;color:var(--ink-3)}
+.kpi .v{font-family:var(--f-num);font-size:24px;font-weight:600;direction:ltr;text-align:right}
+.kpi .n{font-size:12px;color:var(--ink-2)}
+.kpi.bad .v{color:var(--crit)}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.chip i{width:8px;height:8px;border-radius:50%;background:currentColor;font-style:normal}
+.chip.crit{color:var(--crit)} .chip.ser{color:var(--serious)} .chip.warn{color:#b07800} .chip.good{color:var(--good)}
+:root[data-theme="dark"] .chip.warn{color:var(--warn)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip.warn{color:var(--warn)}}
+
+/* charts */
+.chart{position:relative;min-width:0}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.axis text{fill:var(--ink-3);font-family:var(--f-num);font-size:11px}
+.axis-ar text{fill:var(--ink-3);font-family:var(--f-body);font-size:11px}
+.gridline{stroke:var(--rule);stroke-width:1}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--paper);font-size:12px;padding:6px 9px;border-radius:3px;white-space:nowrap;transform:translate(-50%,-110%);opacity:0;transition:opacity .12s;z-index:5;line-height:1.5}
+.tip.on{opacity:1}
+.note{font-size:13px;color:var(--ink-3)}
+.callout{border-inline-start:3px solid var(--crit);background:color-mix(in srgb,var(--crit) 7%,var(--paper));padding:10px 14px;font-size:14px;color:var(--ink-2)}
+.callout b{color:var(--ink)}
+
+/* heatmap */
+.hm-scroll{overflow-x:auto}
+table.hm{border-collapse:separate;border-spacing:2px;width:100%;min-width:560px;font-size:12px}
+.hm th{font-weight:500;color:var(--ink-3);padding:4px;text-align:center;white-space:nowrap}
+.hm th.bl{text-align:right;color:var(--ink);font-weight:600}
+.hm th.bl small{color:var(--ink-3);font-weight:400;margin-inline-start:4px}
+.hm td{height:34px;text-align:center;border-radius:2px;font-family:var(--f-num);font-variant-numeric:tabular-nums;cursor:pointer;position:relative}
+.hm td.na{background:repeating-linear-gradient(135deg,transparent 0 4px,var(--rule) 4px 5px);color:var(--ink-3);cursor:default}
+.hm tr.ph td.phlbl{background:none;text-align:right;font-family:var(--f-disp);color:var(--site);font-size:13px;padding-top:10px;cursor:default}
+.hm tr.sel th.bl{color:var(--site)}
+.hm tr.sel td:not(.na):not(.phlbl){outline:2px solid var(--site);outline-offset:-1px}
+.hm td.down::after{content:"▼";position:absolute;top:1px;left:3px;font-size:8px;color:var(--crit)}
+.hm td.flat::after{content:"■";position:absolute;top:1px;left:3px;font-size:7px;color:var(--serious)}
+.hm-key{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink-2);align-items:center}
+.ramp{display:inline-flex;direction:ltr}
+.ramp b{width:18px;height:10px;display:inline-block}
+
+/* my block */
+.picker{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+select{font:inherit;padding:8px 12px;border:1px solid var(--rule);border-radius:3px;background:var(--paper);color:var(--ink)}
+select:focus-visible,button:focus-visible{outline:2px solid var(--site);outline-offset:2px}
+.mine{display:grid;grid-template-columns:1fr 1.3fr;gap:18px}
+.mine-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start}
+.ms{border-top:2px solid var(--ink);padding-top:6px}
+.ms .k{font-size:12px;color:var(--ink-3)}
+.ms .v{font-family:var(--f-num);font-size:22px;font-weight:600}
+.ms .v.ar{font-family:var(--f-disp);font-size:20px}
+.mine-log{font-size:14px;color:var(--ink-2);display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--rule);padding-top:10px}
+.mine-log div{display:flex;gap:10px}
+.mine-log span{color:var(--site);font-weight:600;min-width:58px}
+
+/* forecast */
+.fc{display:flex;flex-direction:column;gap:4px}
+.fc-row{display:grid;grid-template-columns:62px 1fr 92px;gap:10px;align-items:center;font-size:13px;cursor:pointer;padding:3px 4px;border-radius:3px}
+.fc-row:hover{background:var(--site-soft)}
+.fc-row.sel{background:var(--site-soft);outline:1px solid var(--site)}
+.fc-track{position:relative;height:14px;direction:ltr}
+.fc-bar{position:absolute;top:2px;bottom:2px;left:0;border-radius:0 3px 3px 0}
+.fc-year{font-family:var(--f-num);text-align:left;direction:ltr;color:var(--ink-2)}
+.fc-axis{display:grid;grid-template-columns:62px 1fr 92px;gap:10px;font-size:11px;color:var(--ink-3)}
+.fc-axis .t{display:flex;justify-content:space-between;direction:ltr;font-family:var(--f-num)}
+
+/* flags */
+.flags{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.flag{border:1px solid var(--rule);border-radius:4px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0;background:var(--paper)}
+.flag.crit{border-top:3px solid var(--crit)} .flag.ser{border-top:3px solid var(--serious)} .flag.warn{border-top:3px solid var(--warn)}
+.flag h3{font-size:16px}
+.flag p{font-size:14px;color:var(--ink-2)}
+.flag .ev{font-family:var(--f-num);font-size:12px;color:var(--ink);background:var(--bg);padding:6px 8px;border-radius:2px;direction:ltr;text-align:right;overflow-x:auto;white-space:nowrap}
+
+/* timeline */
+.tl{display:flex;flex-direction:column;gap:0;border-inline-start:2px solid var(--rule);margin-inline-start:6px}
+.tl-i{position:relative;padding-inline-start:20px;padding-block:8px}
+.tl-i::before{content:"";position:absolute;inset-inline-start:-7px;top:15px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--site)}
+.tl-i.gap::before{border-color:var(--ink-3);border-style:dashed}
+.tl-i .m{font-weight:600;color:var(--site);font-size:13px}
+.tl-i.gap .m{color:var(--ink-3)}
+.tl-i p{font-size:14px;color:var(--ink-2)}
+
+/* questions */
+ol.qs{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+ol.qs li{padding-inline-start:4px}
+.btn{font:inherit;font-weight:600;font-size:14px;background:var(--site);color:var(--paper);border:0;border-radius:3px;padding:9px 16px;cursor:pointer;align-self:flex-start}
+.btn:hover{filter:brightness(1.08)}
+footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:6px;padding-inline:4px}
+
+@media (max-width:720px){
+  .hero,.mine,.flags{grid-template-columns:1fr}
+  .big .v{font-size:46px}
+  .fc-row,.fc-axis{grid-template-columns:52px 1fr 78px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .meter .fill{animation:grow 1.1s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes grow{from{width:0}}
+}
+</style></head><body>
+
+<div class="wrap" dir="rtl" lang="ar">
+
+<!-- HERO -->
+<section class="sheet">
+  <div class="hero">
+    <div class="hero-l">
+      <span class="eyebrow">مشروع البورادا فيلا · ضاحية الفرسان، الرياض · تحليل للمالك</span>
+      <h1>المشروع يتقدّم، لكن أبطأ مما تقوله الأرقام</h1>
+      <p class="verdict">حللت <b>9 نشرات شهرية</b> من أكتوبر 2025 إلى سبتمبر 2026. الإنجاز الكلي يزيد حوالي <b>نقطة واحدة في الشهر</b>، والوتيرة <b>تباطأت 25%</b> في آخر 3 أشهر. بلوكان شبه متوقفين، وفي المرحلة الأولى قفزة في النسبة لا تبررها بلوكاتها.</p>
+      <div>
+        <div class="big"><span class="v num">29.35%</span><span class="note">نسبة الإنجاز الكلية · سبتمبر 2026</span></div>
+      </div>
+      <div class="meter" role="img" aria-label="الإنجاز الكلي 29.35 بالمئة">
+        <div class="fill" style="width:29.35%"></div>
+        <div class="tick" style="left:25%"></div><div class="tick" style="left:50%"></div><div class="tick" style="left:75%"></div>
+      </div>
+      <div class="meter-cap"><span>التسليم 100%</span><span>منجز حتى الآن · المتبقي <span class="num">70.65</span> نقطة</span></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><span class="k">المعدل الشهري (يناير–سبتمبر)</span><span class="v">1.02</span><span class="n">نقطة مئوية في الشهر</span></div>
+      <div class="kpi bad"><span class="k">آخر 3 أشهر</span><span class="v">0.92</span><span class="n">كان 1.23 في يناير–أبريل</span></div>
+      <div class="kpi"><span class="k">الاكتمال بالمعدل الحالي</span><span class="v">2032–33</span><span class="n">تقدير خطي للمشروع كله</span></div>
+      <div class="kpi bad"><span class="k">ملاحظات حمراء</span><span class="v">4</span><span class="n">تحتاج رداً مكتوباً من المطوّر</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERALL CURVE -->
+<section class="sheet" id="curve">
+  <div class="tb"><span class="dwg">DWG-01</span><h2>منحنى الإنجاز الكلي</h2><span class="sub">نسبة المشروع شهراً بشهر</span></div>
+  <p class="lead">الخط المتصل هو ما أعلنته النشرات. الخطوط المنقطة تُظهر إلى أين يصل المشروع لو استمر بنفس الوتيرة. الدائرة المفرغة شهر بلا نشرة (يوليو).</p>
+  <div class="chart" id="c-overall"><div class="tip"></div></div>
+  <div class="legend">
+    <span><i style="background:var(--site)"></i>المعلن</span>
+    <span><i style="background:var(--s1)"></i>إسقاط على 1.02/شهر ← منتصف 2032</span>
+    <span><i style="background:var(--s2)"></i>إسقاط على 0.92/شهر ← بداية 2033</span>
+  </div>
+</section>
+
+<!-- PACE -->
+<section class="sheet" id="pace">
+  <div class="tb"><span class="dwg">DWG-02</span><h2>سرعة العمل تتراجع</h2><span class="sub">الزيادة في النسبة الكلية لكل شهر</span></div>
+  <div class="chart" id="c-pace"><div class="tip"></div></div>
+  <p class="note">الفترات التي غابت فيها نشرة قُسمت زيادتها على عدد أشهرها. متوسط يناير–أبريل 1.23، ومن أبريل إلى سبتمبر 0.90. أضعف شهر كان مايو (0.55).</p>
+</section>
+
+<!-- PHASES -->
+<section class="sheet" id="phases">
+  <div class="tb"><span class="dwg">DWG-03</span><h2>المراحل الأربع</h2><span class="sub">نسبة كل مرحلة كما في النشرات</span></div>
+  <div class="chart" id="c-phases"><div class="tip"></div></div>
+  <div class="legend" id="lg-phases"></div>
+  <div class="callout"><b>قفزة غير مبررة:</b> المرحلة الأولى ارتفعت <span class="num">+7.1</span> نقطة في مايو وحده، بينما بلوكاتها الأربعة ارتفعت بين <span class="num">0.6</span> و<span class="num">1.7</span> فقط. ثم <span class="num">+5.5</span> في يونيو. في أبريل كانت نسبة المرحلة أقل من متوسط بلوكاتها، ومن مايو صارت أعلى منه بـ5 إلى 8 نقاط.</div>
+</section>
+
+<!-- HEATMAP -->
+<section class="sheet" id="blocks" style="position:relative"><div class="tip"></div>
+  <div class="tb"><span class="dwg">DWG-04</span><h2>خريطة البلوكات</h2><span class="sub">16 بلوكاً × 8 نشرات</span></div>
+  <p class="lead">كل خلية نسبة إنجاز البلوك في ذلك الشهر، وكلما غمق اللون زاد الإنجاز. المس أي بلوك لتراه بالتفصيل في الأسفل.</p>
+  <div class="hm-scroll"><table class="hm" id="hm"></table></div>
+  <div class="hm-key">
+    <span class="ramp"><b style="background:var(--h1)"></b><b style="background:var(--h2)"></b><b style="background:var(--h3)"></b><b style="background:var(--h4)"></b><b style="background:var(--h5)"></b><b style="background:var(--h6)"></b></span><span>من 15% إلى 60%</span>
+    <span><span style="color:var(--crit)">▼</span> تراجعت النسبة</span>
+    <span><span style="color:var(--serious)">■</span> لم تتحرك تقريباً (أقل من 0.5)</span>
+    <span>المخطط = لا توجد نشرة</span>
+  </div>
+</section>
+
+<!-- MY BLOCK -->
+<section class="sheet" id="mine">
+  <div class="tb"><span class="dwg">DWG-05</span><h2>بلوكي</h2><span class="sub">اختر البلوك الذي فيه فيلتك</span></div>
+  <div class="picker"><label for="blk">البلوك:</label><select id="blk"></select><span class="note" id="blk-meta"></span></div>
+  <div class="mine">
+    <div class="mine-stats" id="mine-stats"></div>
+    <div class="chart" id="c-mine"><div class="tip"></div></div>
+  </div>
+  <div class="mine-log" id="mine-log"></div>
+</section>
+
+<!-- FORECAST -->
+<section class="sheet" id="forecast">
+  <div class="tb"><span class="dwg">DWG-06</span><h2>متى يكتمل كل بلوك؟</h2><span class="sub">تقدير بمعدل يناير–سبتمبر لكل بلوك</span></div>
+  <p class="lead">البلوكات التي تتقدم جيداً تحتاج بين سنة وسنتين. المشكلة في ثلاثة بلوكات معدلها قريب من الصفر، فلا يمكن تقدير موعدها بالوتيرة الحالية.</p>
+  <div class="fc" id="fc"></div>
+  <p class="note">التقدير خطي ويفترض ثبات المعدل. أعمال التشطيب عادة أبطأ من الهيكل، فالمواعيد الفعلية غالباً أبعد من هذه.</p>
+</section>
+
+<!-- FLAGS -->
+<section class="sheet" id="flags">
+  <div class="tb"><span class="dwg">DWG-07</span><h2>ما يحتاج تفسيراً</h2><span class="sub">مرتّبة حسب الخطورة</span></div>
+  <div class="flags" id="flag-list"></div>
+</section>
+
+<!-- TIMELINE -->
+<section class="sheet" id="timeline">
+  <div class="tb"><span class="dwg">DWG-08</span><h2>ما أُنجز فعلاً</h2><span class="sub">من نصوص النشرات</span></div>
+  <div class="tl" id="tl"></div>
+</section>
+
+<!-- QUESTIONS -->
+<section class="sheet" id="questions">
+  <div class="tb"><span class="dwg">DWG-09</span><h2>أسئلة للمطوّر</h2><span class="sub">اطلب الرد كتابياً</span></div>
+  <ol class="qs" id="qs"></ol>
+  <button class="btn" id="copy" type="button">نسخ الأسئلة</button>
+  <p class="note">بعد الرد، تحقق من نسب الإنجاز المعتمدة لدى منصة وافي (الهيئة العامة للعقار) وقارنها بهذه النشرات. ولا توقف أي دفعة من تلقاء نفسك قبل استشارة مختص.</p>
+</section>
+
+<footer>
+  <span>المصدر: نشرات Urbas Middle East الشهرية لمشروع Alborada Villas by ad home: أكتوبر 2025، ويناير وفبراير ومارس وأبريل ومايو ويونيو وأغسطس وسبتمبر 2026. نشرة يوليو غير متوفرة، ونشرة أكتوبر 2025 لا تذكر نسبة كلية.</span>
+  <span>التقديرات والتحليل من إعداد Claude للمالك، وليست بيانات رسمية. هذا ليس رأياً قانونياً أو مالياً.</span>
+</footer>
+</div>
+
+<script>
+(function(){
+const M = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر']; // idx 0..8 = Jan..Sep 2026
+const SRC = [0,1,2,3,4,5,7,8]; // months with a newsletter
+const overall = {0:21.19,1:22.13,2:23.71,3:24.87,4:25.42,5:26.60,7:28.44,8:29.35};
+const phases = [
+  {id:1,name:'المرحلة 1',units:106,c:'--s1',v:{0:40.50,1:46.14,2:47.00,3:48.50,4:55.56,5:61.10,7:62.70,8:63.50}},
+  {id:2,name:'المرحلة 2',units:88,c:'--s2',v:{0:31.50,1:38.06,2:43.00,3:44.50,4:47.50,5:50.15,7:52.00,8:53.50}},
+  {id:3,name:'المرحلة 3',units:80,c:'--s3',v:{0:29.00,1:37.40,2:38.00,3:41.70,4:44.70,5:45.05,7:46.40,8:47.50}},
+  {id:4,name:'المرحلة 4',units:86,c:'--s4',v:{0:17.00,1:20.50,2:26.00,3:26.50,4:28.50,5:33.20,7:34.70,8:34.70}}
+];
+const blocks = [
+  {b:1,p:1,u:26,v:[46.74,47.64,50.02,51.88,53.56,54.44,58.03,59.10],log:{'أبريل':'لياسة خارجية لـ20 فيلا وبدء أعمال السور','أغسطس':'اكتمال كل اللياسة الداخلية والدهان الداخلي','سبتمبر':'هيكل الجبس لـ40 دوراً وبدء سيراميك المناطق الرطبة'}},
+  {b:2,p:1,u:28,v:[42.59,45.28,46.26,48.93,50.29,52.63,56.13,56.45],log:{'يونيو':'لياسة خارجية لـ24 فيلا','أغسطس':'اكتمال الأسوار الخلفية والجانبية','سبتمبر':'اكتمال الدهان الداخلي، وتكرار ذكر لياسة 24 فيلا خارجياً'}},
+  {b:3,p:1,u:26,v:[42.33,43.75,46.52,49.30,50.22,51.93,54.95,57.23],log:{'يونيو':'لياسة داخلية لكل الأدوار الأولى','أغسطس':'اكتمال كل اللياسة الداخلية','سبتمبر':'دهان داخلي كامل وهيكل جبس لـ20 فيلا'}},
+  {b:5,p:1,u:26,v:[38.18,41.50,43.58,48.52,49.92,51.71,55.06,56.65],log:{'أبريل':'اكتمال المباني لكل الأدوار','أغسطس':'لياسة ودهان داخلي لـ62 دوراً','سبتمبر':'دهان لـ22 فيلا وهيكل جبس لـ20 فيلا'}},
+  {b:4,p:2,u:12,v:[38.02,42.89,44.37,44.87,45.71,48.50,54.80,58.13],log:{'مارس':'اكتمال كل أعمال المباني','أغسطس':'لياسة داخلية لـ18 دوراً','سبتمبر':'لياسة داخلية لـ27 دوراً ومباني الأسوار الأمامية'}},
+  {b:6,p:2,u:32,v:[35.89,39.41,43.04,43.56,44.84,47.89,52.28,54.21],log:{'أبريل':'اكتمال المباني وبدء الأسوار','أغسطس':'صب وعزل قواعد الأسوار الأمامية','سبتمبر':'لياسة داخلية لـ36 دوراً'}},
+  {b:7,p:2,u:16,v:[31.84,41.20,42.70,44.78,45.03,48.05,55.35,56.66],log:{'أبريل':'اكتمال كل أعمال المباني','أغسطس':'لياسة داخلية لـ24 دوراً','سبتمبر':'لياسة لـ36 دوراً ومباني الأسوار الأمامية'}},
+  {b:8,p:2,u:28,v:[34.98,39.68,41.48,43.25,43.80,46.46,50.48,52.46],log:{'مارس':'اكتمال الخرسانة لكل الفلل','أغسطس':'بدء اللياسة الخارجية','سبتمبر':'لياسة داخلية لـ36 دوراً'}},
+  {b:9,p:3,u:10,v:[26.94,33.08,39.38,42.45,43.80,43.95,50.40,53.35],log:{'أبريل':'اكتمال أسقف الملحق','أغسطس':'اكتمال التأسيسات لكل الفلل','سبتمبر':'اكتمال اللياسة الداخلية لكل الفلل'}},
+  {b:10,p:3,u:18,v:[29.88,34.46,38.20,41.27,42.23,43.95,45.96,50.58],log:{'يونيو':'اكتمال مباني الملحق','أغسطس':'اكتمال الطبانات','سبتمبر':'اكتمال التأسيسات وقواعد السور'}},
+  {b:12,p:3,u:16,v:[27.80,34.01,28.38,29.51,30.42,31.51,32.53,34.89],log:{'مارس':'النسبة تراجعت من 34.01 إلى 28.38 دون تفسير','يونيو':'اكتمال مباني الملحق','سبتمبر':'عزل وردم قواعد السور'}},
+  {b:13,p:3,u:10,v:[33.65,40.70,42.25,43.95,44.20,44.20,49.60,50.73],log:{'أبريل':'اكتمال كل المباني','أغسطس':'اكتمال التأسيسات','سبتمبر':'بدء اللياسة الداخلية'}},
+  {b:14,p:3,u:10,v:[41.65,43.45,44.20,44.45,44.45,44.45,48.56,52.30],log:{'يونيو':'نفس نسبة أبريل بالضبط (44.45)','أغسطس':'اكتمال التأسيسات','سبتمبر':'لياسة داخلية لـ6 فلل'}},
+  {b:15,p:3,u:16,v:[17.51,21.26,22.81,22.85,22.94,22.94,23.28,23.61],log:{'أبريل':'اكتمال صب الطبانات','أغسطس':'اكتمال قواعد السور','سبتمبر':'عزل قواعد السور، والنسبة شبه ثابتة منذ مارس'}},
+  {b:22,p:4,u:38,v:[23.86,26.16,32.04,35.53,37.23,42.78,44.17,44.17],log:{'يونيو':'المباني قاربت الاكتمال','أغسطس':'اكتمال كل الطبانات','سبتمبر':'لا تقدم مسجل، وصفحة البلوك بلا وصف'}},
+  {b:23,p:4,u:48,v:[17.42,19.10,19.50,19.50,null,null,19.88,19.88],log:{'فبراير':'صب أعمدة الدور الأرضي لـ37 فيلا','يونيو':'بدء المباني لـ6 فلل فقط','سبتمبر':'النسبة شبه ثابتة منذ مارس، والصور ما زالت للدور الأرضي'}}
+];
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const ymLabel = m => { const d=new Date(2026, 8+m, 1); const mm=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][d.getMonth()]; return mm+' '+d.getFullYear(); };
+
+function tipper(box){const t=box.querySelector('.tip');return{show(x,y,h){t.innerHTML=h;t.style.left=x+'px';t.style.top=y+'px';t.classList.add('on')},hide(){t.classList.remove('on')}}}
+
+/* ---------- generic line chart ---------- */
+function lineChart(boxId,{series,xMin,xMax,yMin,yMax,xTicks,yTicks,h=300,proj}){
+  const box=document.getElementById(boxId); const T=tipper(box);
+  const W=900,H=h,pl=44,pr=16,pt=14,pb=34;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img',direction:'ltr'});
+  box.insertBefore(svg,box.firstChild);
+  const X=v=>pl+(v-xMin)/(xMax-xMin)*(W-pl-pr), Y=v=>H-pb-(v-yMin)/(yMax-yMin)*(H-pt-pb);
+  const g=el('g',{class:'axis'},svg);
+  yTicks.forEach(v=>{el('line',{x1:pl,x2:W-pr,y1:Y(v),y2:Y(v),class:'gridline'},g);const t=el('text',{x:pl-8,y:Y(v)+4,'text-anchor':'end'},g);t.textContent=v+'%'});
+  const ga=el('g',{class:'axis-ar'},svg);
+  xTicks.forEach(([v,l])=>{const t=el('text',{x:X(v),y:H-10,'text-anchor':'middle'},ga);t.textContent=l});
+  if(proj) proj.forEach(p=>{el('path',{d:`M${X(p.x0)},${Y(p.y0)}L${X(p.x1)},${Y(p.y1)}`,stroke:css(p.c),'stroke-width':2,'stroke-dasharray':'5 5',fill:'none'},svg);
+    if(p.label){const t=el('text',{x:X(p.x1)-4,y:Y(p.y1)+(p.dy||0),'text-anchor':'end',fill:css('--ink-2'),'font-size':12,'font-family':css('--f-body')},svg);t.textContent=p.label}});
+  series.forEach(s=>{
+    const pts=Object.keys(s.v).map(Number).sort((a,b)=>a-b).filter(k=>s.v[k]!=null);
+    el('path',{d:pts.map((k,i)=>(i?'L':'M')+X(k)+','+Y(s.v[k])).join(''),stroke:css(s.c),'stroke-width':s.w||2,fill:'none','stroke-linejoin':'round'},svg);
+    pts.forEach((k,i)=>{const last=i===pts.length-1;el('circle',{cx:X(k),cy:Y(s.v[k]),r:last?5:3.5,fill:css(s.c),stroke:css('--paper'),'stroke-width':2},svg);
+      if(last&&s.label){const t=el('text',{x:X(k)+8,y:Y(s.v[k])+4,fill:css('--ink'),'font-size':12,'font-family':css('--f-num')},svg);t.textContent=s.label}});
+    (s.gaps||[]).forEach(k=>{const a=k-1,b=k+1;const y=(s.v[a]+s.v[b])/2;el('circle',{cx:X(k),cy:Y(y),r:4,fill:css('--paper'),stroke:css('--ink-3'),'stroke-width':1.5,'stroke-dasharray':'2 2'},svg)});
+  });
+  // hover
+  const hit=el('rect',{x:pl,y:pt,width:W-pl-pr,height:H-pt-pb,fill:'transparent'},svg);
+  const cross=el('line',{y1:pt,y2:H-pb,stroke:css('--ink-3'),'stroke-width':1,opacity:0},svg);
+  hit.addEventListener('pointermove',e=>{const r=svg.getBoundingClientRect();const sx=(e.clientX-r.left)/r.width*W;let k=Math.round(xMin+(sx-pl)/(W-pl-pr)*(xMax-xMin));
+    const avail=series.filter(s=>s.v[k]!=null); if(!avail.length||k<0||k>8){cross.setAttribute('opacity',0);T.hide();return}
+    cross.setAttribute('x1',X(k));cross.setAttribute('x2',X(k));cross.setAttribute('opacity',.6);
+    const top=Math.max(...avail.map(s=>s.v[k]));
+    T.show(X(k)/W*r.width,Y(top)/H*r.height,`<b>${M[k]} 2026</b><br>`+avail.map(s=>`${s.name}: <span class="num">${s.v[k].toFixed(2)}%</span>`).join('<br>'))});
+  hit.addEventListener('pointerleave',()=>{cross.setAttribute('opacity',0);T.hide()});
+}
+
+/* ---------- 1. overall ---------- */
+function drawOverall(){
+  const box=document.getElementById('c-overall'); box.querySelector('svg')?.remove();
+  const end=8+69, end2=8+77;
+  lineChart('c-overall',{series:[{name:'الكلي',c:'--site',w:2.5,v:overall,gaps:[6],label:'29.35%'}],
+    xMin:0,xMax:end2+2,yMin:0,yMax:100,yTicks:[0,25,50,75,100],
+    xTicks:[[0,'يناير 2026'],[12,'2027'],[24,'2028'],[36,'2029'],[48,'2030'],[60,'2031'],[72,'2032'],[84,'2033']],
+    proj:[{x0:8,y0:29.35,x1:end,y1:100,c:'--s1',label:'يونيو 2032',dy:-8},{x0:8,y0:29.35,x1:end2,y1:100,c:'--s2',label:'فبراير 2033',dy:18}],h:280});
+}
+
+/* ---------- 2. pace bars ---------- */
+function drawPace(){
+  const box=document.getElementById('c-pace'); box.querySelector('svg')?.remove(); const T=tipper(box);
+  const data=[['يناير←فبراير',0.94,1],['فبراير←مارس',1.58,1],['مارس←أبريل',1.16,1],['أبريل←مايو',0.55,1],['مايو←يونيو',1.18,1],['يونيو←أغسطس',0.92,2],['أغسطس←سبتمبر',0.91,1]];
+  const W=900,H=220,pl=44,pr=10,pt=16,pb=40,max=1.8;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,direction:'ltr'}); box.insertBefore(svg,box.firstChild);
+  const Y=v=>H-pb-v/max*(H-pt-pb); const bw=(W-pl-pr)/data.length;
+  const g=el('g',{class:'axis'},svg);
+  [0,0.5,1,1.5].forEach(v=>{el('line',{x1:pl,x2:W-pr,y1:Y(v),y2:Y(v),class:'gridline'},g);const t=el('text',{x:pl-8,y:Y(v)+4,'text-anchor':'end'},g);t.textContent=v});
+  const avg=(v,c,l)=>{el('line',{x1:pl,x2:W-pr,y1:Y(v),y2:Y(v),stroke:css(c),'stroke-dasharray':'4 4','stroke-width':1.5},svg)};
+  data.forEach(([l,v,n],i)=>{const x=pl+i*bw+bw*.22,w=bw*.56;const late=i>=3;
+    const r=el('path',{d:`M${x},${Y(0)}V${Y(v)+4}Q${x},${Y(v)} ${x+4},${Y(v)}H${x+w-4}Q${x+w},${Y(v)} ${x+w},${Y(v)+4}V${Y(0)}Z`,fill:css(late?'--s2':'--s1')},svg);
+    const t=el('text',{x:x+w/2,y:Y(v)-6,'text-anchor':'middle',fill:css('--ink'),'font-size':12,'font-family':css('--f-num')},svg);t.textContent=v.toFixed(2);
+    const t2=el('text',{x:x+w/2,y:H-14,'text-anchor':'middle',fill:css('--ink-3'),'font-size':11,'font-family':css('--f-body')},svg);t2.textContent=l;
+    const hit=el('rect',{x:pl+i*bw,y:pt,width:bw,height:H-pt-pb,fill:'transparent'},svg);
+    hit.addEventListener('pointerenter',()=>{const rr=svg.getBoundingClientRect();T.show((x+w/2)/W*rr.width,Y(v)/H*rr.height,`${l}<br><span class="num">${v.toFixed(2)}</span> نقطة/شهر${n>1?'<br>(متوسط شهرين، نشرة ناقصة)':''}`)});
+    hit.addEventListener('pointerleave',T.hide);
+  });
+}
+
+/* ---------- 3. phases ---------- */
+function drawPhases(){
+  const box=document.getElementById('c-phases'); box.querySelector('svg')?.remove();
+  lineChart('c-phases',{series:phases.map(p=>({name:p.name,c:p.c,v:p.v,label:p.v[8].toFixed(1)+'%'})),xMin:0,xMax:8.9,yMin:0,yMax:70,yTicks:[0,20,40,60],
+    xTicks:[0,1,2,3,4,5,6,7,8].map(k=>[k,M[k]]),h:300});
+  document.getElementById('lg-phases').innerHTML=phases.map(p=>`<span><i style="background:var(${p.c})"></i>${p.name} · <span class="num">${p.units}</span> وحدة</span>`).join('');
+}
+
+/* ---------- 4. heatmap ---------- */
+const shade=v=>{if(v==null)return null;const s=['--h1','--h2','--h3','--h4','--h5','--h6'];const i=Math.max(0,Math.min(5,Math.floor((v-15)/8)));return s[i]};
+function drawHeat(sel){
+  const t=document.getElementById('hm'); const T=tipper(document.getElementById('blocks'));
+  let h='<thead><tr><th class="bl">البلوك</th>'+SRC.map(k=>`<th>${M[k]}</th>`).join('')+'</tr></thead><tbody>';
+  let lastP=0;
+  blocks.forEach(b=>{
+    if(b.p!==lastP){lastP=b.p;h+=`<tr class="ph"><td class="phlbl" colspan="9">${phases[b.p-1].name}</td></tr>`}
+    h+=`<tr data-b="${b.b}" class="${b.b==sel?'sel':''}"><th class="bl">بلوك ${b.b}<small>${b.u} وحدة</small></th>`;
+    b.v.forEach((v,i)=>{
+      if(v==null){h+=`<td class="na">—</td>`;return}
+      let prev=null;for(let j=i-1;j>=0;j--){if(b.v[j]!=null){prev=b.v[j];break}}
+      const d=prev==null?null:v-prev; const cls=d!=null&&d<0?'down':(d!=null&&d<0.5?'flat':'');
+      const sh=shade(v); const dark=['--h4','--h5','--h6'].includes(sh);
+      h+=`<td class="${cls}" data-b="${b.b}" data-m="${SRC[i]}" data-v="${v}" data-d="${d==null?'':d.toFixed(2)}" style="background:var(${sh});color:${dark?'#fff':'var(--ink)'}">${v.toFixed(1)}</td>`;
+    });
+    h+='</tr>';
+  });
+  t.innerHTML=h+'</tbody>';
+  const sec=document.getElementById('blocks');
+  t.querySelectorAll('td[data-v]').forEach(td=>{
+    td.addEventListener('pointerenter',()=>{const r=td.getBoundingClientRect(),s=sec.getBoundingClientRect();const d=td.dataset.d;
+      T.show(r.left-s.left+r.width/2,r.top-s.top,`بلوك ${td.dataset.b} · ${M[td.dataset.m]}<br><span class="num">${(+td.dataset.v).toFixed(2)}%</span>${d!==''?` · تغيّر <span class="num">${d>0?'+':''}${d}</span>`:''}`)});
+    td.addEventListener('pointerleave',T.hide);
+  });
+  t.querySelectorAll('tr[data-b]').forEach(tr=>tr.addEventListener('click',()=>pick(+tr.dataset.b,true)));
+}
+
+/* ---------- forecast ---------- */
+function rate(b){const a=b.v[0],z=b.v[b.v.length-1];return (z-a)/8}
+function eta(b){const r=rate(b);if(r<0.8)return null;return Math.round((100-b.v[b.v.length-1])/r)}
+function drawForecast(sel){
+  const rows=blocks.map(b=>({b,r:rate(b),m:eta(b)})).sort((x,y)=>(x.m??999)-(y.m??999));
+  const maxM=60;
+  let h='<div class="fc-axis"><span></span><div class="t"><span>الآن</span><span>2027</span><span>2028</span><span>2029</span><span>2030</span><span>2031+</span></div><span></span></div>';
+  rows.forEach(({b,r,m})=>{
+    const w=m==null?100:Math.min(100,m/maxM*100);
+    const col=m==null?'var(--crit)':(m>30?'var(--serious)':'var(--site)');
+    const lbl=m==null?'غير ممكن':(m>maxM?ymLabel(m).replace(/^\S+ /,''):ymLabel(m));
+    h+=`<div class="fc-row ${b.b==sel?'sel':''}" data-b="${b.b}" role="button" tabindex="0"><span>بلوك ${b.b}</span><div class="fc-track"><div class="fc-bar" style="width:${w}%;background:${col};${m==null?'opacity:.35;background:repeating-linear-gradient(45deg,var(--crit) 0 4px,transparent 4px 8px)':''}"></div></div><span class="fc-year">${lbl}</span></div>`;
+  });
+  const fc=document.getElementById('fc');fc.innerHTML=h;
+  fc.querySelectorAll('.fc-row').forEach(r=>{const go=()=>pick(+r.dataset.b,true);r.addEventListener('click',go);r.addEventListener('keydown',e=>{if(e.key==='Enter')go()})});
+}
+
+/* ---------- my block ---------- */
+function drawMine(n){
+  const b=blocks.find(x=>x.b===n), ph=phases[b.p-1], r=rate(b), m=eta(b);
+  document.getElementById('blk-meta').textContent=`${ph.name} · ${b.u} وحدة`;
+  const all=blocks.map(x=>x.v[x.v.length-1]).sort((a,c)=>c-a); const rank=all.indexOf(b.v[b.v.length-1])+1;
+  const st=r<0.8?'<span class="chip crit"><i></i>متعثر</span>':r<1.6?'<span class="chip ser"><i></i>بطيء</span>':'<span class="chip good"><i></i>يتقدم جيداً</span>';
+  document.getElementById('mine-stats').innerHTML=`
+    <div class="ms"><div class="k">الإنجاز (سبتمبر)</div><div class="v num">${b.v[b.v.length-1].toFixed(2)}%</div></div>
+    <div class="ms"><div class="k">المعدل الشهري</div><div class="v num">${r.toFixed(2)}</div></div>
+    <div class="ms"><div class="k">الترتيب بين 16 بلوكاً</div><div class="v num">${rank} / 16</div></div>
+    <div class="ms"><div class="k">الاكتمال المتوقع</div><div class="v ar">${m==null?'غير ممكن تقديره':ymLabel(m)}</div></div>
+    <div style="grid-column:1/-1">${st}</div>`;
+  const box=document.getElementById('c-mine'); box.querySelector('svg')?.remove();
+  const v={},pv={};SRC.forEach((k,i)=>{v[k]=b.v[i]});phases[b.p-1]&&SRC.forEach(k=>pv[k]=ph.v[k]);
+  lineChart('c-mine',{series:[{name:'بلوك '+b.b,c:'--site',w:2.5,v,label:b.v[b.v.length-1].toFixed(1)+'%'},{name:ph.name+' (معلن)',c:ph.c,w:1.5,v:pv}],xMin:0,xMax:8.9,yMin:0,yMax:70,yTicks:[0,20,40,60],xTicks:[[0,'يناير'],[3,'أبريل'],[5,'يونيو'],[8,'سبتمبر']],h:230});
+  document.getElementById('mine-log').innerHTML='<div style="font-weight:600;color:var(--ink)">آخر ما ذكرته النشرات عن هذا البلوك</div>'+Object.entries(b.log).map(([k,t])=>`<div><span>${k}</span><p>${t}</p></div>`).join('');
+}
+function pick(n,scroll){
+  try{localStorage.setItem('alb-blk',n)}catch(e){}
+  document.getElementById('blk').value=n; drawHeat(n); drawForecast(n); drawMine(n);
+  if(scroll) document.getElementById('mine').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+}
+
+/* ---------- flags ---------- */
+const flags=[
+ ['crit','قفزة المرحلة الأولى','في مايو وحده ارتفعت نسبة المرحلة 7.1 نقطة، بينما بلوكاتها الأربعة ارتفعت 1.3 نقطة في المتوسط. ثم 5.5 نقطة أخرى في يونيو. لا يوجد في النشرات ما يفسر الفرق.','Phase 1: Apr 48.50 → May 55.56 → Jun 61.10 | Blocks Apr→May: +1.68 / +1.36 / +0.92 / +1.40'],
+ ['crit','بلوك 23 متوقف منذ مارس','48 وحدة، وهو أكبر بلوك في المشروع. زاد 0.38 نقطة فقط في 6 أشهر، وصور سبتمبر ما زالت لأسقف وأعمدة الدور الأرضي.','Mar 19.50 → Apr 19.50 → Aug 19.88 → Sep 19.88'],
+ ['crit','بلوك 15 شبه متوقف','نصوص النشرات تذكر إنجازات كل شهر، لكن النسبة زادت 0.8 نقطة فقط منذ مارس.','Mar 22.81 → Jun 22.94 → Sep 23.61'],
+ ['crit','بلوك 12 رجع للخلف','النسبة نزلت 5.6 نقطة في مارس دون أي تفسير، ونسبته اليوم تقريباً نفس رقم فبراير.','Feb 34.01 → Mar 28.38 → Sep 34.89'],
+ ['ser','الوتيرة تتباطأ','متوسط الزيادة الشهرية نزل من 1.23 إلى 0.92 نقطة، مع أن المشروع دخل مرحلة التشطيبات التي عادة تحتاج وقتاً أطول.','Jan–Apr 1.23/mo → Jun–Sep 0.92/mo (−25%)'],
+ ['ser','المرحلة الرابعة لا تطابق بلوكيها','ارتفعت 6.7 نقطة بين أبريل ويونيو، بينما بلوك 23 لم يتحرك. حسب بلوك 22 وحده المفترض حوالي 3.2. وفي سبتمبر لم تتغير إطلاقاً.','Phase 4: Apr 26.5 → Jun 33.2 | B22 +7.25, B23 ≈ 0 | Sep: 34.70 = Aug'],
+ ['ser','النسبة الكلية لا تطابق المراحل','متوسط المراحل الأربع حسب عدد الوحدات حوالي 50.6%، والنسبة الكلية المعلنة 29.35%. النشرات لا تشرح ما تشمله النسبة الكلية.','Weighted phases Sep ≈ 50.6% vs overall 29.35%'],
+ ['ser','بيان تسليم بلا موعد','كل نشرة تبدأ بصفحة عنوانها "بيان تسليم المشروع"، لكنها لا تذكر أي تاريخ تسليم ولا نسبة مخططة.','“Project Delivery Statement” — no date in 7 issues'],
+ ['ser','أرقام مكررة حرفياً','نسبة بلوك 14 هي 44.45% في أبريل ومايو ويونيو، رغم ذكر صب الباربت في مايو. وبلوك 13 بقي 44.20% وبلوك 15 بقي 22.94% في مايو ويونيو. التكرار الحرفي لثلاثة أشهر يثير سؤالاً عن تحديث الأرقام فعلاً.','B14: Apr = May = Jun = 44.45 | B13: May = Jun = 44.20 | B15: May = Jun = 22.94'],
+ ['ser','نص مكرر من يناير','ملخص مايو ويونيو يقول إن المرحلة الرابعة شهدت "الانتهاء من جميع اللبشات والبدء بصب الأعمدة"، وهذا حدث فعلاً في يناير. الملخص نُسخ دون تحديث.','Jan: all rafts done | May & Jun summaries repeat the same sentence'],
+ ['warn','نشرة يوليو ناقصة','لا توجد نشرة لشهر يوليو.','Missing: Jul 2026'],
+ ['warn','أخطاء تحرير متكررة','صفحة بلوك 6 معنونة "Phase 1 / Block 5" في 4 نشرات، وصورة الغلاف الجوية نفسها في مايو ويونيو وأغسطس وسبتمبر.','B6 page title wrong ×4 | same cover photo ×4']
+];
+function drawFlags(){
+  const lab={crit:['crit','حرج'],ser:['ser','مهم'],warn:['warn','للمتابعة']};
+  document.getElementById('flag-list').innerHTML=flags.map(([s,t,p,e])=>`<article class="flag ${s}"><span class="chip ${lab[s][0]}"><i></i>${lab[s][1]}</span><h3>${t}</h3><p>${p}</p><div class="ev">${e}</div></article>`).join('')+
+  `<article class="flag ser"><span class="chip ser"><i></i>سياق خارجي</span><h3>وضع الشركة الأم</h3><p>تقارير صحفية إسبانية تشير إلى أن Urbas Grupo Financiero (المجموعة الأم) دخلت إجراءات إعسار منذ 2025. أورباس الشرق الأوسط كيان سعودي مستقل، وأموال المشترين يُفترض أنها في حساب ضمان، لكن الأمر يستحق سؤال المطوّر مباشرة.</p><div class="ev">Source: Spanish press 2025–2026 · verify independently</div></article>`;
+}
+
+/* ---------- timeline ---------- */
+const tl=[
+ ['أكتوبر 2025','المرحلة 1: اكتمال أسقف الدور الأرضي وصب 80% من أعمدة الأول. المرحلة 2: 88% من القواعد. المرحلة 3: تسوية 27% من الأرض. المرحلة 4: بداية الأعمال (7%).'],
+ ['يناير 2026','اكتمال كل لبشات المرحلة 4، واكتمال أعمدة وأسقف الملحق لكل فلل المرحلة 1 (106 فلل).'],
+ ['فبراير','اكتمال الخرسانة في بلوكات 2 و4 و7. المرحلة 3 تنهي مباني الدور الأرضي بالكامل.'],
+ ['مارس','اكتمال الخرسانة لكل فلل المرحلة 2 (88 فيلا). تركيب التكييف في فيلا العرض.'],
+ ['أبريل','افتتاح فيلا العرض للزوار. اكتمال كل أعمال المباني في المرحلة 1.'],
+ ['مايو','اكتمال تأسيسات الكهرباء والميكانيكا في المرحلة 1. اكتمال المباني والباربت والخزانات في المرحلة 2. صب أسقف الملحق لكل فلل المرحلة 3 وبلوك 22.'],
+ ['يونيو','اكتمال المباني في المرحلة 3 بالكامل، واكتمال مباني بلوك 22.'],
+ ['يوليو','لا توجد نشرة.',1],
+ ['أغسطس','بدء تركيب سيراميك الحوائط في المرحلة 1. اكتمال الطبانات في بلوك 22.'],
+ ['سبتمبر','اكتمال اللياسة والدهان الداخلي للأدوار الأرضية والأولى في المرحلة 1، وتأسيسات الكهرباء والميكانيكا لـ50 فيلا في المرحلة 3.']
+];
+function drawTl(){document.getElementById('tl').innerHTML=tl.map(([m,t,g])=>`<div class="tl-i ${g?'gap':''}"><div class="m">${m}</div><p>${t}</p></div>`).join('')}
+
+/* ---------- questions ---------- */
+const qs=[
+ 'ما موعد التسليم التعاقدي لفيلتي باليوم؟ وما النسبة المخططة لكل شهر مقابل الفعلية؟',
+ 'كيف ارتفعت نسبة المرحلة الأولى 7.1 نقطة في مايو 2026 وحده، بينما بلوكاتها ارتفعت 1.3 نقطة في المتوسط؟',
+ 'لماذا تراجعت نسبة بلوك 12 من 34.01% في فبراير إلى 28.38% في مارس؟',
+ 'ما سبب توقف بلوكي 15 و23 تقريباً منذ مارس 2026، وما خطة استئنافهما وتاريخها؟',
+ 'ماذا تشمل النسبة الكلية للمشروع (29.35%)، ولماذا هي أقل بكثير من متوسط المراحل الأربع؟',
+ 'لماذا تكررت نفس النسب حرفياً لبلوكات 13 و14 و15 بين أبريل ويونيو؟ وأين نشرة يوليو؟',
+ 'ما اسم المكتب الاستشاري المعتمد، وهل يمكن تزويدي بآخر تقرير إنجاز معتمد منه ومن منصة وافي؟',
+ 'هل لإجراءات الإعسار الخاصة بالشركة الأم في إسبانيا أي أثر على تمويل المشروع أو جدوله؟'
+];
+function drawQs(){
+  document.getElementById('qs').innerHTML=qs.map(q=>`<li>${q}</li>`).join('');
+  const b=document.getElementById('copy');
+  b.addEventListener('click',()=>{const txt='أسئلة بخصوص مشروع البورادا فيلا:\n'+qs.map((q,i)=>`${i+1}. ${q}`).join('\n');
+    const done=()=>{b.textContent='تم النسخ';setTimeout(()=>b.textContent='نسخ الأسئلة',1800)};
+    navigator.clipboard?.writeText(txt).then(done).catch(()=>{const r=document.createRange();r.selectNodeContents(document.getElementById('qs'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='حدّد النص وانسخه'})});
+}
+
+/* ---------- boot ---------- */
+const sel=document.getElementById('blk');
+sel.innerHTML=blocks.map(b=>`<option value="${b.b}">بلوك ${b.b}</option>`).join('');
+sel.addEventListener('change',()=>pick(+sel.value,false));
+let start=1;try{const s=+localStorage.getItem('alb-blk');if(blocks.some(b=>b.b===s))start=s}catch(e){}
+function all(){drawOverall();drawPace();drawPhases();pick(+sel.value||start,false)}
+sel.value=start; drawFlags(); drawTl(); drawQs(); all();
+matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',all);
+new MutationObserver(all).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+})();
+</script>
+</body></html>
