@@ -868,11 +868,13 @@ async function copy(t){try{await navigator.clipboard.writeText(t);return true}ca
 const NOCOPY='تعذّر النسخ؛ انسخ الرابط من شريط العنوان';
 
 /* ================= settings ================= */
-const DEF={toured:false,block:null,theme:'auto',size:'m',density:'comfy',digits:'latin',order:PANELS.map(p=>p[0]),hidden:[],open:{},welcomed:false};
+const DEF={toured:false,urlBlock:null,block:null,theme:'auto',size:'m',density:'comfy',digits:'latin',order:PANELS.map(p=>p[0]),hidden:[],open:{},welcomed:false};
 let S=Object.assign({},DEF);
 try{const s=JSON.parse(localStorage.getItem('alb-set')||'null');if(s)S=Object.assign({},DEF,s)}catch(e){}
-try{const old=+localStorage.getItem('alb-blk');if(!S.block&&blocks.some(b=>b.b===old))S.block=old}catch(e){}
-const qp=new URLSearchParams(location.search);const qb=+qp.get('block');if(blocks.some(b=>b.b===qb)){S.block=qb;S.welcomed=true}
+/* one-time migration of the old 'my block' key, then remove it so it can never bring a cleared choice back */
+try{const old=+localStorage.getItem('alb-blk');if(old&&!localStorage.getItem('alb-set')&&blocks.some(b=>b.b===old))S.block=old;localStorage.removeItem('alb-blk')}catch(e){}
+/* a ?block= link applies once; if the same link is reopened after the viewer cleared or changed the block, their choice wins */
+const qp=new URLSearchParams(location.search);const qb=+qp.get('block');if(blocks.some(b=>b.b===qb)&&qb!==S.urlBlock){S.block=qb;S.urlBlock=qb;S.welcomed=true;try{localStorage.setItem('alb-set',JSON.stringify(S))}catch(e){}}
 const known=id=>PANELS.some(p=>p[0]===id);
 S.order=(S.order||[]).filter(known);S.hidden=(S.hidden||[]).filter(known);
 PANELS.forEach((p,i)=>{if(!S.order.includes(p[0]))S.order.splice(Math.min(i,S.order.length),0,p[0])});
@@ -1189,7 +1191,7 @@ function drawDeep(){
 function opts(id,name,list,cur,on){$(id).innerHTML=list.map(([v,l])=>`<label><input type="radio" name="${name}" id="${name}-${v}" value="${v}" ${v===cur?'checked':''}><span>${l}</span></label>`).join('');$(id).querySelectorAll('input').forEach(i=>i.onchange=()=>on(i.value))}
 function buildSettings(){
   $('#setBlock').innerHTML='<option value="">لا شيء</option>'+blocks.map(b=>`<option value="${b.b}" ${b.b===S.block?'selected':''}>بلوك ${b.b}</option>`).join('');
-  $('#setBlock').onchange=e=>{const v=+e.target.value;if(v)setBlock(v);else{S.block=null;save();syncURL();drawMine();drawBlocks()}};
+  $('#setBlock').onchange=e=>{const v=+e.target.value;if(v)setBlock(v);else{S.block=null;save();syncURL();drawMine();drawBlocks();refreshExplains();toast('أُلغي اختيار البلوك')}};
   opts('#setTheme','th',[['light','فاتح'],['dark','داكن'],['auto','تلقائي']],S.theme,v=>{S.theme=v;save();applyLook();redraw()});
   opts('#setSize','sz',[['s','صغير'],['m','متوسط'],['l','كبير']],S.size,v=>{S.size=v;save();applyLook();redraw()});
   opts('#setDensity','dn',[['comfy','مريح'],['compact','مضغوط']],S.density,v=>{S.density=v;save();applyLook()});
@@ -1203,7 +1205,7 @@ function buildSettings(){
     r.addEventListener('dragstart',e=>{r.classList.add('drag');e.dataTransfer.setData('text/plain',id)});r.addEventListener('dragend',()=>r.classList.remove('drag'));
     r.addEventListener('dragover',e=>e.preventDefault());
     r.addEventListener('drop',e=>{e.preventDefault();const from=e.dataTransfer.getData('text/plain');if(!from||from===id)return;S.order.splice(S.order.indexOf(from),1);S.order.splice(S.order.indexOf(id),0,from);S.order=S.order.filter(x=>x!=='wafi').concat('wafi');save();layoutPanels();buildSettings()})});
-  $('#reset').onclick=()=>{const keep=S.block;S=Object.assign({},DEF,{order:PANELS.map(p=>p[0]),hidden:[],open:{},block:keep,welcomed:true});save();applyLook();layoutPanels();buildSettings();renderAll();toast('أُعيدت الإعدادات الافتراضية')};
+  $('#reset').onclick=()=>{const keep=S.block;S=Object.assign({},DEF,{order:PANELS.map(p=>p[0]),hidden:[],open:{},block:keep,urlBlock:S.urlBlock,toured:S.toured,welcomed:true});save();applyLook();layoutPanels();buildSettings();renderAll();toast('أُعيدت الإعدادات الافتراضية')};
   digits($('#dSet'));
 }
 
