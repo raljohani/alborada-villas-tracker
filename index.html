@@ -497,12 +497,13 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
 
 /* ---------- v12: compact estimate, notes, balanced grids ---------- */
 .mm.eta{padding:var(--s-3) var(--s-4)}
+.mm .v{display:block}
 .mm.eta .v{font-size:var(--t-lg)}
 .stamp{top:var(--s-2);inset-inline-end:var(--s-2);padding:0 8px;line-height:1.45}
-.eta-line{margin-top:var(--s-2);display:flex;flex-wrap:wrap;align-items:center;gap:4px var(--s-2);font-size:var(--t-sm);color:var(--ink-2);background:var(--sheet);border-radius:var(--r-2);padding:var(--s-2) var(--s-3);border-inline-start:3px solid var(--warn-m)}
-.eta-line .ico{color:var(--warn);width:18px;height:18px}
+.eta-line{margin-top:var(--s-2);display:grid;grid-template-columns:18px minmax(0,1fr);align-items:start;gap:0 var(--s-2);font-size:var(--t-sm);color:var(--ink-2);background:var(--sheet);border-radius:var(--r-2);padding:var(--s-2) var(--s-3);border-inline-start:3px solid var(--warn-m)}
+.eta-line .ico{color:var(--warn);width:18px;height:18px;margin-top:4px}
 .eta-line b{color:var(--ink)}
-.eta-why{flex-basis:100%}
+.eta-why{grid-column:2}
 .eta-why summary{display:inline-flex;align-items:center;min-height:32px;color:var(--site);font-weight:700;cursor:pointer;list-style:none}
 .eta-why summary::-webkit-details-marker{display:none}
 .eta-why summary::after{content:"▾";margin-inline-start:6px;font-size:12px}
