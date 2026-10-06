@@ -146,6 +146,24 @@ ol.qs{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:
 ol.qs li{padding-inline-start:4px}
 .btn{font:inherit;font-weight:600;font-size:14px;background:var(--site);color:var(--paper);border:0;border-radius:3px;padding:9px 16px;cursor:pointer;align-self:flex-start}
 .btn:hover{filter:brightness(1.08)}
+.updated{font-size:13px;color:var(--ink-2);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.updated b{color:var(--ink)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0;padding:0;list-style:none;counter-reset:st}
+.steps li{counter-increment:st;display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--ink-2);min-width:0}
+.steps li::before{content:counter(st);font-weight:700;font-size:13px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--site-soft);color:var(--site)}
+.steps b{color:var(--ink)}
+.disc{border:1px solid var(--rule);border-inline-start:3px solid var(--site);padding:10px 14px;font-size:13px;color:var(--ink-2);background:var(--paper)}
+.gal-h{font-weight:600;font-size:14px;color:var(--ink);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.gal{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
+.gal button{flex:0 0 auto;width:170px;border:1px solid var(--rule);background:var(--bg);border-radius:3px;padding:0;cursor:zoom-in;scroll-snap-align:start;display:flex;flex-direction:column;font:inherit;color:var(--ink)}
+.gal img{width:100%;height:120px;object-fit:cover;object-position:top;display:block;border-radius:3px 3px 0 0;background:var(--rule)}
+.gal span{font-size:12px;padding:4px 6px;text-align:center}
+.gal .none{width:170px;height:146px;display:grid;place-items:center;font-size:12px;color:var(--ink-3);border:1px dashed var(--rule);border-radius:3px;flex:0 0 auto}
+.lb{position:fixed;inset:0;background:rgba(10,12,9,.88);z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.lb img{max-width:min(100%,1000px);max-height:80vh;object-fit:contain;border-radius:3px;background:#fff}
+.lb .bar{display:flex;gap:10px;align-items:center;color:#fff;font-size:14px}
+.lb button{font:inherit;background:#fff;color:#111;border:0;border-radius:3px;padding:6px 14px;cursor:pointer}
+@media (max-width:720px){.steps{grid-template-columns:1fr}}
 footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:6px;padding-inline:4px}
 
 @media (max-width:720px){
@@ -165,9 +183,10 @@ footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:
 <section class="sheet">
   <div class="hero">
     <div class="hero-l">
-      <span class="eyebrow">مشروع البورادا فيلا · ضاحية الفرسان، الرياض · تحليل للمالك</span>
+      <span class="eyebrow">مشروع البورادا فيلا · ضاحية الفرسان، الرياض · صفحة مستقلة لملاك الفلل</span>
+      <div class="updated"><b>آخر تحديث: 6 أكتوبر 2026</b><span>· تشمل النشرات حتى سبتمبر 2026</span></div>
       <h1>المشروع يتقدّم، لكن أبطأ مما تقوله الأرقام</h1>
-      <p class="verdict">حللت <b>9 نشرات شهرية</b> من أكتوبر 2025 إلى سبتمبر 2026. المشروع يتقدم حوالي <b>1% فقط كل شهر</b>، وسرعة العمل <b>نزلت ربعها</b> في آخر 3 أشهر. فيه بلوكان شبه واقفين، ونسبة المرحلة الأولى قفزت فجأة بشكل ما تفسره أرقام بلوكاتها.</p>
+      <p class="verdict">هذه الصفحة تجمع <b>9 نشرات شهرية</b> أرسلها المطوّر للملاك من أكتوبر 2025 إلى سبتمبر 2026. المشروع يتقدم حوالي <b>1% فقط كل شهر</b>، وسرعة العمل <b>نزلت ربعها</b> في آخر 3 أشهر. فيه بلوكان شبه واقفين، ونسبة المرحلة الأولى قفزت فجأة بشكل ما تفسره أرقام بلوكاتها.</p>
       <div>
         <div class="big"><span class="v num">29.35%</span><span class="note">نسبة الإنجاز الكلية · سبتمبر 2026</span></div>
       </div>
@@ -181,9 +200,20 @@ footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:
       <div class="kpi"><span class="k">متوسط التقدم كل شهر</span><span class="v">1.02%</span><span class="n">من يناير إلى سبتمبر</span></div>
       <div class="kpi bad"><span class="k">التقدم الشهري مؤخراً</span><span class="v">0.92%</span><span class="n">كان 1.23% في بداية السنة</span></div>
       <div class="kpi"><span class="k">متى يكتمل المشروع كله؟</span><span class="v">2032–33</span><span class="n">لو استمر بنفس السرعة</span></div>
-      <div class="kpi bad"><span class="k">مشاكل خطيرة</span><span class="v">4</span><span class="n">تحتاج رداً مكتوباً من المطوّر</span></div>
+      <div class="kpi bad"><span class="k">نقاط مهمة تحتاج توضيح</span><span class="v">4</span><span class="n">نتمنى رداً مكتوباً من المطوّر</span></div>
     </div>
   </div>
+</section>
+
+<!-- HOW TO READ -->
+<section class="sheet" id="howto">
+  <div class="tb"><h2>كيف تستخدم الصفحة؟</h2><span class="sub">دقيقة وحدة تكفي</span></div>
+  <ol class="steps">
+    <li><b>شوف الصورة العامة</b>كم وصلت نسبة المشروع، وهل سرعة العمل تزيد أو تقل.</li>
+    <li><b>اختر بلوكك</b>من قسم "بلوكي" تشوف نسبة بلوكك، ومتى يكتمل تقريباً، وصفحته من كل نشرة.</li>
+    <li><b>أرسل الأسئلة</b>في آخر الصفحة أسئلة جاهزة، انسخها وأرسلها للمطوّر.</li>
+  </ol>
+  <div class="disc">صفحة مستقلة، غير تابعة للمطوّر ولا لأي جهة. كل الأرقام منقولة من النشرات الشهرية اللي يرسلها المطوّر للملاك. النقاط المذكورة أسئلة تحتاج توضيح، وليست اتهامات.</div>
 </section>
 
 <!-- OVERALL CURVE -->
@@ -235,6 +265,8 @@ footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:
     <div class="chart" id="c-mine"><div class="tip"></div></div>
   </div>
   <div class="mine-log" id="mine-log"></div>
+  <div class="gal-h"><span>صفحة البلوك في كل نشرة</span><span class="note">اضغط على الصورة لتكبيرها</span></div>
+  <div class="gal" id="gal"></div>
 </section>
 
 <!-- FORECAST -->
@@ -247,7 +279,7 @@ footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:
 
 <!-- FLAGS -->
 <section class="sheet" id="flags">
-  <div class="tb"><h2>أشياء تحتاج تفسير من المطوّر</h2><span class="sub">من الأخطر إلى الأقل</span></div>
+  <div class="tb"><h2>نقاط تحتاج توضيح من المطوّر</h2><span class="sub">من الأهم إلى الأقل</span></div>
   <div class="flags" id="flag-list"></div>
 </section>
 
@@ -257,9 +289,21 @@ footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:
   <div class="tl" id="tl"></div>
 </section>
 
+<!-- WAFI -->
+<section class="sheet" id="wafi">
+  <div class="tb"><h2>تأكد بنفسك من منصة وافي</h2><span class="sub">الجهة الرسمية لمشاريع البيع على الخارطة</span></div>
+  <p class="lead">"وافي" برنامج تابع للهيئة العامة للعقار، ويشرف على مشاريع البيع على الخارطة في السعودية. فلوس المشترين تنحفظ في حساب بنكي خاص بالمشروع اسمه "حساب الضمان"، وما تُصرف للمطوّر إلا حسب الإنجاز اللي يعتمده مكتب هندسي مستقل.</p>
+  <ol class="steps">
+    <li><b>ادخل منصة وافي</b>من موقع الهيئة العامة للعقار rega.gov.sa، وابحث عن المشروع باسم "البورادا".</li>
+    <li><b>قارن الأرقام</b>شوف حالة المشروع والبيانات المسجلة، وقارنها بالنسب في هذه الصفحة.</li>
+    <li><b>إذا لقيت فرق</b>تقدر تقدم استفسار أو بلاغ عن طريق وافي نفسها.</li>
+  </ol>
+</section>
+
 <!-- QUESTIONS -->
 <section class="sheet" id="questions">
-  <div class="tb"><h2>أسئلة للمطوّر</h2><span class="sub">اطلب الرد كتابياً</span></div>
+  <div class="tb"><h2>أسئلة للمطوّر</h2><span class="sub">انسخها وأرسلها، واطلب الرد مكتوب</span></div>
+  <p class="lead">كل ما زاد عدد الملاك اللي يرسلون نفس الأسئلة، كان الرد أوضح وأسرع.</p>
   <ol class="qs" id="qs"></ol>
   <button class="btn" id="copy" type="button">نسخ الأسئلة</button>
   <p class="note">بعد ما يردون، قارن ردهم بنسب الإنجاز المسجلة في منصة وافي التابعة للهيئة العامة للعقار. ولا توقف أي دفعة من نفسك قبل ما تستشير محامي أو مختص.</p>
@@ -267,7 +311,7 @@ footer{font-size:12px;color:var(--ink-3);display:flex;flex-direction:column;gap:
 
 <footer>
   <span>المصدر: نشرات Urbas Middle East الشهرية لمشروع Alborada Villas by ad home: أكتوبر 2025، ويناير وفبراير ومارس وأبريل ومايو ويونيو وأغسطس وسبتمبر 2026. نشرة يوليو غير متوفرة، ونشرة أكتوبر 2025 لا تذكر نسبة كلية.</span>
-  <span>التوقعات والتحليل من إعداد Claude لمساعدتك كمالك، وهي مو أرقام رسمية ولا استشارة قانونية أو مالية.</span>
+  <span>صفحة مستقلة وغير تابعة للمطوّر. التوقعات والتحليل من إعداد Claude لمساعدة الملاك، وهي مو أرقام رسمية ولا استشارة قانونية أو مالية.</span>
 </footer>
 </div>
 
@@ -438,31 +482,43 @@ function drawMine(n){
   lineChart('c-mine',{series:[{name:'بلوك '+b.b,c:'--site',w:2.5,v,label:b.v[b.v.length-1].toFixed(1)+'%'},{name:ph.name+' (حسب النشرة)',c:ph.c,w:1.5,v:pv}],xMin:0,xMax:8.9,yMin:0,yMax:70,yTicks:[0,20,40,60],xTicks:[[0,'يناير'],[3,'أبريل'],[5,'يونيو'],[8,'سبتمبر']],h:230});
   document.getElementById('mine-log').innerHTML='<div style="font-weight:600;color:var(--ink)">وش قالت النشرات عن هذا البلوك</div>'+Object.entries(b.log).map(([k,t])=>`<div><span>${k}</span><p>${t}</p></div>`).join('');
 }
+function drawGal(n){
+  const g=document.getElementById('gal');
+  g.innerHTML=SRC.map(m=>{const b=blocks.find(x=>x.b===n);const i=SRC.indexOf(m);const v=b.v[i];
+    return `<button type="button" data-src="img/b${n}-m${m}.jpg" data-cap="بلوك ${n} · نشرة ${M[m]} 2026"><img loading="lazy" src="img/b${n}-m${m}.jpg" alt="صفحة بلوك ${n} في نشرة ${M[m]}"><span>${M[m]}${v!=null?' · '+v.toFixed(1)+'%':''}</span></button>`}).join('');
+  g.querySelectorAll('button').forEach(bt=>bt.addEventListener('click',()=>openLb(bt.dataset.src,bt.dataset.cap)));
+}
+function openLb(src,cap){
+  const d=document.createElement('div');d.className='lb';d.setAttribute('role','dialog');
+  d.innerHTML=`<img src="${src}" alt="${cap}"><div class="bar"><span>${cap}</span><button type="button">إغلاق</button></div>`;
+  const close=()=>{d.remove();document.removeEventListener('keydown',esc)};const esc=e=>{if(e.key==='Escape')close()};
+  d.addEventListener('click',e=>{if(e.target===d||e.target.tagName==='BUTTON')close()});document.addEventListener('keydown',esc);
+  document.body.appendChild(d);d.querySelector('button').focus();
+}
 function pick(n,scroll){
   try{localStorage.setItem('alb-blk',n)}catch(e){}
-  document.getElementById('blk').value=n; drawHeat(n); drawForecast(n); drawMine(n);
+  document.getElementById('blk').value=n; drawHeat(n); drawForecast(n); drawMine(n); drawGal(n);
   if(scroll) document.getElementById('mine').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
 }
 
 /* ---------- flags ---------- */
 const flags=[
  ['crit','قفزة المرحلة الأولى','في مايو وحده زادت نسبة المرحلة 7.1%، بينما بلوكاتها الأربعة زادت 1.3% بالمتوسط. وفي يونيو زادت 5.5% أخرى. النشرات ما تشرح سبب هذا الفرق.','المرحلة: أبريل 48.50% ← مايو 55.56% ← يونيو 61.10% · البلوكات في مايو زادت بين 0.9% و1.7% فقط'],
- ['crit','بلوك 23 واقف من مارس','فيه 48 فيلا، وهو أكبر بلوك في المشروع. زاد 0.38% فقط خلال 6 أشهر، وصور سبتمبر ما زالت تُظهر الدور الأرضي.','مارس 19.50% ← أبريل 19.50% ← أغسطس 19.88% ← سبتمبر 19.88%'],
+ ['crit','بلوك 23 بدون تقدم يُذكر من مارس','فيه 48 فيلا، وهو أكبر بلوك في المشروع. زاد 0.38% فقط خلال 6 أشهر، وصور سبتمبر ما زالت تُظهر الدور الأرضي.','مارس 19.50% ← أبريل 19.50% ← أغسطس 19.88% ← سبتمبر 19.88%'],
  ['crit','بلوك 15 شبه واقف','النشرات تذكر له شغل كل شهر، لكن نسبته زادت أقل من 1% من مارس.','مارس 22.81% ← يونيو 22.94% ← سبتمبر 23.61%'],
  ['crit','بلوك 12 رجع للخلف','نسبته نزلت 5.6% في مارس بدون أي تفسير، واليوم نسبته تقريباً نفس رقم فبراير.','فبراير 34.01% ← مارس 28.38% ← سبتمبر 34.89%'],
  ['ser','الشغل صار أبطأ','كان المشروع يزيد 1.23% كل شهر في بداية السنة، والحين يزيد 0.92% بس. يعني السرعة نزلت ربعها، مع أن التشطيبات اللي جاية عادة تاخذ وقت أطول.','يناير–أبريل: 1.23% شهرياً · يونيو–سبتمبر: 0.92% شهرياً'],
  ['ser','المرحلة الرابعة ما تطابق بلوكاتها','زادت 6.7% بين أبريل ويونيو مع أن بلوك 23 ما تحرك. لو حسبناها من بلوك 22 وحده، المفروض تزيد حوالي 3% بس. وفي سبتمبر ما تغيرت أبداً.','المرحلة: أبريل 26.5% ← يونيو 33.2% · بلوك 22 زاد 7.25% · بلوك 23 ما تحرك'],
  ['ser','نسبة المشروع ما تطابق المراحل','متوسط المراحل الأربع حوالي 50.6%، لكن نسبة المشروع كله المكتوبة 29.35%. النشرات ما توضح وش يدخل في نسبة المشروع.','متوسط المراحل 50.6% · نسبة المشروع 29.35%'],
  ['ser','بيان تسليم بدون تاريخ','كل نشرة فيها صفحة عنوانها "بيان تسليم المشروع"، لكن ما فيها أي تاريخ تسليم ولا النسبة المفروض الوصول لها.','الصفحة موجودة في كل النشرات · بدون أي تاريخ'],
- ['ser','نفس الأرقام تتكرر','نسبة بلوك 14 بقت 44.45% ثلاثة أشهر ورا بعض، مع أن نشرة مايو تقول إنهم صبوا جدار السطح. ونفس الشي في بلوك 13 وبلوك 15 بين مايو ويونيو. هل الأرقام فعلاً تتحدث كل شهر؟','بلوك 14: أبريل = مايو = يونيو = 44.45% · بلوك 13: مايو = يونيو · بلوك 15: مايو = يونيو'],
- ['ser','كلام منسوخ من يناير','ملخص مايو ويونيو يقول إن المرحلة الرابعة "خلّصت الأساسات وبدأت تصب الأعمدة"، وهذا حصل فعلاً في يناير. يعني الملخص انسخ بدون تحديث.','الأساسات خلصت في يناير · نفس الجملة مكررة في مايو ويونيو'],
+ ['ser','نفس الأرقام تتكرر','نسبة بلوك 14 بقت 44.45% ثلاثة أشهر ورا بعض، مع أن نشرة مايو تقول إنهم صبوا جدار السطح. ونفس الشي في بلوك 13 وبلوك 15 بين مايو ويونيو. نحتاج نعرف هل الأرقام تتحدث كل شهر.','بلوك 14: أبريل = مايو = يونيو = 44.45% · بلوك 13: مايو = يونيو · بلوك 15: مايو = يونيو'],
+ ['ser','جملة مكررة من يناير','ملخص مايو ويونيو يقول إن المرحلة الرابعة "خلّصت الأساسات وبدأت تصب الأعمدة"، وهذا حصل فعلاً في يناير. يبدو أن الملخص ما تحدّث.','الأساسات خلصت في يناير · نفس الجملة مكررة في مايو ويونيو'],
  ['warn','نشرة يوليو ناقصة','ما وصلت نشرة لشهر يوليو.','الناقص: يوليو 2026'],
  ['warn','أخطاء في الكتابة','صفحة بلوك 6 مكتوب عليها "المرحلة 1 / بلوك 5" في 4 نشرات، وصورة الغلاف نفسها مكررة في مايو ويونيو وأغسطس وسبتمبر.','عنوان خاطئ 4 مرات · نفس صورة الغلاف 4 مرات']
 ];
 function drawFlags(){
-  const lab={crit:['crit','خطير'],ser:['ser','مهم'],warn:['warn','بسيط']};
-  document.getElementById('flag-list').innerHTML=flags.map(([s,t,p,e])=>`<article class="flag ${s}"><span class="chip ${lab[s][0]}"><i></i>${lab[s][1]}</span><h3>${t}</h3><p>${p}</p><div class="ev">${e}</div></article>`).join('')+
-  `<article class="flag ser"><span class="chip ser"><i></i>من خارج النشرات</span><h3>وضع الشركة الأم</h3><p>صحف إسبانية تذكر أن الشركة الأم للمطوّر في إسبانيا (Urbas) تمر بإجراءات إفلاس وتسوية ديون من 2025. الشركة اللي تبني المشروع شركة سعودية مستقلة، وفلوس المشترين المفروض محفوظة في حساب بنكي خاص بالمشروع (حساب الضمان)، لكن يستاهل تسألهم عن الموضوع مباشرة.</p><div class="ev">المصدر: صحف إسبانية 2025–2026 · تحتاج تأكيد</div></article>`;
+  const lab={crit:['crit','أولوية عالية'],ser:['ser','متوسطة'],warn:['warn','بسيطة']};
+  document.getElementById('flag-list').innerHTML=flags.map(([s,t,p,e])=>`<article class="flag ${s}"><span class="chip ${lab[s][0]}"><i></i>${lab[s][1]}</span><h3>${t}</h3><p>${p}</p><div class="ev">${e}</div></article>`).join('');
 }
 
 /* ---------- timeline ---------- */
@@ -488,8 +544,7 @@ const qs=[
  'ليش بلوك 15 وبلوك 23 شبه واقفين من مارس 2026؟ ومتى بيرجع الشغل فيهم؟',
  'وش يدخل في نسبة المشروع كله (29.35%)؟ وليش هي أقل بكثير من متوسط المراحل الأربع؟',
  'ليش تكررت نفس النسب بالضبط في بلوكات 13 و14 و15 بين أبريل ويونيو؟ ووين نشرة يوليو؟',
- 'وش اسم المكتب الهندسي المشرف على المشروع؟ وتقدرون ترسلون لي آخر تقرير إنجاز معتمد منه ومن منصة وافي؟',
- 'هل مشاكل الشركة الأم في إسبانيا تأثر على تمويل المشروع أو مواعيده؟'
+ 'وش اسم المكتب الهندسي المشرف على المشروع؟ وتقدرون ترسلون لي آخر تقرير إنجاز معتمد منه ومن منصة وافي؟'
 ];
 function drawQs(){
   document.getElementById('qs').innerHTML=qs.map(q=>`<li>${q}</li>`).join('');
