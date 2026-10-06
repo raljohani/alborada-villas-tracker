@@ -102,7 +102,7 @@ button,select,input{font:inherit;color:inherit}
 main{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);min-width:0}
 
 /* ---------- panel (sheet with title block) ---------- */
-.panel{background:var(--sheet);border:var(--bw) solid var(--rule);border-radius:var(--r-2);box-shadow:var(--shadow);min-width:0;container-type:inline-size;position:relative}
+.panel{background:var(--sheet);border:var(--bw) solid var(--rule);border-radius:var(--r-2);box-shadow:var(--shadow);min-width:0;container-type:inline-size;position:relative;display:flex;flex-direction:column}
 .ph{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s-1) var(--s-3);padding:var(--pad);padding-bottom:var(--s-4);align-items:start}
 .ph-l{display:flex;flex-direction:column;gap:var(--s-1);min-width:0}
 .sheetno{font-size:var(--t-xs);font-weight:600;color:var(--site);letter-spacing:.02em;display:flex;align-items:center;gap:var(--s-2)}
@@ -116,7 +116,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);min-width:0
 .pbtn .chev{transition:transform var(--d-2) var(--ease)}
 .panel.closed .pbtn .chev{transform:rotate(-90deg)}
 [dir="rtl"] .panel.closed .pbtn .chev{transform:rotate(90deg)}
-.pb{padding:0 var(--pad) var(--pad);display:flex;flex-direction:column;gap:var(--s-4);min-width:0}
+.pb{padding:0 var(--pad) var(--pad);display:flex;flex-direction:column;gap:var(--s-4);min-width:0;flex:1}
 .panel.closed .pb{display:none}
 .lead{font-size:var(--t-sm);color:var(--ink-2);max-width:65ch}
 .note{font-size:var(--t-xs);color:var(--ink-3);line-height:1.6}
@@ -135,6 +135,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);min-width:0
 .mhead{display:flex;align-items:baseline;gap:var(--s-3);flex-wrap:wrap}
 .mbig{font-size:var(--t-3xl);font-weight:700;line-height:1}
 .mmeta{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-2)}
+.mmeta .mm:last-child{grid-column:1/-1}
 .mm{background:var(--sunk);border-radius:var(--r-2);padding:var(--s-3);min-width:0}
 .mm .k{font-size:var(--t-xs);color:var(--ink-3);display:block}
 .mm .v{font-size:var(--t-lg);font-weight:700;line-height:1.35}
@@ -229,8 +230,9 @@ main{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--gap);min-width:0
 .gb{position:relative}
 .gb i{position:absolute;inset-inline:15%;border-radius:2px}
 .gmon{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;font-size:var(--t-xs);color:var(--ink-3);text-align:center}
-.reuse{display:grid;grid-template-columns:1fr;gap:var(--s-3)}
-.ru{background:var(--sunk);border-radius:var(--r-2);overflow:hidden}
+.reuse{display:flex;flex-wrap:wrap;gap:var(--s-3)}
+.ru{background:var(--sunk);border-radius:var(--r-2);overflow:hidden;flex:1 1 240px;display:flex;flex-direction:column}
+.ru button{flex:1;display:flex;align-items:center;background:#fff!important}
 .ru button{border:0;padding:0;background:none;cursor:zoom-in;display:block;width:100%}
 .ru img{width:100%;height:auto;aspect-ratio:808/300;object-fit:contain;display:block;background:#fff}
 .ru .pair{display:flex;justify-content:space-between;padding:var(--s-2) var(--s-3) 0}
@@ -305,15 +307,14 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
   .ring{width:150px}
   .kpis{grid-template-columns:repeat(4,1fr)}
   .phs{grid-template-columns:repeat(4,1fr)}
-  .mmeta{grid-template-columns:repeat(4,1fr)}
+  .mmeta{grid-template-columns:repeat(3,1fr)}
+  .mmeta .mm:last-child{grid-column:auto}
   .blockgrid{grid-template-columns:repeat(8,1fr)}
   .flags{grid-template-columns:1fr 1fr}
-  .reuse{grid-template-columns:1fr 1fr}
   .trust{grid-template-columns:1fr 1fr}
   .steps{grid-template-columns:repeat(3,1fr)}
 }
 @container (min-width:860px){
-  .reuse{grid-template-columns:repeat(3,1fr)}
   .flags{grid-template-columns:repeat(3,1fr)}
   .trust{grid-template-columns:repeat(4,1fr)}
 }
@@ -405,7 +406,7 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
 .fact{border:1.5px dashed var(--rule);border-radius:var(--r-2);padding:var(--s-2) var(--s-3);display:flex;flex-direction:column;line-height:1.35}
 .fact b{font-size:var(--t-2xl);color:var(--site)}
 .fact span{font-size:var(--t-xs);color:var(--ink-2)}
-.shelf{list-style:none;margin:0;padding:0 0 var(--s-2);display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:var(--s-4) var(--s-3)}
+.shelf{list-style:none;margin:0;padding:0 0 var(--s-2);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-4) var(--s-3)}
 .shelf li{display:flex}
 .rep{position:relative;display:flex;flex-direction:column;width:100%;border:var(--bw) solid var(--rule);background:var(--sheet);border-radius:var(--r-2);padding:0;cursor:pointer;text-align:start;color:var(--ink);box-shadow:0 3px 0 -1px var(--sheet),0 4px 0 -1px var(--rule),0 7px 0 -2px var(--sheet),0 8px 0 -2px var(--rule);transition:transform var(--d-1) var(--ease),border-color var(--d-1)}
 .rep:hover{transform:translateY(-2px);border-color:var(--site)}
@@ -418,7 +419,7 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
 .rep .pv{display:flex;align-items:center;gap:var(--s-2);font-size:var(--t-xs);font-weight:600;margin-top:4px}
 .rep .pv i{flex:1;height:5px;border-radius:var(--r-pill);background:var(--h0);direction:ltr;position:relative;overflow:hidden}
 .rep .pv i b{position:absolute;inset-block:0;left:0;background:var(--site);border-radius:var(--r-pill)}
-.rep.gap{border:1.5px dashed var(--ink-3);background:none;box-shadow:none;cursor:default;align-items:center;justify-content:center;text-align:center;color:var(--ink-3);gap:4px;padding:var(--s-4);min-height:160px}
+.rep.gap{border:1.5px dashed var(--ink-3);background:none;box-shadow:none;cursor:default;align-items:center;justify-content:center;text-align:center;color:var(--ink-3);gap:4px;padding:var(--s-4)}
 .rep.gap:hover{transform:none}
 .rep.gap .mo{color:var(--ink-2)}
 .shelf .sep{grid-column:1/-1;display:flex;align-items:center;gap:var(--s-3);font-size:var(--t-xs);color:var(--ink-3)}
@@ -494,6 +495,53 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
 .morebtn{display:flex;align-items:center;gap:var(--s-2);min-height:48px;width:100%;border:1.5px solid var(--site);background:var(--site-soft);color:var(--site);border-radius:var(--r-2);font-weight:700;padding:0 var(--s-4);cursor:pointer;margin-bottom:var(--s-3)}
 @media print{.explain-btn,.tour,.gloss{display:none!important}.term{border:0}}
 
+/* ---------- v12: compact estimate, notes, balanced grids ---------- */
+.mm.eta{padding:var(--s-3) var(--s-4)}
+.mm.eta .v{font-size:var(--t-lg)}
+.stamp{top:var(--s-2);inset-inline-end:var(--s-2);padding:0 8px;line-height:1.45}
+.eta-line{margin-top:var(--s-2);display:flex;flex-wrap:wrap;align-items:center;gap:4px var(--s-2);font-size:var(--t-sm);color:var(--ink-2);background:var(--sheet);border-radius:var(--r-2);padding:var(--s-2) var(--s-3);border-inline-start:3px solid var(--warn-m)}
+.eta-line .ico{color:var(--warn);width:18px;height:18px}
+.eta-line b{color:var(--ink)}
+.eta-why{flex-basis:100%}
+.eta-why summary{display:inline-flex;align-items:center;min-height:32px;color:var(--site);font-weight:700;cursor:pointer;list-style:none}
+.eta-why summary::-webkit-details-marker{display:none}
+.eta-why summary::after{content:"▾";margin-inline-start:6px;font-size:12px}
+.eta-why[open] summary::after{content:"▴"}
+.eta-why ul{margin:var(--s-1) 0 0;padding-inline-start:18px;display:grid;gap:2px;line-height:1.75}
+.eta-why a{color:var(--site);font-weight:600}
+.pace-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s-2)}
+.pace-stats div{background:var(--sunk);border-radius:var(--r-2);padding:var(--s-2) var(--s-3);display:flex;flex-direction:column;min-width:0}
+.pace-stats span{font-size:var(--t-xs);color:var(--ink-3)}
+.pace-stats b{font-size:var(--t-lg);line-height:1.4}
+.pace-stats small{font-size:var(--t-xs);color:var(--ink-2)}
+#p-pace .pb>.note{margin-top:auto}
+.notes{display:grid;grid-template-columns:1fr;gap:var(--s-3)}
+.nt{background:var(--sheet);border:var(--bw) solid var(--rule);border-radius:var(--r-2);padding:var(--s-4);display:flex;flex-direction:column;gap:var(--s-2);min-width:0}
+.nt-h{display:flex;align-items:center;gap:var(--s-2)}
+.nt-i{width:32px;height:32px;flex:0 0 32px;border-radius:50%;background:var(--site-soft);color:var(--site);display:grid;place-items:center}
+.nt-i .ico{width:18px;height:18px}
+.nt h3{font-size:var(--t-md);line-height:1.5}
+.nt p{font-size:var(--t-sm);color:var(--ink-2);line-height:1.8}
+.nt .ev{margin-top:auto;font-size:var(--t-xs);color:var(--ink-2);background:var(--sunk);border-radius:var(--r-1);padding:var(--s-2) var(--s-3);line-height:1.7}
+.notes-intro{font-size:var(--t-sm);color:var(--ink-2);background:var(--site-soft);border-radius:var(--r-2);padding:var(--s-3) var(--s-4);line-height:1.8}
+.bt2{display:grid;grid-template-columns:1fr;column-gap:var(--s-6)}
+.bt2>div{display:flex;flex-direction:column;min-width:0}
+.panel.solo{grid-column:1/-1!important}
+@container (min-width:520px){
+  .shelf{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .notes{grid-template-columns:1fr 1fr}
+}
+@container (min-width:860px){
+  .notes{grid-template-columns:repeat(3,1fr)}
+  .bt2{grid-template-columns:1fr 1fr}
+  .tl{grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,auto);grid-auto-flow:column;column-gap:var(--s-6)}
+  .tl-i:nth-child(5)::before{bottom:calc(100% - 1.1em)}
+  .tl-i:nth-child(6)::before{top:1.1em}
+  .faq{grid-template-columns:1fr 1fr;align-items:start}
+}
+
+.reps{display:flex;flex-wrap:wrap;gap:var(--s-3)}
+.reps .rp{flex:1 1 300px}
 </style>
 </head>
 <body>
@@ -507,6 +555,8 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
   <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
   <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17h.01"/></symbol>
   <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v6H4V6h6"/></symbol>
+  <symbol id="i-pinb" viewBox="0 0 24 24"><path d="M9 4h6l-1 5 3 3H7l3-3z"/><path d="M12 12v8"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><path d="M12 7.5h.01"/></symbol>
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
   <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
@@ -546,22 +596,6 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
       </div>
       <p class="srcnote">قُرئت التقارير صفحةً صفحةً، ونُقلت نسب المشروع والمراحل والبلوكات كما وردت فيها دون أي تعديل. أما الوتيرة والتوقعات والمقارنات فهي حسابات مبنية على تلك النسب. اضغط على أي تقرير لتتصفح صفحاته.</p>
       <ol class="shelf" id="shelf" aria-label="التقارير الشهرية مرتبة زمنيًا"></ol>
-      <div class="wafi" id="wafi">
-        <div class="wafi-h"><span class="chip c-good"><span class="sym" aria-hidden="true">✓</span>مصدر رسمي</span><h3>سجل المشروع في منصة وافي</h3></div>
-        <p class="lead">وافي منصة تابعة للهيئة العامة للعقار، تُسجَّل فيها مشاريع البيع على الخارطة. وهذه أبرز بيانات المشروع فيها:</p>
-        <dl>
-          <div><dt>حالة المشروع</dt><dd>جارٍ التنفيذ</dd></div>
-          <div><dt>نسبة الإنجاز في وافي</dt><dd><span class="ltr">26%</span><small>دون تاريخ تحديث ظاهر</small></dd></div>
-          <div><dt>تاريخ بداية المشروع</dt><dd>10 نوفمبر 2024</dd></div>
-          <div><dt>تاريخ نهاية المشروع</dt><dd>1 يونيو 2028</dd></div>
-          <div><dt>عدد الوحدات</dt><dd>596 وحدة<small>430 فيلا و166 تاون هاوس</small></dd></div>
-          <div><dt>الوحدات في التقارير الشهرية</dt><dd>360 فيلا<small>في أربع مراحل</small></dd></div>
-          <div><dt>المطوّر</dt><dd style="font-size:var(--t-sm)">شركة أورباس الشرق الأوسط العقارية</dd></div>
-          <div><dt>الموقع</dt><dd>الرياض، الجنادرية</dd></div>
-        </dl>
-        <a class="btn ghost" href="https://rega.gov.sa/rega-services/platforms/wafi-off-plan-sales-and-lease/%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84-%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9/?id=11717d0f-7990-4e3e-8db8-ffb03f2a7350" target="_blank" rel="noopener" style="align-self:flex-start"><svg class="ico sm"><use href="#i-ext"/></svg>افتح صفحة المشروع في وافي</a>
-        <p class="note">اطّلعنا على هذه البيانات في 6 أكتوبر 2026، وقد تتغير بعد ذلك؛ لذا ارجع إلى صفحة المشروع في وافي للاطلاع على آخر تحديث.</p>
-      </div>
     </div>
   </section>
 
@@ -601,6 +635,7 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
     <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 05</span><h2 id="h-pace">وتيرة العمل تتباطأ</h2><p class="take">كان <b>مايو</b> أضعف الأشهر؛ إذ لم يتقدم المشروع فيه إلا <b>0.55%</b>.</p></div><div class="ph-act"></div></div>
     <div class="pb">
       <div class="chart" id="c-pace"><div class="tip" role="status"></div></div>
+      <div class="pace-stats"><div><span>أعلى زيادة</span><b class="ltr">1.58%</b><small>فبراير–مارس</small></div><div><span>أدنى زيادة</span><b class="ltr">0.55%</b><small>أبريل–مايو</small></div><div><span>المتوسط الشهري</span><b class="ltr">1.02%</b><small>يناير–سبتمبر</small></div></div>
       <p class="note">كان المشروع يتقدم في مطلع السنة بمعدل 1.23% شهريًا، ثم انخفض المعدل إلى 0.90% منذ أبريل. ولأن تقرير يوليو غير متوفر، وُزّعت زيادة الفترة من يونيو إلى أغسطس على الشهرين بالتساوي.</p>
     </div>
   </section>
@@ -623,7 +658,16 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
     </div>
   </section>
 
-  <section class="panel half" id="p-trust" data-p="trust" data-deep="1" aria-labelledby="h-trust">
+  <section class="panel" id="p-notes" data-p="notes" aria-labelledby="h-notes">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 08</span><h2 id="h-notes">ملاحظات للمتابعة</h2><p class="take">نقاط لفتت انتباهنا أثناء قراءة التقارير، وقد يفيد الاستفسار عنها لاكتمال الصورة.</p></div><div class="ph-act"></div></div>
+    <div class="pb">
+      <p class="notes-intro">هذه ملاحظات من قراءة الأرقام، وليست حكمًا على سير العمل؛ فقد يكون لبعضها تفسير لم تذكره التقارير.</p>
+      <div class="notes" id="notesA"></div>
+      <details class="more"><summary id="notesSum"></summary><div class="notes" id="notesB"></div></details>
+    </div>
+  </section>
+
+  <section class="panel" id="p-trust" data-p="trust" data-deep="1" aria-labelledby="h-trust">
     <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 08</span><h2 id="h-trust">هل تطابق نسبة كل مرحلة نسب بلوكاتها؟</h2><p class="take">المرحلة الثانية <b>متطابقة</b>، أما المرحلة الأولى ففيها <b>فرق كبير منذ مايو</b>.</p></div><div class="ph-act"></div></div>
     <div class="pb">
       <p class="lead">يُفترض أن تساوي نسبة المرحلة تقريبًا متوسط نسب بلوكاتها مرجَّحًا بعدد الفلل. ويمثل كل عمود فرق شهر واحد، وما ارتفع فوق الخط يعني أن التقرير منح المرحلة نسبة أعلى من نسب بلوكاتها.</p>
@@ -631,9 +675,9 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
     </div>
   </section>
 
-  <section class="panel half" id="p-texts" data-p="texts" data-deep="1" aria-labelledby="h-texts">
+  <section class="panel" id="p-texts" data-p="texts" data-deep="1" aria-labelledby="h-texts">
     <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 09</span><h2 id="h-texts">نصوص تتكرر بين التقارير</h2><p class="take"><b>86%</b> من كلمات ملخص يونيو مطابقة لكلمات ملخص مايو.</p></div><div class="ph-act"></div></div>
-    <div class="pb"><div class="flags" id="repL" style="grid-template-columns:1fr"></div></div>
+    <div class="pb"><div class="reps" id="repL"></div></div>
   </section>
 
   <section class="panel" id="p-photos" data-p="photos" data-deep="1" aria-labelledby="h-photos">
@@ -652,6 +696,27 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
   <section class="panel" id="p-faq" data-p="faq" aria-labelledby="h-faq">
     <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 12</span><h2 id="h-faq">أسئلة شائعة</h2><p class="take">إجابات مختصرة عن أكثر ما يسأل عنه الملاك عند قراءة الأرقام.</p></div><div class="ph-act"></div></div>
     <div class="pb"><div class="faq" id="faqL"></div></div>
+  </section>
+
+  <section class="panel" id="p-wafi" data-p="wafi" aria-labelledby="h-wafi">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 14</span><h2 id="h-wafi">السجل الرسمي في منصة وافي</h2><p class="take"><span class="chip c-good"><span class="sym" aria-hidden="true">✓</span>مصدر رسمي</span> بيانات المشروع كما سجّلتها الهيئة العامة للعقار.</p></div><div class="ph-act"></div></div>
+    <div class="pb">
+      <div class="wafi" id="wafi">
+                <p class="lead">وافي منصة تابعة للهيئة العامة للعقار، تُسجَّل فيها مشاريع البيع على الخارطة. وهذه أبرز بيانات المشروع فيها:</p>
+        <dl>
+          <div><dt>حالة المشروع</dt><dd>جارٍ التنفيذ</dd></div>
+          <div><dt>نسبة الإنجاز في وافي</dt><dd><span class="ltr">26%</span><small>دون تاريخ تحديث ظاهر</small></dd></div>
+          <div><dt>تاريخ بداية المشروع</dt><dd>10 نوفمبر 2024</dd></div>
+          <div><dt>تاريخ نهاية المشروع</dt><dd>1 يونيو 2028</dd></div>
+          <div><dt>عدد الوحدات</dt><dd>596 وحدة<small>430 فيلا و166 تاون هاوس</small></dd></div>
+          <div><dt>الوحدات في التقارير الشهرية</dt><dd>360 فيلا<small>في أربع مراحل</small></dd></div>
+          <div><dt>المطوّر</dt><dd style="font-size:var(--t-sm)">شركة أورباس الشرق الأوسط العقارية</dd></div>
+          <div><dt>الموقع</dt><dd>الرياض، الجنادرية</dd></div>
+        </dl>
+        <a class="btn ghost" href="https://rega.gov.sa/rega-services/platforms/wafi-off-plan-sales-and-lease/%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84-%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9/?id=11717d0f-7990-4e3e-8db8-ffb03f2a7350" target="_blank" rel="noopener" style="align-self:flex-start"><svg class="ico sm"><use href="#i-ext"/></svg>افتح صفحة المشروع في وافي</a>
+        <p class="note">اطّلعنا على هذه البيانات في 6 أكتوبر 2026، وقد تتغير بعد ذلك؛ لذا ارجع إلى صفحة المشروع في وافي للاطلاع على آخر تحديث.</p>
+      </div>
+    </div>
   </section>
 
   <footer>
@@ -737,9 +802,7 @@ const STAGE_N=['الهيكل','البناء','الكهرباء والسباكة'
 const REUSE=[[9,4,5,2,'reuse/r9-4-5.jpg'],[10,4,5,2,'reuse/r10-4-5.jpg'],[12,4,5,1,'reuse/r12-4-5.jpg'],[13,4,5,1,'reuse/r13-4-5.jpg'],[14,4,5,2,'reuse/r14-4-5.jpg'],[15,4,5,2,'reuse/r15-4-5.jpg'],[22,5,8,1,'reuse/r22-5-8.jpg']];
 /* the monthly reports: the primary source */
 const REPORTS=[
- {sep:2025},
  {k:'o',mo:'أكتوبر',y:2025,pg:11,fmt:'PDF',ttl:'النشرة الإخبارية الشهرية'},
- {sep:2026},
  {k:'m0',m:0,mo:'يناير',y:2026,pg:26,fmt:'PDF',ttl:'تقرير تقدم الأعمال'},
  {k:'m1',m:1,mo:'فبراير',y:2026,pg:27,fmt:'PDF',ttl:'تقرير تقدم الأعمال'},
  {k:'m2',m:2,mo:'مارس',y:2026,pg:27,fmt:'PDF',ttl:'تقرير تقدم الأعمال'},
@@ -770,7 +833,7 @@ const tl=[
  ['أغسطس','بدأ تركيب سيراميك الجدران في المرحلة 1، واكتملت جدران السطح في بلوك 22.'],
  ['سبتمبر','اكتملت اللياسة والدهان الداخليان في المرحلة 1، وتمديدات الكهرباء والسباكة لخمسين فيلا في المرحلة 3.']
 ];
-const PANELS=[['mine','بلوكي'],['sources','مصدر الأرقام'],['summary','المشروع باختصار'],['progress','تقدم المشروع'],['pace','وتيرة العمل'],['phases','المراحل الأربع'],['blocks','جميع البلوكات'],['trust','مطابقة المراحل'],['texts','نصوص مكررة'],['photos','صور مكررة'],['timeline','ما الذي اكتمل؟'],['faq','أسئلة شائعة']];
+const PANELS=[['mine','بلوكي'],['sources','مصدر الأرقام'],['summary','المشروع باختصار'],['progress','تقدم المشروع'],['pace','وتيرة العمل'],['phases','المراحل الأربع'],['blocks','جميع البلوكات'],['notes','ملاحظات للمتابعة'],['trust','مطابقة المراحل'],['texts','نصوص مكررة'],['photos','صور مكررة'],['timeline','ما الذي اكتمل؟'],['faq','أسئلة شائعة'],['wafi','منصة وافي']];
 const PNAME=id=>PANELS.find(p=>p[0]===id)[1];
 
 /* ================= helpers ================= */
@@ -803,6 +866,8 @@ const qp=new URLSearchParams(location.search);const qb=+qp.get('block');if(block
 const known=id=>PANELS.some(p=>p[0]===id);
 S.order=(S.order||[]).filter(known);S.hidden=(S.hidden||[]).filter(known);
 PANELS.forEach((p,i)=>{if(!S.order.includes(p[0]))S.order.splice(Math.min(i,S.order.length),0,p[0])});
+/* the official Wafi record always stays last */
+S.order=S.order.filter(id=>id!=='wafi').concat('wafi');S.hidden=S.hidden.filter(id=>id!=='wafi');
 function save(){try{localStorage.setItem('alb-set',JSON.stringify(S))}catch(e){}}
 function syncURL(){try{const u=new URL(location.href);S.block?u.searchParams.set('block',S.block):u.searchParams.delete('block');history.replaceState(null,'',u)}catch(e){}}
 function applyLook(){const r=document.documentElement;if(S.theme==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',S.theme);
@@ -830,6 +895,9 @@ function layoutPanels(){
   S.order.forEach((id,i)=>{const p=$('#p-'+id);if(!p)return;p.style.order=i;p.hidden=S.hidden.includes(id);const o=panelOpen(id);p.classList.toggle('closed',!o);const t=p.querySelector('[data-tog]');if(t)t.setAttribute('aria-expanded',o)});
   $('footer').style.order=99;
   const vis=S.order.filter(id=>!S.hidden.includes(id)&&$('#p-'+id));
+  /* number panels in display order, and let an unpaired half panel take the full row */
+  vis.forEach((id,i)=>{$('#p-'+id).querySelector('.sheetno').textContent='لوحة '+String(i+1).padStart(2,'0')});
+  for(let i=0;i<vis.length;i++){const p=$('#p-'+vis[i]);p.classList.remove('solo');if(!p.classList.contains('half'))continue;const q=vis[i+1]&&$('#p-'+vis[i+1]);if(q&&q.classList.contains('half')){q.classList.remove('solo');i++}else p.classList.add('solo')}
   const no=id=>$('#p-'+id).querySelector('.sheetno').textContent;
   $('#indexL').innerHTML=vis.map(id=>`<li><a href="#p-${id}" data-go="${id}"><span>${no(id).replace('لوحة ','')}</span>${PNAME(id)}</a></li>`).join('');
   $('#moreL').innerHTML=vis.map(id=>`<li class="pi" style="grid-template-columns:auto 1fr"><span class="note">${no(id)}</span><a href="#p-${id}" data-go="${id}" style="min-height:44px;display:flex;align-items:center;color:var(--ink);text-decoration:none;font-weight:600">${PNAME(id)}</a></li>`).join('');
@@ -968,8 +1036,8 @@ function drawMine(){
      ${plainHTML(b)}
      <div class="mmeta">
       <div class="mm eta"><span class="stamp" aria-hidden="true">تقديري<small>غير رسمي</small></span><span class="k">موعد الاكتمال المتوقع لبلوكك</span><span class="v">${eta(b)}${stuck(b)?'<small>البلوك شبه متوقف، فلا يمكن تقدير موعد اكتماله</small>':`<small>على الأرجح بين ${ym(q[0])} و${ym(q[2])}</small>`}</span>
-        <div class="eta-note" role="note"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg><div><b>تنبيه مهم: هذا الموعد تقدير، وليس موعدًا رسميًا من الشركة.</b>
-          <ul><li>التقارير الشهرية لا تذكر أي موعد لتسليم البلوكات، فحسبنا هذا الموعد بأنفسنا.</li><li>استخلصناه من وتيرة تقدم البلوك في التقارير السابقة، بعد تجربة آلاف الاحتمالات لتلك الوتيرة.</li><li>قد يتقدم الموعد أو يتأخر إذا تغيرت وتيرة العمل، وأعمال التشطيب عادةً أبطأ.</li><li>الموعد الرسمي الوحيد المعلن هو تاريخ نهاية المشروع كله في منصة وافي: <b>1 يونيو 2028</b>. <a href="https://rega.gov.sa/rega-services/platforms/wafi-off-plan-sales-and-lease/%D8%AA%D9%81%D8%A7%D8%B5%D9%8A%D9%84-%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9/?id=11717d0f-7990-4e3e-8db8-ffb03f2a7350" target="_blank" rel="noopener">اطّلع عليه</a></li></ul></div></div>
+        <div class="eta-line" role="note"><svg class="ico" aria-hidden="true"><use href="#i-alert"/></svg><span><b>تقدير غير رسمي</b>، محسوب من وتيرة التقارير، وليس موعدًا من الشركة.</span>
+          <details class="eta-why"><summary>لماذا هو تقديري؟</summary><ul><li>التقارير الشهرية لا تذكر أي موعد لتسليم البلوكات.</li><li>حسبناه من وتيرة تقدم البلوك في التقارير السابقة، بعد تجربة آلاف الاحتمالات.</li><li>قد يتقدم أو يتأخر إذا تغيرت وتيرة العمل، وأعمال التشطيب عادةً أبطأ.</li><li>الموعد الرسمي الوحيد المعلن هو نهاية المشروع كله في منصة وافي: <b>1 يونيو 2028</b>. <a href="#p-wafi" data-go="wafi">اطّلع عليه</a></li></ul></details></div>
       </div>
       <div class="mm"><span class="k">وتيرته في آخر 3 أشهر</span><span class="v" style="color:var(--${recent(b)>=early(b)?'good':'crit'})"><span class="ltr">${recent(b).toFixed(1)}%</span> شهريًا<small>مقابل ${early(b).toFixed(1)}% مطلع السنة</small></span></div>
       <div class="mm"><span class="k">أشهر بلا تقدم يُذكر</span><span class="v">${st.filter(Boolean).length} من ${st.length}</span></div>
@@ -1015,6 +1083,7 @@ if(!VIEWS.some(v=>v[0]===view))view='progress';
 function spark(b){const W=120,H=32,vs=b.v.map((v,i)=>[SRC[i],v]).filter(x=>x[1]!=null);const lo=Math.min(...vs.map(x=>x[1]))-1,hi=Math.max(...vs.map(x=>x[1]))+1;const X=k=>k/8*(W-4)+2,Y=v=>H-3-(v-lo)/(hi-lo)*(H-6);
   return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><path d="${vs.map((x,i)=>(i?'L':'M')+X(x[0])+','+Y(x[1])).join('')}" fill="none" stroke="var(--site)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`}
 function row(b,mid,val){const nm=`<span class="nm">بلوك ${b.b}<small>${b.b===S.block?'بلوكي':villas(b.u)}</small></span>`;return `<button class="br ${b.b===S.block?'mine':''}" type="button" data-b="${b.b}" aria-label="تفاصيل بلوك ${b.b}">${nm}<span style="min-width:0">${mid}</span><span class="val">${val}</span></button>`}
+const split=rows=>`<div class="bt2"><div class="bt">${rows.slice(0,8).join('')}</div><div class="bt">${rows.slice(8).join('')}</div></div>`;
 function grouped(sortFn,fn){return phases.map(p=>`<div class="grp" style="--c:var(${p.c})"><i></i>${p.name}</div>`+blocks.filter(b=>b.p===p.id).sort(sortFn).map(fn).join('')).join('')}
 function drawBlocks(){
   $('#seg').innerHTML=VIEWS.map(([k,l])=>`<button type="button" role="tab" aria-selected="${k===view}" data-v="${k}" tabindex="${k===view?0:-1}">${l}</button>`).join('');
@@ -1022,10 +1091,10 @@ function drawBlocks(){
   $('#seg').onkeydown=e=>{const i=VIEWS.findIndex(v=>v[0]===view);if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const n=(i+(e.key==='ArrowLeft'?1:-1)+VIEWS.length)%VIEWS.length;view=VIEWS[n][0];drawBlocks();$('#seg [aria-selected="true"]').focus()}};
   $('#viewNote').textContent=VIEWS.find(v=>v[0]===view)[2];glossify($('#viewNote'));
   const bv=$('#bview');let h='';
-  if(view==='progress')h=`<div class="bt">${grouped((a,b)=>last(b)-last(a),b=>row(b,spark(b),`${pct(last(b))}<small>${status(b)[1]}</small>`))}</div>`;
+  if(view==='progress'){const g=ids=>phases.filter(p=>ids.includes(p.id)).map(p=>`<div class="grp" style="--c:var(${p.c})"><i></i>${p.name}</div>`+blocks.filter(b=>b.p===p.id).sort((a,b)=>last(b)-last(a)).map(b=>row(b,spark(b),`${pct(last(b))}<small>${status(b)[1]}</small>`)).join('')).join('');h=`<div class="bt2"><div class="bt">${g([1,2])}</div><div class="bt">${g([3,4])}</div></div>`}
   if(view==='stage')h=`<div class="ladkey" style="padding-inline:calc(76px + var(--s-5)) var(--s-2)" aria-hidden="true">${STAGE_N.map(x=>`<span>${x}</span>`).join('')}</div><div class="bt">${[...blocks].sort((a,b)=>STAGE[b.b]-STAGE[a.b]||last(b)-last(a)).map(b=>row(b,ladderHTML(b.b),'')).join('')}</div>`;
-  if(view==='speed'){const mx=4;h=`<div class="bt">${blocks.map(b=>({b,d:recent(b)-early(b)})).sort((x,y)=>y.d-x.d).map(({b,d})=>{const w=Math.min(50,Math.abs(d)/mx*50),c=d>=0?'var(--good-m)':'var(--crit-m)';return row(b,`<span class="trk" style="display:block"><span class="mid"></span><i style="background:${c};${d>=0?`left:50%;width:${w}%`:`right:50%;width:${w}%`}"></i></span>`,`<span class="ltr" style="color:var(--${d>=0?'good':'crit'})">${recent(b).toFixed(1)}%</span><small>مقابل ${early(b).toFixed(1)}%</small>`)}).join('')}</div>`}
-  if(view==='stall')h=`<div class="bt">${blocks.map(b=>({b,s:stalls(b)})).sort((x,y)=>y.s.filter(Boolean).length-x.s.filter(Boolean).length).map(({b,s})=>row(b,`<span class="stag" role="img" aria-label="أشهر بلا تقدم: ${s.filter(Boolean).length} من ${s.length}">${s.map((x,i)=>`<i class="${x?'s':''}" title="${M[SRC[i+1]]}"></i>`).join('')}</span>`,`${s.filter(Boolean).length} من ${s.length}`)).join('')}</div>`;
+  if(view==='speed'){const mx=4;h=split(blocks.map(b=>({b,d:recent(b)-early(b)})).sort((x,y)=>y.d-x.d).map(({b,d})=>{const w=Math.min(50,Math.abs(d)/mx*50),c=d>=0?'var(--good-m)':'var(--crit-m)';return row(b,`<span class="trk" style="display:block"><span class="mid"></span><i style="background:${c};${d>=0?`left:50%;width:${w}%`:`right:50%;width:${w}%`}"></i></span>`,`<span class="ltr" style="color:var(--${d>=0?'good':'crit'})">${recent(b).toFixed(1)}%</span><small>مقابل ${early(b).toFixed(1)}%</small>`)}))}
+  if(view==='stall')h=split(blocks.map(b=>({b,s:stalls(b)})).sort((x,y)=>y.s.filter(Boolean).length-x.s.filter(Boolean).length).map(({b,s})=>row(b,`<span class="stag" role="img" aria-label="أشهر بلا تقدم: ${s.filter(Boolean).length} من ${s.length}">${s.map((x,i)=>`<i class="${x?'s':''}" title="${M[SRC[i+1]]}"></i>`).join('')}</span>`,`${s.filter(Boolean).length} من ${s.length}`)));
   if(view==='eta'){const max=48,pos=m=>Math.min(100,m/max*100);h=`<div class="proj-ax" style="padding-inline:calc(76px + var(--s-5)) 96px"><span>اليوم</span><span>2027</span><span>2028</span><span>+2029</span></div><div class="bt">${[...blocks].sort((a,b)=>MC[a.b][1]-MC[b.b][1]).map(b=>{const q=MC[b.b],st=stuck(b),c=st?'var(--crit-m)':q[1]>30?'var(--ser-m)':'var(--site)';
     return row(b,`<span class="trk" style="display:block">${st?`<i style="left:0;width:100%;background:repeating-linear-gradient(45deg,var(--crit-m) 0 4px,transparent 4px 8px);opacity:.6"></i>`:`<i style="left:${pos(q[0])}%;width:${Math.max(2,pos(q[2])-pos(q[0]))}%;background:${c};opacity:.35"></i><span class="dot" style="left:${pos(q[1])}%;background:${c}"></span>`}</span>`,eta(b))}).join('')}</div>`}
   if(view==='rank')h=`<div class="bump-ctl" id="bumpCtl" aria-label="اختر بلوكًا لإبرازه"></div><div class="chart" id="c-bump"><div class="tip" role="status"></div></div>`;
@@ -1074,14 +1143,14 @@ function buildSettings(){
   opts('#setDensity','dn',[['comfy','مريح'],['compact','مضغوط']],S.density,v=>{S.density=v;save();applyLook()});
   opts('#setDigits','dg',[['latin','123'],['arab','١٢٣']],S.digits,v=>{S.digits=v;save();renderAll();buildSettings()});
   const pl=$('#plist');
-  pl.innerHTML=S.order.map((id,i)=>`<div class="pi" draggable="true" data-id="${id}"><span class="handle" aria-hidden="true"><svg class="ico sm"><use href="#i-grip"/></svg></span><label><input type="checkbox" ${S.hidden.includes(id)?'':'checked'} ${id==='mine'?'disabled':''}> ${PNAME(id)}</label><button class="mv" type="button" data-up aria-label="انقل «${PNAME(id)}» إلى الأعلى" ${i===0?'disabled':''}><svg class="ico sm"><use href="#i-up"/></svg></button><button class="mv" type="button" data-dn aria-label="انقل «${PNAME(id)}» إلى الأسفل" ${i===S.order.length-1?'disabled':''}><svg class="ico sm"><use href="#i-down"/></svg></button></div>`).join('');
-  const move=(id,d)=>{const i=S.order.indexOf(id),j=i+d;if(j<0||j>=S.order.length)return;[S.order[i],S.order[j]]=[S.order[j],S.order[i]];save();layoutPanels();buildSettings();pl.querySelector(`[data-id="${id}"] [${d<0?'data-up':'data-dn'}]`)?.focus()};
+  pl.innerHTML=S.order.filter(id=>id!=='wafi').map((id,i,arr)=>`<div class="pi" draggable="true" data-id="${id}"><span class="handle" aria-hidden="true"><svg class="ico sm"><use href="#i-grip"/></svg></span><label><input type="checkbox" ${S.hidden.includes(id)?'':'checked'} ${id==='mine'?'disabled':''}> ${PNAME(id)}</label><button class="mv" type="button" data-up aria-label="انقل «${PNAME(id)}» إلى الأعلى" ${i===0?'disabled':''}><svg class="ico sm"><use href="#i-up"/></svg></button><button class="mv" type="button" data-dn aria-label="انقل «${PNAME(id)}» إلى الأسفل" ${i===arr.length-1?'disabled':''}><svg class="ico sm"><use href="#i-down"/></svg></button></div>`).join('');
+  const move=(id,d)=>{const i=S.order.indexOf(id),j=i+d;if(j<0||j>=S.order.length-1)return;[S.order[i],S.order[j]]=[S.order[j],S.order[i]];save();layoutPanels();buildSettings();pl.querySelector(`[data-id="${id}"] [${d<0?'data-up':'data-dn'}]`)?.focus()};
   pl.querySelectorAll('.pi').forEach(r=>{const id=r.dataset.id;
     r.querySelector('input').onchange=e=>{S.hidden=e.target.checked?S.hidden.filter(x=>x!==id):[...S.hidden,id];save();layoutPanels()};
     r.querySelector('[data-up]').onclick=()=>move(id,-1);r.querySelector('[data-dn]').onclick=()=>move(id,1);
     r.addEventListener('dragstart',e=>{r.classList.add('drag');e.dataTransfer.setData('text/plain',id)});r.addEventListener('dragend',()=>r.classList.remove('drag'));
     r.addEventListener('dragover',e=>e.preventDefault());
-    r.addEventListener('drop',e=>{e.preventDefault();const from=e.dataTransfer.getData('text/plain');if(!from||from===id)return;S.order.splice(S.order.indexOf(from),1);S.order.splice(S.order.indexOf(id),0,from);save();layoutPanels();buildSettings()})});
+    r.addEventListener('drop',e=>{e.preventDefault();const from=e.dataTransfer.getData('text/plain');if(!from||from===id)return;S.order.splice(S.order.indexOf(from),1);S.order.splice(S.order.indexOf(id),0,from);S.order=S.order.filter(x=>x!=='wafi').concat('wafi');save();layoutPanels();buildSettings()})});
   $('#reset').onclick=()=>{const keep=S.block;S=Object.assign({},DEF,{order:PANELS.map(p=>p[0]),hidden:[],open:{},block:keep,welcomed:true});save();applyLook();layoutPanels();buildSettings();renderAll();toast('أُعيدت الإعدادات الافتراضية')};
   digits($('#dSet'));
 }
@@ -1118,7 +1187,7 @@ const myB=()=>S.block?blocks.find(x=>x.b===S.block):null;
 const EXPLAIN={
  mine:{w:'ملخص حالة بلوكك وحده، لا المشروع كله.',h:'الرقم الكبير هو نسبة ما أُنجز من أعمال بلوكك. والبيوت العشرة تمثّل البناء كاملًا، والملوّن منها هو المنجَز. والشريط ذو المربعات الستة يوضح مراحل البناء من الهيكل إلى التشطيب، والمربع المخطَّط هو المرحلة الجارية الآن.',
    y:()=>{const b=myB();return b?`بلوكك (بلوك ${b.b}) أنجز ${last(b).toFixed(2)}% من أعماله. وموعد اكتماله المكتوب هنا تقدير غير رسمي، فالشركة لم تعلن مواعيد لتسليم البلوكات.`:'اختر رقم بلوكك من الأزرار ليظهر لك ملخصه.'}},
- sources:{w:'من أين جاءت أرقام هذه الصفحة.',h:'كل غلاف يمثل تقريرًا شهريًا أرسلته الشركة، والرقم أسفله نسبة إنجاز المشروع في ذلك التقرير. أما بطاقة وافي فتعرض البيانات الرسمية المسجلة لدى الهيئة العامة للعقار.',
+ sources:{w:'من أين جاءت أرقام هذه الصفحة.',h:'كل غلاف يمثل تقريرًا شهريًا أرسلته الشركة، والرقم أسفله نسبة إنجاز المشروع في ذلك التقرير. وفي آخر الصفحة لوحة تعرض البيانات الرسمية للمشروع في منصة وافي.',
    y:()=>'إذا أردت التحقق من أي رقم، فاضغط على التقرير وافتح صفحة بلوكك فيه.'},
  summary:{w:'صورة عامة عن المشروع كله، لا عن بلوك بعينه.',h:'الدائرة توضح الجزء المنجز من المشروع. والبطاقات الأربع تعرض: النسبة الحالية، ومقدار التقدم في كل شهر، والموعد التقديري للاكتمال، وعدد البلوكات شبه المتوقفة.',
    y:()=>'أنجز المشروع قرابة ثلث العمل، ويتقدم بنحو 1% كل شهر؛ أي أن كل سنة تضيف إليه نحو 11% إلى 12% فقط.'},
@@ -1136,6 +1205,8 @@ const EXPLAIN={
    y:()=>'تكرار الجملة نفسها قد يعني أن وصف ذلك الشهر لم يُحدَّث بالكامل.'},
  photos:{w:'صور ظهرت متطابقة في تقريرين على أنها من أعمال الشهر.',h:'كل بطاقة تعرض الصورة المكررة، وفوقها اسما التقريرين اللذين ظهرت فيهما. اضغط على الصورة لتكبيرها.',
    y:()=>{const b=myB(),r=b&&REUSE.find(x=>x[0]===b.b);return r?`بلوكك من البلوكات التي تكررت صورها: ظهرت صورة تقرير ${M[r[2]]} نفسها في تقرير ${M[r[1]]}.`:'الصورة المكررة لا تُثبت تقدم العمل في الشهر الجديد.'}},
+ notes:{w:'نقاط لفتت انتباهنا أثناء قراءة التقارير.',h:'كل بطاقة تعرض ملاحظة قصيرة، وأسفلها الأرقام التي استندت إليها كما وردت في التقارير.',y:()=>'هذه الملاحظات ليست حكمًا على سير العمل؛ وإن أردت فهم أي منها أكثر، فيمكنك الاستفسار عنها لدى الشركة.'},
+ wafi:{w:'البيانات الرسمية للمشروع في منصة وافي التابعة للهيئة العامة للعقار.',h:'كل مربع يعرض معلومة واحدة كما وردت في صفحة المشروع على المنصة، والزر في الأسفل يفتح الصفحة نفسها.',y:()=>'تاريخ نهاية المشروع المسجل في وافي هو 1 يونيو 2028، وهو الموعد الرسمي الوحيد المعلن.'},
  timeline:{w:'أهم ما اكتمل في كل شهر وفق التقارير.',h:'اقرأ من الأعلى إلى الأسفل، من الأقدم إلى الأحدث. والدائرة المتقطعة تعني شهرًا لا تقرير له.',
    y:()=>'هذه الإنجازات منقولة من التقارير كما وردت.'}
 };
@@ -1179,6 +1250,26 @@ document.addEventListener('click',e=>{const t=e.target.closest('.term');if(!t){i
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!gp.hidden){hideGloss()}});
 addEventListener('scroll',()=>{if(!gp.hidden)hideGloss()},{passive:true});
 
+
+/* gentle notes for follow-up (no alarm wording) */
+const NOTES=[
+ ['قفزة في نسبة المرحلة الأولى','زادت نسبة المرحلة الأولى 7.1% في مايو، في حين زادت بلوكاتها الأربعة 1.3% في المتوسط، ثم زادت 5.5% أخرى في يونيو. ولم توضح التقارير سبب هذا الفرق.','المرحلة: أبريل 48.50% ← مايو 55.56% ← يونيو 61.10%'],
+ ['بلوك 23: تقدم محدود منذ مارس','يضم 48 فيلا، وهو أكبر بلوكات المشروع. زادت نسبته 0.38% خلال ستة أشهر، وما زالت صوره تُظهر الدور الأرضي.','مارس 19.50% ← سبتمبر 19.88%'],
+ ['بلوك 15: تقدم بطيء','تذكر التقارير أعمالًا فيه كل شهر، لكن نسبته زادت أقل من 1% منذ مارس.','مارس 22.81% ← سبتمبر 23.61%'],
+ ['بلوك 12: انخفاض في مارس','انخفضت نسبته 5.6% في مارس دون توضيح، ثم عادت تدريجيًا حتى أصبحت قريبة من نسبة فبراير.','فبراير 34.01% ← مارس 28.38% ← سبتمبر 34.89%'],
+ ['صور متشابهة بين شهرين','ظهرت صور بلوكات المرحلة الثالثة في تقرير يونيو مطابقة لصور تقرير مايو، وظهرت صورة من يونيو لبلوك 22 في تقرير سبتمبر.','التفاصيل في لوحة «صور مكررة من الشهر السابق»'],
+ ['تباطؤ وتيرة العمل','كان المشروع يتقدم بمعدل 1.23% شهريًا في مطلع السنة، وأصبح يتقدم 0.92% في الأشهر الأخيرة، مع أن أعمال التشطيب القادمة تحتاج عادةً وقتًا أطول.','يناير–أبريل: 1.23% · يونيو–سبتمبر: 0.92%'],
+ ['المرحلة الرابعة وبلوكاتها','زادت نسبة المرحلة 6.7% بين أبريل ويونيو مع ثبات بلوك 23، ولو حُسبت من بلوك 22 وحده لكانت الزيادة نحو 3%. ولم تتغير نسبتها في سبتمبر.','المرحلة: أبريل 26.5% ← يونيو 33.2%'],
+ ['نسبة المشروع ونسب المراحل','متوسط نسب المراحل الأربع نحو 50.6%، أما نسبة المشروع فهي 29.35%. وقد يرجع ذلك إلى أن المشروع في وافي يضم 596 وحدة، في حين تغطي التقارير 360 فيلا.','متوسط المراحل 50.6% · نسبة المشروع 29.35%'],
+ ['صفحة «بيان تسليم المشروع»','تتضمن التقارير صفحة بهذا العنوان، لكنها لا تذكر موعدًا للتسليم ولا النسبة المستهدفة.','موجودة في جميع التقارير'],
+ ['نسب ثابتة لعدة أشهر','بقيت نسبة بلوك 14 عند 44.45% ثلاثة أشهر متتالية، مع أن تقرير مايو يذكر صبّ جدار السطح، وتكرر ذلك في البلوكين 13 و15 بين مايو ويونيو.','بلوك 14: أبريل = مايو = يونيو = 44.45%'],
+ ['تقرير يوليو','لم يصلنا تقرير لشهر يوليو 2026.','الأشهر المتوفرة: 9 تقارير'],
+ ['ملاحظات تحريرية','كُتب على صفحة بلوك 6 «المرحلة 1 / بلوك 5» في أربعة تقارير، وتكررت صورة الغلاف نفسها في أربعة تقارير.','لا تؤثر في الأرقام']
+];
+function drawNotes(){const card=([t,p,e])=>`<article class="nt"><div class="nt-h"><span class="nt-i" aria-hidden="true"><svg class="ico"><use href="#i-pinb"/></svg></span><h3>${t}</h3></div><p>${p}</p><div class="ev">${e}</div></article>`;
+  $('#notesA').innerHTML=NOTES.slice(0,6).map(card).join('');$('#notesB').innerHTML=NOTES.slice(6).map(card).join('');
+  $('#notesSum').textContent=`اعرض بقية الملاحظات (${NOTES.length-6})`;glossify($('#p-notes .pb'))}
+
 /* FAQ */
 const FAQ=[
  ['ما المقصود بـ«البلوك»؟','البلوك مجموعة من الفلل المتجاورة تُبنى معًا ولها رقم. وفي المشروع 16 بلوكًا موزعة على أربع مراحل، ولكل بلوك نسبة إنجاز خاصة به في التقارير.'],
@@ -1221,11 +1312,11 @@ function startTour(){if(tourEl)return;tourEl=document.createElement('div');tourE
 /* ================= boot ================= */
 function charts(){drawRing();drawOverall();drawPace();drawPhases();if(view==='rank')drawBump();digits($('main'))}
 function redraw(){requestAnimationFrame(charts)}
-function renderAll(){if(S.digits!=='arab'){drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();charts();restoreLatin();return}drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();charts();digits(document.body)}
+function renderAll(){if(S.digits!=='arab'){drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();drawNotes();charts();restoreLatin();return}drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();drawNotes();charts();digits(document.body)}
 /* switching back to 123: static text was converted in place, so reload it from the markup */
 function restoreLatin(){if(converted)location.reload()}
 applyLook();setupPanels();layoutPanels();
-drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();charts();
+drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();drawNotes();charts();
 $$('.panel .take,.panel .lead,.panel .note,.panel .srcnote,.panel .callout,.panel .disc,.panel .rp,.panel .tl,.wafi dl').forEach(glossify);
 if(S.digits==='arab')digits(document.body)
 syncURL();welcome();if(S.welcomed&&!S.toured&&!new URLSearchParams(location.search).get('block'))maybeTour();
