@@ -452,16 +452,14 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
 @container (min-width:520px){.wafi dl{grid-template-columns:repeat(4,1fr)}}
 
 /* ---------- plain-language layer ---------- */
-.explain-btn{align-self:flex-start;margin-top:var(--s-1);display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 var(--s-3) 0 var(--s-2);border:1.5px solid var(--site);border-radius:var(--r-pill);background:var(--site-soft);color:var(--site);font-weight:700;font-size:var(--t-sm);cursor:pointer;position:relative}
-
-.explain-btn .q{width:22px;height:22px;border-radius:50%;background:var(--site);color:var(--on-site);display:grid;place-items:center;font-size:13px;line-height:1}
-.explain-btn[aria-expanded="true"]{background:var(--site);color:var(--on-site)}
-.explain-btn[aria-expanded="true"] .q{background:var(--on-site);color:var(--site)}
-.explain{border-radius:var(--r-2);background:var(--site-soft);padding:var(--s-4);display:grid;gap:var(--s-3);border:1.5px dashed color-mix(in srgb,var(--site) 45%,transparent)}
-.explain>div{display:grid;grid-template-columns:32px minmax(0,1fr);gap:var(--s-1) var(--s-3);align-items:start}
-.explain .n{width:32px;height:32px;border-radius:var(--r-2);background:var(--sheet);color:var(--site);display:grid;place-items:center;font-weight:700}
-.explain b{display:block;color:var(--ink);font-size:var(--t-md)}
-.explain p{font-size:var(--t-md);color:var(--ink-2);line-height:1.8;max-width:65ch}
+.explain-btn{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-block:-8px -10px;padding:0;border:0;background:none;color:var(--site);font-weight:600;font-size:var(--t-sm);cursor:pointer}
+.explain-btn .q{width:20px;height:20px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-size:12px;line-height:1;font-weight:700}
+.explain-btn span:last-child{border-bottom:1px dashed currentColor;line-height:1.4}
+.explain-btn:hover span:last-child{border-bottom-style:solid}
+.explain-btn[aria-expanded="true"] .q{background:var(--site);color:var(--on-site);border-color:var(--site)}
+.explain{border-radius:var(--r-2);background:var(--site-soft);padding:var(--s-3) var(--s-4);display:grid;gap:var(--s-2);border-inline-start:3px solid var(--site)}
+.explain p{font-size:var(--t-sm);color:var(--ink-2);line-height:1.75;max-width:75ch}
+.explain p b{color:var(--ink);font-weight:700;margin-inline-end:4px}
 .term{all:unset;cursor:help;border-bottom:1.5px dotted var(--site);color:inherit;font:inherit}
 .term:hover{background:var(--site-soft)}
 .term:focus-visible{outline:3px solid var(--site);outline-offset:2px;border-radius:2px}
@@ -1212,7 +1210,7 @@ const EXPLAIN={
    y:()=>'هذه الإنجازات منقولة من التقارير كما وردت.'}
 };
 function fillExplain(id){const ex=$('#p-'+id+'-ex');if(!ex)return;const e=EXPLAIN[id];
-  ex.innerHTML=[['ماذا تعرض؟',e.w],['كيف تقرؤها؟',e.h],['ماذا تعني لك؟',e.y()]].map(([t,d],i)=>`<div><span class="n" aria-hidden="true">${i+1}</span><span><b>${t}</b><p>${d}</p></span></div>`).join('');
+  ex.innerHTML=[['ماذا تعرض؟',e.w],['كيف تقرؤها؟',e.h],['ماذا تعني لك؟',e.y()]].map(([t,d])=>`<p><b>${t}</b>${d}</p>`).join('');
   glossify(ex);digits(ex)}
 function refreshExplains(){$$('.explain').forEach(ex=>{if(!ex.hidden)fillExplain(ex.id.slice(2,-3))})}
 
