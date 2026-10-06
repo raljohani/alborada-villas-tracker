@@ -392,13 +392,24 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
 .thumbs span b{display:block;font-weight:600}
 
 /* ---------- lightbox ---------- */
-.lb{position:fixed;inset:0;background:rgba(8,10,7,.94);z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s-3);padding:calc(var(--s-4) + env(safe-area-inset-top,0px)) var(--s-3) calc(var(--s-4) + env(safe-area-inset-bottom,0px));touch-action:pan-y}
-.lb img{max-width:min(100%,1000px);max-height:72vh;object-fit:contain;border-radius:var(--r-2);background:#fff}
-.lb .cap{color:#fff;font-size:var(--t-sm);text-align:center}
-.lb .lbn{display:flex;gap:var(--s-2);align-items:center;color:#fff;font-size:var(--t-sm);flex-wrap:wrap;justify-content:center}
-.lb button{min-height:44px;min-width:44px;background:#fff;color:#111;border:0;border-radius:var(--r-pill);padding:0 var(--s-4);cursor:pointer;font-weight:600}
-.lb button:disabled{opacity:.35;cursor:default}
-.lb .cnt{min-width:56px;text-align:center}
+.lb{position:fixed;inset:0;z-index:60;background:#0b0d0a;color:#fff;display:grid;grid-template-rows:auto minmax(0,1fr) auto;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.lb-top,.lb-bot{display:flex;align-items:center;gap:var(--s-2);padding:var(--s-2) var(--s-3);background:rgba(255,255,255,.06)}
+.lb-top .cap{flex:1;min-width:0;font-size:var(--t-sm);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-top .cnt{font-size:var(--t-xs);color:#c9cfc3;white-space:nowrap}
+.lb-bot{justify-content:center;flex-wrap:wrap}
+.lb button{min-height:44px;min-width:44px;background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:var(--r-pill);padding:0 var(--s-3);cursor:pointer;font-weight:600;font-size:var(--t-sm);display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.lb button:hover{background:rgba(255,255,255,.22)}
+.lb button:disabled{opacity:.3;cursor:default}
+.lb button:focus-visible{outline:3px solid #9fd36b;outline-offset:2px}
+.lb .lb-x{background:#fff;color:#111}
+.lb-stage{position:relative;overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.lb-stage.zoomed{cursor:grab}.lb-stage.drag{cursor:grabbing}
+.lb-stage img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.5);will-change:transform;-webkit-user-drag:none}
+.lb-stage.anim img{transition:transform var(--d-2) var(--ease)}
+.lb-hint{position:absolute;left:50%;bottom:var(--s-4);transform:translateX(-50%);background:rgba(0,0,0,.72);color:#fff;font-size:var(--t-sm);padding:var(--s-2) var(--s-4);border-radius:var(--r-pill);pointer-events:none;white-space:nowrap;transition:opacity var(--d-2)}
+.lb-load{position:absolute;top:var(--s-3);left:50%;transform:translateX(-50%);font-size:var(--t-xs);background:rgba(0,0,0,.6);padding:2px 10px;border-radius:var(--r-pill);pointer-events:none}
+.lb .zl{min-width:56px;text-align:center;font-size:var(--t-xs);color:#c9cfc3}
+@media (max-width:599px){.lb-bot .txt,.lb .zl{display:none}.lb-bot{flex-wrap:nowrap;gap:6px;padding-inline:var(--s-2)}.lb-bot button{padding:0 var(--s-3)}}
 
 /* ---------- sources: the report shelf ---------- */
 .srcnote{font-size:var(--t-sm);color:var(--ink-2);border-inline-start:3px solid var(--site);padding-inline-start:var(--s-3);max-width:65ch}
@@ -925,17 +936,59 @@ $('#openSet').onclick=e=>{buildSettings();openDrawer('#dSet',e.currentTarget)};
 /* ================= lightbox with previous / next ================= */
 function openLb(items,i=0){
   const d=document.createElement('div');d.className='lb';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.dir='rtl';
-  const many=items.length>1;
-  d.innerHTML=`<img alt=""><p class="cap" aria-live="polite"></p><div class="lbn">${many?'<button type="button" data-p>→ السابق</button><span class="cnt"></span><button type="button" data-n>التالي ←</button>':''}<button type="button" data-x>إغلاق</button></div>`;
-  const img=d.querySelector('img'),cap=d.querySelector('.cap'),cnt=d.querySelector('.cnt'),prev=document.activeElement;
-  const show=k=>{i=Math.max(0,Math.min(items.length-1,k));img.src=items[i].src;img.alt=items[i].cap;cap.textContent=items[i].cap;d.setAttribute('aria-label',items[i].cap);
-    if(many){cnt.textContent=(i+1)+' / '+items.length;d.querySelector('[data-p]').disabled=i===0;d.querySelector('[data-n]').disabled=i===items.length-1}digits(d)};
-  const close=()=>{d.remove();document.removeEventListener('keydown',key,true);prev?.focus?.()};
-  const key=e=>{if(e.key==='Escape'){e.stopPropagation();close()}else if(e.key==='ArrowLeft'){e.preventDefault();show(i+1)}else if(e.key==='ArrowRight'){e.preventDefault();show(i-1)}
+  const many=items.length>1,touch=matchMedia('(pointer:coarse)').matches;
+  d.innerHTML=`<div class="lb-top"><span class="cap" aria-live="polite"></span><span class="cnt"></span><button type="button" class="lb-x" data-x aria-label="إغلاق">✕ <span class="txt">إغلاق</span></button></div>
+   <div class="lb-stage" dir="ltr"><img alt="" draggable="false"><span class="lb-load" hidden>جارٍ تحميل نسخة أوضح…</span><span class="lb-hint">${touch?'اسحب للتنقل داخل الصفحة، وقرّب بإصبعين':'استخدم عجلة الفأرة أو انقر مرتين للتكبير، واسحب للتنقل'}</span></div>
+   <div class="lb-bot">${many?'<button type="button" data-p aria-label="الصورة السابقة">→ <span class="txt">السابق</span></button>':''}<button type="button" data-zo aria-label="تصغير">−</button><span class="zl" aria-live="polite"></span><button type="button" data-zi aria-label="تكبير">+</button><button type="button" data-fit><span>تكبير للقراءة</span></button>${many?'<button type="button" data-n aria-label="الصورة التالية"><span class="txt">التالي</span> ←</button>':''}</div>`;
+  const st=d.querySelector('.lb-stage'),img=st.querySelector('img'),cap=d.querySelector('.cap'),cnt=d.querySelector('.cnt'),zl=d.querySelector('.zl'),ld=st.querySelector('.lb-load'),hint=st.querySelector('.lb-hint'),fitB=d.querySelector('[data-fit] span'),prevF=document.activeElement;
+  let W=0,H=0,iw=1,ih=1,dw=1,dh=1,s=1,X=0,Y=0,wide=false;
+  const MAX=6;
+  const apply=(anim)=>{st.classList.toggle('anim',!!anim);img.style.width=dw+'px';img.style.height=dh+'px';img.style.transform=`translate(${X}px,${Y}px) scale(${s})`;zl.textContent=Math.round(s*100)+'%';st.classList.toggle('zoomed',s>1.01);digits(zl)};
+  const clamp=()=>{const w=dw*s,h=dh*s;X=w<=W?(W-w)/2:Math.min(0,Math.max(W-w,X));Y=h<=H?(H-h)/2:Math.min(0,Math.max(H-h,Y))};
+  const layout=()=>{W=st.clientWidth;H=st.clientHeight;const f=Math.min(W/iw,H/ih);dw=iw*f;dh=ih*f};
+  const fit=(anim)=>{s=1;wide=false;fitB.textContent='تكبير للقراءة';clamp();apply(anim)};
+  /* reading view: a landscape page on a portrait phone opens zoomed from the right edge; a tall page on a wide screen fills the width from the top */
+  const narrowLand=()=>W/H<0.8&&iw/ih>1.2;
+  const fillWidth=(anim=true)=>{if(narrowLand()){s=Math.min(MAX,Math.max(1.6,H*0.7/dh));X=W-dw*s;Y=(H-dh*s)/2}else{s=Math.min(MAX,Math.max(1.4,W/dw));X=(W-dw*s)/2;Y=0}wide=true;fitB.textContent='الصفحة كاملة';clamp();apply(anim)};
+  const initView=()=>{narrowLand()?fillWidth(false):fit()};
+  const zoomAt=(ns,px,py,anim)=>{ns=Math.max(1,Math.min(MAX,ns));X=px-(px-X)*(ns/s);Y=py-(py-Y)*(ns/s);s=ns;clamp();apply(anim)};
+  const show=k=>{i=Math.max(0,Math.min(items.length-1,k));const it=items[i];cap.textContent=it.cap;d.setAttribute('aria-label',it.cap);
+    if(many){cnt.textContent=(i+1)+' / '+items.length;d.querySelector('[data-p]').disabled=i===0;d.querySelector('[data-n]').disabled=i===items.length-1}
+    img.alt=it.cap;img.onload=null;iw=1;img.src=it.src;
+    const go=()=>{iw=img.naturalWidth||1;ih=img.naturalHeight||1;layout();initView()};
+    if(img.complete&&img.naturalWidth)go();else img.onload=go;
+    if(it.hi){ld.hidden=false;const pre=new Image();pre.onload=()=>{if(items[i]!==it)return;const had=iw>1&&img.naturalWidth>0,keep={s,X,Y};img.onload=null;img.src=it.hi;ld.hidden=true;if(!had){iw=pre.naturalWidth;ih=pre.naturalHeight;layout();initView()}else{s=keep.s;X=keep.X;Y=keep.Y;apply()}};pre.onerror=()=>{ld.hidden=true};pre.src=it.hi}else ld.hidden=true;
+    digits(d)};
+  const close=()=>{ro.disconnect();d.remove();document.removeEventListener('keydown',key,true);document.body.style.overflow=bodyOv;prevF?.focus?.()};
+  const center=()=>[W/2,H/2];
+  const key=e=>{if(e.key==='Escape'){e.stopPropagation();close();return}
+    if(e.key==='+'||e.key==='='){e.preventDefault();zoomAt(s*1.5,...center(),true)}else if(e.key==='-'){e.preventDefault();zoomAt(s/1.5,...center(),true)}else if(e.key==='0'){e.preventDefault();fit(true)}
+    else if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();if(s>1.01){X+=e.key==='ArrowLeft'?80:-80;clamp();apply(true)}else show(i+(e.key==='ArrowLeft'?1:-1))}
+    else if(e.key==='ArrowUp'||e.key==='ArrowDown'){if(s>1.01){e.preventDefault();Y+=e.key==='ArrowUp'?80:-80;clamp();apply(true)}}
     else if(e.key==='Tab'){const f=[...d.querySelectorAll('button')].filter(b=>!b.disabled);const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}};
-  d.addEventListener('click',e=>{if(e.target===d||e.target.closest('[data-x]'))close();else if(e.target.closest('[data-n]'))show(i+1);else if(e.target.closest('[data-p]'))show(i-1)});
-  let x0=null;d.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});d.addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;if(dx>50)show(i+1);else if(dx<-50)show(i-1);x0=null});
-  document.addEventListener('keydown',key,true);document.body.appendChild(d);show(i);(d.querySelector('[data-n]:not(:disabled)')||d.querySelector('[data-x]')).focus()}
+  d.addEventListener('click',e=>{if(e.target.closest('[data-x]'))close();else if(e.target.closest('[data-n]'))show(i+1);else if(e.target.closest('[data-p]'))show(i-1);
+    else if(e.target.closest('[data-zi]'))zoomAt(s*1.5,...center(),true);else if(e.target.closest('[data-zo]'))zoomAt(s/1.5,...center(),true);else if(e.target.closest('[data-fit]'))wide?fit(true):fillWidth()});
+  /* pointer gestures: drag to pan, pinch to zoom, swipe to change page, double tap to zoom */
+  const P=new Map();let start=null,pinch=null,lastTap=0;
+  const pos=e=>{const r=st.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top]};
+  st.addEventListener('pointerdown',e=>{st.setPointerCapture(e.pointerId);P.set(e.pointerId,pos(e));hint.style.opacity=0;
+    if(P.size===1){start={p:pos(e),X,Y,t:Date.now()};st.classList.add('drag')}
+    if(P.size===2){const [a,b]=[...P.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),s,m:[(a[0]+b[0])/2,(a[1]+b[1])/2]};start=null}});
+  st.addEventListener('pointermove',e=>{if(!P.has(e.pointerId))return;P.set(e.pointerId,pos(e));
+    if(pinch&&P.size===2){const [a,b]=[...P.values()];const nd=Math.hypot(a[0]-b[0],a[1]-b[1]);zoomAt(pinch.s*nd/pinch.d,pinch.m[0],pinch.m[1])}
+    else if(start&&s>1.01){const p=pos(e);X=start.X+p[0]-start.p[0];Y=start.Y+p[1]-start.p[1];clamp();apply()}});
+  const up=e=>{if(!P.has(e.pointerId))return;const p=pos(e);P.delete(e.pointerId);st.classList.remove('drag');
+    if(start&&P.size===0){const dx=p[0]-start.p[0],dy=p[1]-start.p[1],moved=Math.hypot(dx,dy);
+      if(s<=1.01&&many&&Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy))show(i+(dx>0?1:-1));
+      else if(moved<10){const now=Date.now();if(now-lastTap<320){s>1.01?fit(true):zoomAt(2.5,p[0],p[1],true);lastTap=0}else lastTap=now}}
+    if(P.size<2)pinch=null;if(P.size===0)start=null};
+  st.addEventListener('pointerup',up);st.addEventListener('pointercancel',up);
+  st.addEventListener('wheel',e=>{e.preventDefault();hint.style.opacity=0;const p=pos(e);zoomAt(s*Math.exp(-e.deltaY*0.0018),p[0],p[1])},{passive:false});
+  const ro=new ResizeObserver(()=>{const r={s,cx:(W/2-X)/(dw*s),cy:(H/2-Y)/(dh*s)};layout();s=r.s;X=W/2-r.cx*dw*s;Y=H/2-r.cy*dh*s;clamp();apply()});
+  const bodyOv=document.body.style.overflow;document.body.style.overflow='hidden';
+  document.addEventListener('keydown',key,true);document.body.appendChild(d);ro.observe(st);show(i);
+  setTimeout(()=>{hint.style.opacity=0},3500);
+  (d.querySelector('[data-n]:not(:disabled)')||d.querySelector('[data-x]')).focus()}
 function thumbs(items,labelFn){return `<div class="thumbs">${items.map((t,i)=>`<button type="button" data-i="${i}" aria-label="تكبير: ${t.cap}"><img loading="lazy" src="${t.src}" alt=""><span>${labelFn(t,i)}</span></button>`).join('')}</div>`}
 function wireThumbs(root,items){root.querySelectorAll('.thumbs button').forEach(b=>b.onclick=()=>openLb(items,+b.dataset.i))}
 
@@ -1008,10 +1061,10 @@ function openReport(k,from){
   const r=REPORTS.find(x=>x.k===k),ord=ORD[REPORTS.filter(x=>x.k).indexOf(r)];
   $('#dBlockT').textContent=`تقرير ${r.mo} ${r.y}`;$('#dBlockChip').innerHTML='';
   $('#dBlockSub').textContent=`التقرير ${ord} · ${r.ttl} · ${r.pg} صفحة · ${r.fmt}`;
-  const cover={src:`covers/c-${k}.jpg`,cap:`غلاف تقرير ${r.mo} ${r.y}`};
+  const cover={src:`covers/c-${k}.jpg`,hi:`hi/c-${k}.jpg`,cap:`غلاف تقرير ${r.mo} ${r.y}`};
   let items=[cover],html='';
   if(r.m!=null){
-    const pages=blocks.map(b=>({src:`img/b${b.b}-m${r.m}.jpg`,cap:`بلوك ${b.b} · تقرير ${r.mo} ${r.y}`,b,v:b.v[SRC.indexOf(r.m)]}));
+    const pages=blocks.map(b=>({src:`img/b${b.b}-m${r.m}.jpg`,hi:`hi/b${b.b}-m${r.m}.jpg`,cap:`بلوك ${b.b} · تقرير ${r.mo} ${r.y}`,b,v:b.v[SRC.indexOf(r.m)]}));
     items=items.concat(pages);
     html=`<div class="ms"><div class="mm"><span class="k">نسبة المشروع</span><span class="v">${pct(overall[r.m])}</span></div>${phases.map(p=>`<div class="mm"><span class="k">${p.name}</span><span class="v"><span class="ltr">${p.v[r.m].toFixed(2)}%</span></span></div>`).join('')}</div>
       <b style="font-size:var(--t-sm)">صفحات البلوكات في هذا التقرير</b><span class="note">اضغط على أي صفحة لتكبيرها، وتنقّل بين الصفحات بزرَّي السابق والتالي.</span>`+
@@ -1058,7 +1111,7 @@ function setBlock(n){const first=!S.welcomed;S.block=n;S.welcomed=true;save();sy
 function openBlock(n,from){
   const b=blocks.find(x=>x.b===n),ph=phases[b.p-1],[sc,sl,sy]=status(b),st=stalls(b);
   $('#dBlockT').textContent='بلوك '+n;$('#dBlockChip').innerHTML=chip(sc,sl,sy);$('#dBlockSub').textContent=`${ph.name} · ${villas(b.u)}`;
-  const pages=SRC.map((mo,i)=>({src:`img/b${n}-m${mo}.jpg`,cap:`بلوك ${n} · تقرير ${M[mo]} 2026`,mo,v:b.v[i]}));
+  const pages=SRC.map((mo,i)=>({src:`img/b${n}-m${mo}.jpg`,hi:`hi/b${n}-m${mo}.jpg`,cap:`بلوك ${n} · تقرير ${M[mo]} 2026`,mo,v:b.v[i]}));
   $('#dBlockB').innerHTML=`<div class="ms"><div class="mm"><span class="k">نسبة الإنجاز</span><span class="v">${pct(last(b))}</span></div><div class="mm"><span class="k">الاكتمال المتوقع</span><span class="v" style="font-size:var(--t-md)">${eta(b)}</span></div><div class="mm"><span class="k">الوتيرة الحالية</span><span class="v"><span class="ltr">${recent(b).toFixed(1)}%</span></span></div><div class="mm"><span class="k">أشهر بلا تقدم</span><span class="v">${st.filter(Boolean).length} من ${st.length}</span></div></div>
    <p class="eta-mini"><svg class="ico sm" aria-hidden="true" style="color:var(--warn);flex:0 0 auto"><use href="#i-alert"/></svg><span><b>موعد الاكتمال تقديري:</b> محسوب من وتيرة البلوك في التقارير، وليس موعدًا رسميًا من الشركة. الموعد الرسمي الوحيد هو نهاية المشروع في منصة وافي: 1 يونيو 2028.</span></p>
    <div>${ladKey()}${ladderHTML(n)}</div>
