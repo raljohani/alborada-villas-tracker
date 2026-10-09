@@ -897,7 +897,8 @@ function digits(root=document.body){if(S.digits!=='arab'||!root)return;converted
 
 /* ================= panels ================= */
 const isPhone=()=>innerWidth<600;
-function panelOpen(id){const p=$('#p-'+id);if(S.open[id]!=null)return S.open[id];return !(p.dataset.deep&&isPhone())}
+/* all panels open by default; only a panel the viewer collapsed stays collapsed */
+function panelOpen(id){return S.open[id]!=null?S.open[id]:true}
 function setupPanels(){
   $$('.panel').forEach(p=>{const id=p.dataset.p;const act=p.querySelector('.ph-act');const body=p.querySelector('.pb');if(!body.id)body.id=p.id+'-b';
     act.innerHTML=`<button class="pbtn" type="button" data-share aria-label="انسخ رابط هذه اللوحة"><svg class="ico sm"><use href="#i-link"/></svg></button><button class="pbtn" type="button" data-tog aria-controls="${body.id}" aria-label="طيّ اللوحة أو فتحها"><svg class="ico sm chev"><use href="#i-chev"/></svg></button>`;
