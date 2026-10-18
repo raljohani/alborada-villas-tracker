@@ -1,0 +1,130 @@
+[
+{
+"block": "بلوك 1",
+"current_stage_no": 6,
+"current_stage": "التشطيب",
+"months_to_finish_optimistic": 26,
+"months_to_finish_likely": 27,
+"months_to_finish_pessimistic": 28
+},
+{
+"block": "بلوك 2",
+"current_stage_no": 6,
+"current_stage": "التشطيب",
+"months_to_finish_optimistic": 24,
+"months_to_finish_likely": 26,
+"months_to_finish_pessimistic": 28
+},
+{
+"block": "بلوك 3",
+"current_stage_no": 6,
+"current_stage": "التشطيب",
+"months_to_finish_optimistic": 22,
+"months_to_finish_likely": 23,
+"months_to_finish_pessimistic": 25
+},
+{
+"block": "بلوك 5",
+"current_stage_no": 6,
+"current_stage": "التشطيب",
+"months_to_finish_optimistic": 18,
+"months_to_finish_likely": 19,
+"months_to_finish_pessimistic": 21
+},
+{
+"block": "بلوك 4",
+"current_stage_no": 4,
+"current_stage": "اللياسة",
+"months_to_finish_optimistic": 15,
+"months_to_finish_likely": 17,
+"months_to_finish_pessimistic": 19
+},
+{
+"block": "بلوك 6",
+"current_stage_no": 4,
+"current_stage": "اللياسة",
+"months_to_finish_optimistic": 19,
+"months_to_finish_likely": 20,
+"months_to_finish_pessimistic": 22
+},
+{
+"block": "بلوك 7",
+"current_stage_no": 4,
+"current_stage": "اللياسة",
+"months_to_finish_optimistic": 12,
+"months_to_finish_likely": 15,
+"months_to_finish_pessimistic": 18
+},
+{
+"block": "بلوك 8",
+"current_stage_no": 4,
+"current_stage": "اللياسة",
+"months_to_finish_optimistic": 20,
+"months_to_finish_likely": 22,
+"months_to_finish_pessimistic": 24
+},
+{
+"block": "بلوك 9",
+"current_stage_no": 5,
+"current_stage": "الدهان واللياسة الخارجية",
+"months_to_finish_optimistic": 13,
+"months_to_finish_likely": 15,
+"months_to_finish_pessimistic": 17
+},
+{
+"block": "بلوك 10",
+"current_stage_no": 4,
+"current_stage": "اللياسة",
+"months_to_finish_optimistic": 18,
+"months_to_finish_likely": 20,
+"months_to_finish_pessimistic": 22
+},
+{
+"block": "بلوك 12",
+"current_stage_no": 3,
+"current_stage": "الكهرباء والسباكة",
+"months_to_finish_optimistic": 36,
+"months_to_finish_likely": 42,
+"months_to_finish_pessimistic": 49
+},
+{
+"block": "بلوك 13",
+"current_stage_no": 4,
+"current_stage": "اللياسة",
+"months_to_finish_optimistic": 20,
+"months_to_finish_likely": 24,
+"months_to_finish_pessimistic": 28
+},
+{
+"block": "بلوك 14",
+"current_stage_no": 4,
+"current_stage": "اللياسة",
+"months_to_finish_optimistic": 32,
+"months_to_finish_likely": 36,
+"months_to_finish_pessimistic": 41
+},
+{
+"block": "بلوك 15",
+"current_stage_no": 3,
+"current_stage": "الكهرباء والسباكة",
+"months_to_finish_optimistic": 88,
+"months_to_finish_likely": 101,
+"months_to_finish_pessimistic": 116
+},
+{
+"block": "بلوك 22",
+"current_stage_no": 2,
+"current_stage": "البناء",
+"months_to_finish_optimistic": 19,
+"months_to_finish_likely": 22,
+"months_to_finish_pessimistic": 26
+},
+{
+"block": "بلوك 23",
+"current_stage_no": 1,
+"current_stage": "الهيكل",
+"months_to_finish_optimistic": 239,
+"months_to_finish_likely": 240,
+"months_to_finish_pessimistic": 240
+}
+]

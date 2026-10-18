@@ -1,0 +1,258 @@
+[
+{
+"phase": "المرحلة 1",
+"phase_no": 1,
+"villas": 106,
+"month": "2026-01-01",
+"month_name": "يناير",
+"pct": 40.5
+},
+{
+"phase": "المرحلة 1",
+"phase_no": 1,
+"villas": 106,
+"month": "2026-02-01",
+"month_name": "فبراير",
+"pct": 46.14
+},
+{
+"phase": "المرحلة 1",
+"phase_no": 1,
+"villas": 106,
+"month": "2026-03-01",
+"month_name": "مارس",
+"pct": 47.0
+},
+{
+"phase": "المرحلة 1",
+"phase_no": 1,
+"villas": 106,
+"month": "2026-04-01",
+"month_name": "أبريل",
+"pct": 48.5
+},
+{
+"phase": "المرحلة 1",
+"phase_no": 1,
+"villas": 106,
+"month": "2026-05-01",
+"month_name": "مايو",
+"pct": 55.56
+},
+{
+"phase": "المرحلة 1",
+"phase_no": 1,
+"villas": 106,
+"month": "2026-06-01",
+"month_name": "يونيو",
+"pct": 61.1
+},
+{
+"phase": "المرحلة 1",
+"phase_no": 1,
+"villas": 106,
+"month": "2026-08-01",
+"month_name": "أغسطس",
+"pct": 62.7
+},
+{
+"phase": "المرحلة 1",
+"phase_no": 1,
+"villas": 106,
+"month": "2026-09-01",
+"month_name": "سبتمبر",
+"pct": 63.5
+},
+{
+"phase": "المرحلة 2",
+"phase_no": 2,
+"villas": 88,
+"month": "2026-01-01",
+"month_name": "يناير",
+"pct": 31.5
+},
+{
+"phase": "المرحلة 2",
+"phase_no": 2,
+"villas": 88,
+"month": "2026-02-01",
+"month_name": "فبراير",
+"pct": 38.06
+},
+{
+"phase": "المرحلة 2",
+"phase_no": 2,
+"villas": 88,
+"month": "2026-03-01",
+"month_name": "مارس",
+"pct": 43.0
+},
+{
+"phase": "المرحلة 2",
+"phase_no": 2,
+"villas": 88,
+"month": "2026-04-01",
+"month_name": "أبريل",
+"pct": 44.5
+},
+{
+"phase": "المرحلة 2",
+"phase_no": 2,
+"villas": 88,
+"month": "2026-05-01",
+"month_name": "مايو",
+"pct": 47.5
+},
+{
+"phase": "المرحلة 2",
+"phase_no": 2,
+"villas": 88,
+"month": "2026-06-01",
+"month_name": "يونيو",
+"pct": 50.15
+},
+{
+"phase": "المرحلة 2",
+"phase_no": 2,
+"villas": 88,
+"month": "2026-08-01",
+"month_name": "أغسطس",
+"pct": 52.0
+},
+{
+"phase": "المرحلة 2",
+"phase_no": 2,
+"villas": 88,
+"month": "2026-09-01",
+"month_name": "سبتمبر",
+"pct": 53.5
+},
+{
+"phase": "المرحلة 3",
+"phase_no": 3,
+"villas": 80,
+"month": "2026-01-01",
+"month_name": "يناير",
+"pct": 29.0
+},
+{
+"phase": "المرحلة 3",
+"phase_no": 3,
+"villas": 80,
+"month": "2026-02-01",
+"month_name": "فبراير",
+"pct": 37.4
+},
+{
+"phase": "المرحلة 3",
+"phase_no": 3,
+"villas": 80,
+"month": "2026-03-01",
+"month_name": "مارس",
+"pct": 38.0
+},
+{
+"phase": "المرحلة 3",
+"phase_no": 3,
+"villas": 80,
+"month": "2026-04-01",
+"month_name": "أبريل",
+"pct": 41.7
+},
+{
+"phase": "المرحلة 3",
+"phase_no": 3,
+"villas": 80,
+"month": "2026-05-01",
+"month_name": "مايو",
+"pct": 44.7
+},
+{
+"phase": "المرحلة 3",
+"phase_no": 3,
+"villas": 80,
+"month": "2026-06-01",
+"month_name": "يونيو",
+"pct": 45.05
+},
+{
+"phase": "المرحلة 3",
+"phase_no": 3,
+"villas": 80,
+"month": "2026-08-01",
+"month_name": "أغسطس",
+"pct": 46.4
+},
+{
+"phase": "المرحلة 3",
+"phase_no": 3,
+"villas": 80,
+"month": "2026-09-01",
+"month_name": "سبتمبر",
+"pct": 47.5
+},
+{
+"phase": "المرحلة 4",
+"phase_no": 4,
+"villas": 86,
+"month": "2026-01-01",
+"month_name": "يناير",
+"pct": 17.0
+},
+{
+"phase": "المرحلة 4",
+"phase_no": 4,
+"villas": 86,
+"month": "2026-02-01",
+"month_name": "فبراير",
+"pct": 20.5
+},
+{
+"phase": "المرحلة 4",
+"phase_no": 4,
+"villas": 86,
+"month": "2026-03-01",
+"month_name": "مارس",
+"pct": 26.0
+},
+{
+"phase": "المرحلة 4",
+"phase_no": 4,
+"villas": 86,
+"month": "2026-04-01",
+"month_name": "أبريل",
+"pct": 26.5
+},
+{
+"phase": "المرحلة 4",
+"phase_no": 4,
+"villas": 86,
+"month": "2026-05-01",
+"month_name": "مايو",
+"pct": 28.5
+},
+{
+"phase": "المرحلة 4",
+"phase_no": 4,
+"villas": 86,
+"month": "2026-06-01",
+"month_name": "يونيو",
+"pct": 33.2
+},
+{
+"phase": "المرحلة 4",
+"phase_no": 4,
+"villas": 86,
+"month": "2026-08-01",
+"month_name": "أغسطس",
+"pct": 34.7
+},
+{
+"phase": "المرحلة 4",
+"phase_no": 4,
+"villas": 86,
+"month": "2026-09-01",
+"month_name": "سبتمبر",
+"pct": 34.7
+}
+]

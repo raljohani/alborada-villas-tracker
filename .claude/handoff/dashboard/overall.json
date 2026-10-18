@@ -1,0 +1,42 @@
+[
+{
+"month": "2026-01-01",
+"month_name": "يناير",
+"overall_pct": 21.19
+},
+{
+"month": "2026-02-01",
+"month_name": "فبراير",
+"overall_pct": 22.13
+},
+{
+"month": "2026-03-01",
+"month_name": "مارس",
+"overall_pct": 23.71
+},
+{
+"month": "2026-04-01",
+"month_name": "أبريل",
+"overall_pct": 24.87
+},
+{
+"month": "2026-05-01",
+"month_name": "مايو",
+"overall_pct": 25.42
+},
+{
+"month": "2026-06-01",
+"month_name": "يونيو",
+"overall_pct": 26.6
+},
+{
+"month": "2026-08-01",
+"month_name": "أغسطس",
+"overall_pct": 28.44
+},
+{
+"month": "2026-09-01",
+"month_name": "سبتمبر",
+"overall_pct": 29.35
+}
+]

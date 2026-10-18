@@ -1,0 +1,355 @@
+<style>
+.ab{direction:rtl;font-family:var(--font-anthropic-sans);display:flex;flex-direction:column;gap:var(--cds-gap-lg);max-width:1240px;margin-inline:auto}
+.ab-head h1{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);margin:0}
+.ab-take{margin:var(--cds-gap-xs) 0 0;color:var(--color-fg-muted);font-size:var(--cds-font-size-body);line-height:1.7}
+.ab-take b,.ab-kpi b,.ab-cell b{font-weight:600}
+.ab-note{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);line-height:1.6;margin:0}
+.ab-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:var(--cds-gap-md)}
+.ab-kpi{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);display:flex;flex-direction:column;gap:var(--cds-gap-xs)}
+.ab-kpi .lbl{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ab-kpi .big{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);font-variant-numeric:tabular-nums;line-height:1.2}
+.ab-kpi .sub{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);font-variant-numeric:tabular-nums}
+.ab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:var(--cds-gap-md)}
+.ab-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);display:flex;flex-direction:column;gap:var(--cds-gap-sm);min-width:0}
+.ab-card h2{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0}
+.ab-sec{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:var(--cds-gap-sm) 0 0}
+.ab-chart{position:relative;min-height:240px;direction:ltr}
+.ab-chart.tall{min-height:420px}
+.ab-chart svg{display:block;overflow:visible}
+.ab-tip{position:absolute;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);border-radius:var(--cds-radius);box-shadow:var(--cds-shadow-popover);padding:var(--cds-pad-xs) var(--cds-pad-sm);font-size:var(--cds-font-size-caption);direction:rtl;white-space:nowrap;opacity:0;z-index:2;line-height:1.6}
+.ab-tip .t{color:var(--cds-text-secondary)}
+.ab-tip i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-end:6px}
+.ab-legend{display:flex;flex-wrap:wrap;gap:var(--cds-gap-xs) var(--cds-gap-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ab-legend span{display:inline-flex;align-items:center;gap:6px}
+.ab-legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.ab-ctl{display:flex;flex-wrap:wrap;align-items:center;gap:var(--cds-gap-sm)}
+.ab-ctl select,.ab-ctl input{font:inherit;font-size:var(--cds-font-size-body);color:var(--color-fg);background:var(--color-bg);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-xs) var(--cds-pad-sm);min-height:36px}
+.ab-mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:var(--cds-gap-sm)}
+.ab-cell{border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-sm) var(--cds-pad-md);display:flex;flex-direction:column;gap:2px}
+.ab-cell .lbl{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ab-cell .v{font-size:var(--cds-font-size-heading);font-variant-numeric:tabular-nums}
+.ab-est{font-size:var(--cds-font-size-caption);color:var(--color-warn)}
+.ab-tbox{max-height:520px;overflow:auto;border:1px solid var(--color-border-line);border-radius:var(--cds-radius)}
+.ab-table{width:100%;border-collapse:collapse;font-size:var(--cds-font-size-body);font-variant-numeric:tabular-nums;direction:rtl}
+.ab-table th{position:sticky;top:0;background:var(--color-panel);text-align:start;font-weight:var(--cds-font-weight-medium);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);border-bottom:1px solid var(--color-border-line);padding:0;z-index:1}
+.ab-table th button{all:unset;cursor:pointer;display:block;padding:var(--cds-pad-xs) var(--cds-pad-sm);white-space:nowrap}
+.ab-table th button:focus-visible{outline:2px solid var(--color-fg)}
+.ab-table td{padding:var(--cds-pad-xs) var(--cds-pad-sm);border-bottom:1px solid var(--color-border-line);white-space:nowrap}
+.ab-table tr.sel td{background:color-mix(in srgb,var(--color-fg) 6%,transparent)}
+.ab-bar{display:flex;align-items:center;gap:var(--cds-gap-xs)}
+.ab-bar span.track{flex:0 0 72px;height:6px;border-radius:3px;background:var(--cds-chart-grid);overflow:hidden;direction:ltr}
+.ab-bar span.fill{display:block;height:100%;border-radius:3px}
+.st-crit{color:var(--color-bad)}.st-ser{color:var(--color-warn)}.st-ok{color:var(--color-ok)}
+@media (max-width:640px){.ab-table .opt{display:none}}
+[data-dash-source-state=empty]{color:transparent}
+[data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
+.ab-fail{display:flex;align-items:center;justify-content:center;gap:6px;min-height:inherit;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.ab-fail::before{content:"";width:.375rem;height:.375rem;border-radius:50%;background:var(--color-bad)}
+</style>
+
+<div class="ab" id="top">
+  <header class="ab-head" id="summary">
+    <h1>لوحة بيانات البورادا فيلا</h1>
+    <p class="ab-take">نسبة إنجاز المشروع <b class="dash-skeleton" data-source="headline" data-field="latest" data-row="0">—</b> وفق تقرير <span class="dash-skeleton" data-source="headline" data-field="latest_month" data-row="0">—</span>، بزيادة <b class="dash-skeleton" data-source="headline" data-field="delta" data-row="0">—</b> عن التقرير السابق. وتيرة الأشهر الثلاثة الأخيرة <b class="dash-skeleton" data-source="pace_summary" data-field="recent" data-row="0">—</b> شهريًا مقابل <b class="dash-skeleton" data-source="pace_summary" data-field="early" data-row="0">—</b> مطلع السنة.</p>
+    <p class="ab-note">لوحة مستقلة غير تابعة للمطوّر. النسب منقولة كما وردت في تقاريره الشهرية، ومواعيد الاكتمال تقديرات غير رسمية محسوبة من وتيرة كل بلوك.</p>
+  </header>
+
+  <section class="ab-kpis" id="kpis">
+    <div class="ab-kpi"><span class="lbl">نسبة إنجاز المشروع</span><span class="big dash-skeleton" data-source="headline" data-field="latest" data-row="0">—</span><span class="sub">تقرير <span data-source="headline" data-field="latest_month" data-row="0">—</span> · <span data-source="headline" data-field="delta" data-row="0">—</span> عن <span data-source="headline" data-field="prev_month" data-row="0">—</span></span></div>
+    <div class="ab-kpi"><span class="lbl">التقدم الشهري مؤخرًا</span><span class="big dash-skeleton" data-source="pace_summary" data-field="recent" data-row="0">—</span><span class="sub">يونيو–سبتمبر · مطلع السنة <span data-source="pace_summary" data-field="early" data-row="0">—</span></span></div>
+    <div class="ab-kpi"><span class="lbl">متوسط التقدم الشهري</span><span class="big dash-skeleton" data-source="pace_summary" data-field="average" data-row="0">—</span><span class="sub">من يناير إلى سبتمبر</span></div>
+    <div class="ab-kpi"><span class="lbl">بلوكات شبه متوقفة</span><span class="big dash-skeleton" data-source="stalled" data-field="count" data-row="0">—</span><span class="sub" data-source="stalled" data-field="names" data-row="0">—</span></div>
+  </section>
+
+  <h2 class="ab-sec" id="progress">تقدم المشروع</h2>
+  <div class="ab-grid">
+    <div class="ab-card" id="card-overall"><h2>نسبة المشروع شهرًا بشهر</h2><p class="ab-note">كما وردت في كل تقرير. لا يوجد تقرير لشهر يوليو.</p><div class="ab-chart" id="ch-overall" data-source="overall"></div></div>
+    <div class="ab-card" id="card-pace"><h2>الزيادة الشهرية</h2><p class="ab-note">الفرق بين كل تقريرين. فترة يونيو–أغسطس مقسومة على شهرين.</p><div class="ab-chart" id="ch-pace" data-source="pace"></div></div>
+  </div>
+  <div class="ab-card" id="card-phases"><h2>المراحل الأربع</h2><p class="ab-note">نسبة كل مرحلة كما وردت في التقارير.</p><div class="ab-chart" id="ch-phases" data-source="phases"></div></div>
+
+  <h2 class="ab-sec" id="block">بلوك محدد</h2>
+  <div class="ab-card" id="card-block">
+    <div class="ab-ctl"><label for="ab-pick">اختر البلوك</label><select id="ab-pick" data-source="block_table"></select></div>
+    <div class="ab-mini" id="ab-mini">
+      <div class="ab-cell"><span class="lbl">نسبة الإنجاز</span><span class="v" data-source="block_table" data-field="latest">—</span></div>
+      <div class="ab-cell"><span class="lbl">الحالة</span><span class="v" data-source="block_table" data-field="status">—</span></div>
+      <div class="ab-cell"><span class="lbl">العمل الجاري</span><span class="v" data-source="block_table" data-field="current_stage">—</span></div>
+      <div class="ab-cell"><span class="lbl">وتيرة آخر 3 أشهر</span><span class="v" data-source="block_table" data-field="recent_pace">—</span></div>
+      <div class="ab-cell"><span class="lbl">الاكتمال المتوقع</span><span class="v" data-source="block_table" data-field="eta">—</span><span class="ab-est">تقدير غير رسمي</span></div>
+    </div>
+    <div class="ab-chart" id="ch-block" data-source="blocks phases"></div>
+    <div class="ab-legend" id="lg-block"></div>
+  </div>
+
+  <h2 class="ab-sec" id="all-blocks">جميع البلوكات</h2>
+  <div class="ab-card" id="card-table">
+    <div class="ab-ctl"><input id="ab-q" type="search" placeholder="ابحث عن بلوك أو مرحلة" aria-label="بحث"></div>
+    <div class="ab-tbox">
+      <table class="ab-table" id="tb-blocks" data-source="block_table" data-row-key="block">
+        <thead><tr>
+          <th data-field="block"><button type="button" data-k="block_no">البلوك</button></th>
+          <th data-field="phase"><button type="button" data-k="phase">المرحلة</button></th>
+          <th data-field="villas" class="opt"><button type="button" data-k="villas">الفلل</button></th>
+          <th data-field="latest"><button type="button" data-k="latest">الإنجاز</button></th>
+          <th data-field="change_since_jan" class="opt"><button type="button" data-k="change_since_jan">منذ يناير</button></th>
+          <th data-field="recent_pace"><button type="button" data-k="recent_pace">الوتيرة الشهرية</button></th>
+          <th data-field="stalled_months" class="opt"><button type="button" data-k="stalled_months">أشهر بلا تقدم</button></th>
+          <th data-field="current_stage" class="opt"><button type="button" data-k="current_stage_no">العمل الجاري</button></th>
+          <th data-field="eta"><button type="button" data-k="months_likely">الاكتمال المتوقع</button></th>
+          <th data-field="status"><button type="button" data-k="status_rank">الحالة</button></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p class="ab-note">«أشهر بلا تقدم»: الفترات التي زادت فيها نسبة البلوك أقل من 0.5% بين تقريرين. الحالة: «شبه متوقف» إذا تجاوز التقدير الأرجح للاكتمال 60 شهرًا، و«بطيء» إذا تجاوز 30 شهرًا.</p>
+  </div>
+
+  <div class="ab-card" id="card-eta"><h2>متى يكتمل كل بلوك؟</h2><p class="ab-note">النقطة هي التقدير الأرجح، والشريط يمتد من المتفائل إلى المتشائم. تقديرات غير رسمية، ويُختصر ما يتجاوز 2030.</p><div class="ab-chart tall" id="ch-eta" data-source="block_table"></div></div>
+
+  <h2 class="ab-sec" id="sources">التقارير المصدر</h2>
+  <div class="ab-card" id="card-reports">
+    <div class="ab-tbox"><table class="ab-table" id="tb-reports" data-source="reports" data-row-key="report">
+      <thead><tr><th data-field="report"><button type="button" tabindex="-1">التقرير</button></th><th data-field="pages"><button type="button" tabindex="-1">الصفحات</button></th><th data-field="format"><button type="button" tabindex="-1">الصيغة</button></th><th data-field="overall_pct"><button type="button" tabindex="-1">نسبة المشروع</button></th></tr></thead>
+      <tbody></tbody></table></div>
+    <p class="ab-note">تقرير أكتوبر 2025 يصف حالة المراحل دون نسبة للمشروع. لا يوجد تقرير لشهر يوليو 2026.</p>
+  </div>
+</div>
+
+<script>
+/* ---------- calculations (visible in Sources) ---------- */
+dash.calc('headline', {
+  inputs: ['overall'], title: 'نسبة المشروع الأخيرة والتغيّر', description: 'آخر نسبة للمشروع والفرق عن التقرير الذي قبله.',
+  fn: (overall) => {
+    const r = overall.map((d) => ({ m: String(d.month).slice(0, 10), name: d.month_name, v: Number(d.overall_pct) })).sort((a, b) => a.m < b.m ? -1 : 1);
+    const a = r[r.length - 1], b = r[r.length - 2];
+    return [{ latest: a.v, latest_month: a.name, prev_month: b.name, delta: +(a.v - b.v).toFixed(2) }];
+  }
+});
+dash.calc('pace', {
+  inputs: ['overall'], title: 'الزيادة الشهرية', description: 'زيادة نسبة المشروع بين كل تقريرين، مقسومة على عدد الأشهر بينهما.',
+  fn: (overall) => {
+    const r = overall.map((d) => ({ m: String(d.month).slice(0, 10), name: d.month_name, v: Number(d.overall_pct) })).sort((a, b) => a.m < b.m ? -1 : 1);
+    const mi = (s) => Number(s.slice(0, 4)) * 12 + Number(s.slice(5, 7));
+    return r.slice(1).map((d, i) => { const g = mi(d.m) - mi(r[i].m); return { period: r[i].name + '–' + d.name, month: d.m, months: g, per_month: +((d.v - r[i].v) / g).toFixed(2) }; });
+  }
+});
+dash.calc('pace_summary', {
+  inputs: ['overall'], title: 'وتيرة المشروع', description: 'متوسط الزيادة الشهرية: يناير–أبريل، ويونيو–سبتمبر، ويناير–سبتمبر.',
+  fn: (overall) => {
+    const v = Object.fromEntries(overall.map((d) => [String(d.month).slice(0, 7), Number(d.overall_pct)]));
+    return [{ early: +((v['2026-04'] - v['2026-01']) / 3).toFixed(2), recent: +((v['2026-09'] - v['2026-06']) / 3).toFixed(2), average: +((v['2026-09'] - v['2026-01']) / 8).toFixed(2) }];
+  }
+});
+dash.calc('block_table', {
+  inputs: ['blocks', 'block_outlook'], title: 'ملخص كل بلوك', description: 'آخر نسبة، والتغيّر منذ يناير، والوتيرة، وأشهر بلا تقدم، والمرحلة، وتقدير الاكتمال لكل بلوك.',
+  fn: (blocks, block_outlook) => {
+    const MN = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+    const by = new Map(); blocks.forEach((d) => { if (!by.has(d.block)) by.set(d.block, []); by.get(d.block).push(d); });
+    const out = new Map(block_outlook.map((o) => [o.block, o]));
+    return [...by].map(([block, rows]) => {
+      rows = rows.slice().sort((a, b) => String(a.month) < String(b.month) ? -1 : 1);
+      let last = null; const v = rows.map((r) => { if (r.pct != null && r.pct !== '') last = Number(r.pct); return last; });
+      const at = (mm) => v[rows.findIndex((r) => String(r.month).slice(0, 7) === mm)];
+      let stalled = 0; for (let i = 1; i < v.length; i++) if (v[i] - v[i - 1] < 0.5) stalled++;
+      const o = out.get(block) || {}; const likely = Number(o.months_to_finish_likely);
+      const date = (m) => { const d = new Date(Date.UTC(2026, 8 + m, 1)); return MN[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); };
+      const eta = likely > 120 ? 'غير معروف' : likely > 48 ? 'نحو ' + new Date(Date.UTC(2026, 8 + likely, 1)).getUTCFullYear() : date(likely);
+      const status = likely > 60 ? 'شبه متوقف' : likely > 30 ? 'بطيء' : 'يسير بانتظام';
+      return { block, block_no: Number(rows[0].block_no), phase: rows[0].phase, villas: Number(rows[0].villas),
+        latest: v[v.length - 1], change_since_jan: +(v[v.length - 1] - v[0]).toFixed(2),
+        early_pace: +((at('2026-04') - at('2026-01')) / 3).toFixed(2), recent_pace: +((at('2026-09') - at('2026-06')) / 3).toFixed(2),
+        stalled_months: stalled, reports_compared: v.length - 1, current_stage: o.current_stage, current_stage_no: Number(o.current_stage_no),
+        months_optimistic: Number(o.months_to_finish_optimistic), months_likely: likely, months_pessimistic: Number(o.months_to_finish_pessimistic),
+        eta, status, status_rank: likely > 60 ? 0 : likely > 30 ? 1 : 2 };
+    });
+  }
+});
+dash.calc('stalled', {
+  inputs: ['block_table'], title: 'البلوكات شبه المتوقفة', description: 'عدد البلوكات التي تتجاوز تقديرات اكتمالها الأرجح 60 شهرًا.',
+  fn: (block_table) => { const s = block_table.filter((b) => b.status === 'شبه متوقف').sort((a, b) => a.block_no - b.block_no); return [{ count: s.length, names: s.map((b) => b.block).join(' و') }]; }
+});
+
+/* ---------- helpers ---------- */
+const P = (x) => d3.format('.2f')(x) + '%';
+const SP = (x) => (x > 0 ? '+' : '') + d3.format('.2f')(x) + '%';
+const D = (s) => new Date(String(s).slice(0, 10) + 'T00:00:00Z');
+const stClass = (s) => s === 'شبه متوقف' ? 'st-crit' : s === 'بطيء' ? 'st-ser' : 'st-ok';
+const stSym = (s) => s === 'شبه متوقف' ? '■ ' : s === 'بطيء' ? '▲ ' : '✓ ';
+const fmtField = { latest: P, delta: SP, recent: (x) => P(x), early: P, average: P };
+function fill(sel, fmt) {
+  document.querySelectorAll(sel).forEach((el) => {
+    const id = el.dataset.source, f = el.dataset.field, r = dash.data(id);
+    el.classList.toggle('dash-skeleton', r.status === 'loading');
+    if (r.status !== 'ok' || !r.data.length) { el.textContent = '—'; return; }
+    const row = el.dataset.row != null ? r.data[+el.dataset.row] : null; if (!row) return;
+    const v = row[f]; el.textContent = typeof v === 'number' ? (fmt[f] ? fmt[f](v) : d3.format(',')(v)) : (v ?? '—');
+  });
+}
+function failBox(box, id) { const s = dash.data(id).status; if (s === 'error' || s === 'connect' || s === 'declined') { box.replaceChildren(Object.assign(document.createElement('div'), { className: 'ab-fail', textContent: 'تعذّر التحميل' })); return true; } return false; }
+function tipFor(box) { let t = box.querySelector('.ab-tip'); if (!t) { t = document.createElement('div'); t.className = 'ab-tip'; box.appendChild(t); } return t; }
+function showTip(box, t, x, y, html) { t.replaceChildren(); html.forEach((line, i) => { const div = document.createElement('div'); if (i === 0) div.className = 't'; if (line.c) { const sw = document.createElement('i'); sw.style.background = line.c; div.appendChild(sw); } div.appendChild(document.createTextNode(line.s ?? line)); t.appendChild(div); }); t.style.opacity = 1; const w = box.clientWidth, tw = t.offsetWidth; t.style.left = Math.max(0, Math.min(w - tw, x - tw / 2)) + 'px'; t.style.top = Math.max(0, y - t.offsetHeight - 10) + 'px'; }
+function axisStyle(g) { g.attr('font-size', null).attr('font-family', null); g.selectAll('text').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)'); g.selectAll('.domain').attr('stroke', 'var(--cds-chart-axis)'); g.selectAll('.tick line').attr('stroke', 'var(--cds-chart-grid)'); }
+
+/* ---------- line chart (months) ---------- */
+function lineChart(box, series, opts) {
+  box.querySelector('svg')?.remove();
+  const W = Math.max(280, box.clientWidth), H = opts.h || 240, m = { t: 14, r: 64, b: 28, l: 40 };
+  const months = d3.range(0, 9).map((i) => new Date(Date.UTC(2026, i, 1)));
+  const x = d3.scaleUtc([months[0], months[8]], [m.l, W - m.r]);
+  const all = series.flatMap((s) => s.pts.map((p) => p.v)).filter((v) => v != null);
+  const y = d3.scaleLinear([opts.y0 ?? Math.floor(d3.min(all) / 5) * 5, opts.y1 ?? Math.ceil(d3.max(all) / 5) * 5], [H - m.b, m.t]);
+  const svg = d3.create('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', opts.label);
+  const jul = new Date(Date.UTC(2026, 6, 1));
+  svg.append('rect').attr('x', x(new Date(Date.UTC(2026, 5, 16)))).attr('width', x(new Date(Date.UTC(2026, 7, 16))) - x(new Date(Date.UTC(2026, 5, 16)))).attr('y', m.t).attr('height', H - m.t - m.b).attr('fill', 'var(--cds-chart-grid)').attr('opacity', .5);
+  svg.append('text').attr('x', x(jul)).attr('y', m.t + 12).attr('text-anchor', 'middle').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text('لا تقرير');
+  const ya = svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat((d) => d + '%')); ya.select('.domain').remove(); axisStyle(ya);
+  const MN = ['ينا', 'فبر', 'مار', 'أبر', 'ماي', 'يون', 'يول', 'أغس', 'سبت'];
+  const xa = svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues(W < 480 ? [months[0], months[3], months[6], months[8]] : months).tickFormat((d) => MN[d.getUTCMonth()]).tickSize(0).tickPadding(8)); axisStyle(xa);
+  const line = d3.line().defined((p) => p.v != null).x((p) => x(p.d)).y((p) => y(p.v));
+  const ends = [];
+  series.forEach((s) => {
+    svg.append('path').attr('d', line(s.pts)).attr('fill', 'none').attr('stroke', s.c).attr('stroke-width', s.w || 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('stroke-dasharray', s.dash || null).attr('opacity', s.op || 1);
+    const lp = s.pts.filter((p) => p.v != null).at(-1); if (!lp) return;
+    svg.append('circle').attr('cx', x(lp.d)).attr('cy', y(lp.v)).attr('r', 3.5).attr('fill', s.c);
+    ends.push({ y: y(lp.v), x: x(lp.d), text: s.end, c: s.c });
+  });
+  ends.sort((a, b) => a.y - b.y); for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 14) ends[i].y = ends[i - 1].y + 14;
+  ends.forEach((e) => svg.append('text').attr('x', e.x + 8).attr('y', e.y + 4).attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text(e.text));
+  const rule = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', 'var(--cds-chart-reference)').attr('opacity', 0);
+  const dots = svg.append('g');
+  const tip = tipFor(box);
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const [px] = d3.pointer(ev); const d = x.invert(px); const mi = Math.round((d - months[0]) / (30.44 * 864e5)); const md = months[Math.max(0, Math.min(8, mi))];
+      const rows = series.map((s) => ({ s, p: s.pts.find((p) => +p.d === +md) })).filter((o) => o.p && o.p.v != null);
+      dots.selectAll('*').remove(); if (!rows.length) { tip.style.opacity = 0; rule.attr('opacity', 0); return; }
+      rule.attr('x1', x(md)).attr('x2', x(md)).attr('opacity', 1);
+      rows.forEach((o) => dots.append('circle').attr('cx', x(md)).attr('cy', y(o.p.v)).attr('r', 4).attr('fill', o.s.c).attr('stroke', 'var(--color-panel)').attr('stroke-width', 2));
+      const r = svg.node().getBoundingClientRect(), k = r.width / W;
+      showTip(box, tip, x(md) * k, y(d3.max(rows, (o) => o.p.v)) * k, [rows[0].p.name + ' 2026', ...rows.map((o) => ({ c: series.length > 1 ? o.s.c : null, s: (series.length > 1 ? o.s.name + ': ' : '') + P(o.p.v) }))]);
+    })
+    .on('pointerleave', () => { tip.style.opacity = 0; rule.attr('opacity', 0); dots.selectAll('*').remove(); });
+  box.prepend(svg.node());
+}
+
+/* ---------- charts ---------- */
+function drawOverall() {
+  const box = document.getElementById('ch-overall'); if (failBox(box, 'overall')) return; const r = dash.data('overall'); if (r.status !== 'ok') return;
+  const pts = r.data.map((d) => ({ d: D(d.month), v: Number(d.overall_pct), name: d.month_name })).sort((a, b) => a.d - b.d);
+  lineChart(box, [{ name: 'المشروع', c: dash.colors[0], pts, end: P(pts.at(-1).v), w: 2.5 }], { label: 'نسبة المشروع شهرًا بشهر' });
+}
+function drawPace() {
+  const box = document.getElementById('ch-pace'); if (failBox(box, 'pace')) return; const r = dash.data('pace'); if (r.status !== 'ok') return;
+  box.querySelector('svg')?.remove();
+  const rows = r.data, W = Math.max(280, box.clientWidth), H = 240, m = { t: 22, r: 8, b: 28, l: 36 };
+  const x = d3.scaleBand(rows.map((d) => d.period), [m.l, W - m.r]).padding(.35), y = d3.scaleLinear([0, Math.max(1.8, d3.max(rows, (d) => d.per_month))], [H - m.b, m.t]);
+  const svg = d3.create('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'الزيادة الشهرية');
+  const ya = svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(W - m.l - m.r))); ya.select('.domain').remove(); axisStyle(ya);
+  const recentFrom = rows.length - 3;
+  const tip = tipFor(box);
+  svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', (d) => x(d.period)).attr('width', Math.min(32, x.bandwidth())).attr('y', (d) => y(d.per_month)).attr('height', (d) => y(0) - y(d.per_month)).attr('rx', 4)
+    .attr('fill', (d, i) => i >= recentFrom ? dash.colors[1] : 'var(--cds-chart-muted)')
+    .on('pointermove', (ev, d) => { const rr = svg.node().getBoundingClientRect(), k = rr.width / W; showTip(box, tip, (x(d.period) + x.bandwidth() / 2) * k, y(d.per_month) * k, [d.period, P(d.per_month) + (d.months > 1 ? ' شهريًا (متوسط ' + d.months + ' أشهر)' : '')]); })
+    .on('pointerleave', () => { tip.style.opacity = 0; });
+  svg.append('g').selectAll('text').data(rows).join('text').attr('x', (d) => x(d.period) + Math.min(32, x.bandwidth()) / 2).attr('y', (d) => y(d.per_month) - 6).attr('text-anchor', 'middle').attr('fill', 'var(--color-fg)').style('font-size', 'var(--cds-font-size-caption)').text((d) => d3.format('.2f')(d.per_month));
+  const xa = svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickSize(0).tickPadding(8).tickFormat((p) => p.split('–')[1])); axisStyle(xa);
+  if (W < 420) xa.selectAll('text').filter((d, i) => i % 2).remove();
+  box.prepend(svg.node());
+}
+function phaseSeries(rows) {
+  return d3.groups(rows, (d) => d.phase).sort((a, b) => a[0] < b[0] ? -1 : 1).map(([name, rr], i) => ({ name, c: dash.colors[i], pts: rr.map((d) => ({ d: D(d.month), v: Number(d.pct), name: d.month_name })).sort((a, b) => a.d - b.d) })).map((s) => ({ ...s, end: s.name.replace('المرحلة ', 'م') + ' ' + d3.format('.1f')(s.pts.at(-1).v) + '%' }));
+}
+function drawPhases() {
+  const box = document.getElementById('ch-phases'); if (failBox(box, 'phases')) return; const r = dash.data('phases'); if (r.status !== 'ok') return;
+  lineChart(box, phaseSeries(r.data), { label: 'نسب المراحل الأربع', y0: 0, y1: 70, h: 260 });
+}
+
+/* ---------- one block ---------- */
+const pick = document.getElementById('ab-pick');
+pick.addEventListener('change', () => dash.setParams({ block: pick.value }));
+function drawBlock() {
+  const t = dash.data('block_table'); const mini = document.getElementById('ab-mini');
+  if (t.status !== 'ok') { mini.querySelectorAll('[data-field]').forEach((el) => { el.textContent = '—'; }); return; }
+  const rows = t.data.slice().sort((a, b) => a.block_no - b.block_no);
+  const cur = dash.params().block && rows.some((b) => b.block === dash.params().block) ? dash.params().block : rows[0].block;
+  if (pick.options.length !== rows.length) pick.replaceChildren(...rows.map((b) => new Option(b.block, b.block)));
+  pick.value = cur;
+  const b = rows.find((x) => x.block === cur);
+  mini.querySelectorAll('[data-field]').forEach((el) => {
+    el.setAttribute('data-where', 'block=' + encodeURIComponent(cur));
+    const f = el.dataset.field, v = b[f];
+    el.className = 'v' + (f === 'status' ? ' ' + stClass(v) : '');
+    el.textContent = f === 'latest' ? P(v) : f === 'recent_pace' ? P(v) + ' شهريًا' : f === 'status' ? stSym(v) + v : v;
+  });
+  const box = document.getElementById('ch-block'), bl = dash.data('blocks'), ph = dash.data('phases');
+  if (failBox(box, 'blocks') || failBox(box, 'phases') || bl.status !== 'ok' || ph.status !== 'ok') return;
+  const pts = bl.data.filter((d) => d.block === cur).map((d) => ({ d: D(d.month), v: d.pct == null || d.pct === '' ? null : Number(d.pct), name: d.month_name })).sort((a, z) => a.d - z.d);
+  const phs = phaseSeries(ph.data).find((s) => s.name === b.phase);
+  lineChart(box, [{ ...phs, c: 'var(--cds-chart-muted)', w: 2, dash: '5 4', end: phs.end }, { name: cur, c: dash.colors[0], pts, w: 2.5, end: cur.replace('بلوك ', 'ب') + ' ' + d3.format('.1f')(pts.filter((p) => p.v != null).at(-1).v) + '%' }], { label: 'نسبة ' + cur + ' شهرًا بشهر', y0: 0, y1: 70 });
+  const lg = document.getElementById('lg-block'); lg.replaceChildren();
+  [[dash.colors[0], cur], ['var(--cds-chart-muted)', b.phase + ' كما وردت في التقارير']].forEach(([c, s]) => { const sp = document.createElement('span'), i = document.createElement('i'); i.style.background = c; sp.append(i, document.createTextNode(s)); lg.appendChild(sp); });
+}
+
+/* ---------- table of all blocks ---------- */
+let sortKey = 'latest', sortDir = -1; const q = document.getElementById('ab-q');
+q.addEventListener('input', () => drawTable());
+document.querySelectorAll('#tb-blocks th button').forEach((b) => b.addEventListener('click', () => { const k = b.dataset.k; if (sortKey === k) sortDir = -sortDir; else { sortKey = k; sortDir = ['block_no', 'phase', 'current_stage_no', 'status_rank', 'months_likely'].includes(k) ? 1 : -1; } drawTable(); }));
+document.getElementById('tb-blocks').addEventListener('click', (ev) => { const tr = ev.target.closest('tr[data-key]'); if (tr) { dash.setParams({ block: tr.dataset.key }); document.getElementById('card-block').scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
+function drawTable() {
+  const tb = document.querySelector('#tb-blocks tbody'), t = dash.data('block_table'); tb.replaceChildren();
+  document.querySelectorAll('#tb-blocks th').forEach((th) => { const k = th.querySelector('button').dataset.k; th.setAttribute('aria-sort', k === sortKey ? (sortDir > 0 ? 'ascending' : 'descending') : 'none'); });
+  if (t.status !== 'ok') return;
+  const s = (q.value || '').trim();
+  const rows = t.data.filter((b) => !s || (b.block + ' ' + b.phase + ' ' + b.current_stage + ' ' + b.status).includes(s)).sort((a, b) => { const x = a[sortKey], y = b[sortKey]; return (typeof x === 'number' ? x - y : String(x).localeCompare(String(y), 'ar')) * sortDir; });
+  const cur = dash.params().block;
+  rows.forEach((b) => {
+    const tr = document.createElement('tr'); tr.dataset.key = b.block; if (b.block === cur) tr.className = 'sel'; tr.style.cursor = 'pointer';
+    const td = (txt, cls) => { const c = document.createElement('td'); if (cls) c.className = cls; c.textContent = txt; tr.appendChild(c); return c; };
+    td(b.block); td(b.phase); td(d3.format(',')(b.villas), 'opt');
+    const lt = document.createElement('td'), wrap = document.createElement('span'), tr2 = document.createElement('span'), fl = document.createElement('span'), tx = document.createElement('span');
+    wrap.className = 'ab-bar'; tr2.className = 'track'; fl.className = 'fill'; fl.style.width = b.latest + '%'; fl.style.background = dash.colors[0]; tr2.appendChild(fl); tx.textContent = P(b.latest); wrap.append(tx, tr2); lt.appendChild(wrap); tr.appendChild(lt);
+    td(SP(b.change_since_jan), 'opt'); td(P(b.recent_pace)); td(b.stalled_months + ' من ' + b.reports_compared, 'opt'); td(b.current_stage, 'opt'); td(b.eta); td(stSym(b.status) + b.status, stClass(b.status));
+    tb.appendChild(tr);
+  });
+}
+
+/* ---------- completion outlook ---------- */
+function drawEta() {
+  const box = document.getElementById('ch-eta'); if (failBox(box, 'block_table')) return; const t = dash.data('block_table'); if (t.status !== 'ok') return;
+  box.querySelector('svg')?.remove();
+  const rows = t.data.slice().sort((a, b) => a.months_likely - b.months_likely), W = Math.max(280, box.clientWidth), row = 24, m = { t: 10, r: 16, b: 28, l: 64 }, H = m.t + m.b + rows.length * row;
+  const CAP = 52; const x = d3.scaleLinear([0, CAP], [m.l, W - m.r]); const y = d3.scaleBand(rows.map((d) => d.block), [m.t, H - m.b]).padding(.35);
+  const svg = d3.create('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'تقدير اكتمال البلوكات');
+  const ticks = [0, 4, 16, 28, 40, 52]; const lab = (mm) => mm === 0 ? 'اليوم' : String(new Date(Date.UTC(2026, 8 + mm, 1)).getUTCFullYear());
+  const xa = svg.append('g').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues(ticks).tickSize(-(H - m.t - m.b)).tickFormat(lab)); xa.select('.domain').remove(); axisStyle(xa);
+  const ya = svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).tickSize(0).tickPadding(8)); ya.select('.domain').remove(); axisStyle(ya);
+  const col = (d) => d.status === 'شبه متوقف' ? 'var(--cds-chart-status-critical)' : d.status === 'بطيء' ? dash.colors[1] : dash.colors[0];
+  const tip = tipFor(box), cl = (v) => Math.min(CAP, v);
+  const g = svg.append('g').selectAll('g').data(rows).join('g');
+  g.append('rect').attr('x', (d) => x(cl(d.months_optimistic))).attr('width', (d) => Math.max(4, x(cl(d.months_pessimistic)) - x(cl(d.months_optimistic)))).attr('y', (d) => y(d.block)).attr('height', y.bandwidth()).attr('rx', 4).attr('fill', col).attr('opacity', .3);
+  g.append('circle').attr('cx', (d) => x(cl(d.months_likely))).attr('cy', (d) => y(d.block) + y.bandwidth() / 2).attr('r', 5).attr('fill', col);
+  g.filter((d) => d.months_likely > CAP).append('text').attr('x', x(CAP) - 10).attr('y', (d) => y(d.block) + y.bandwidth() / 2 + 4).attr('text-anchor', 'end').attr('fill', 'var(--color-fg-muted)').style('font-size', 'var(--cds-font-size-caption)').text((d) => d.eta + ' ←');
+  g.append('rect').attr('x', m.l).attr('width', W - m.l - m.r).attr('y', (d) => y(d.block)).attr('height', y.bandwidth()).attr('fill', 'transparent')
+    .on('pointermove', (ev, d) => { const rr = svg.node().getBoundingClientRect(), k = rr.width / W; showTip(box, tip, x(cl(d.months_likely)) * k, y(d.block) * k, [d.block + ' · ' + d.status, 'الأرجح: ' + d.eta, 'من ' + d.months_optimistic + ' إلى ' + d.months_pessimistic + ' شهرًا', 'تقدير غير رسمي']); })
+    .on('pointerleave', () => { tip.style.opacity = 0; });
+  box.style.minHeight = H + 'px';
+  box.prepend(svg.node());
+}
+
+/* ---------- reports ---------- */
+function drawReports() {
+  const tb = document.querySelector('#tb-reports tbody'), r = dash.data('reports'); tb.replaceChildren(); if (r.status !== 'ok') return;
+  r.data.slice().sort((a, b) => String(a.month) < String(b.month) ? -1 : 1).forEach((d) => {
+    const tr = document.createElement('tr'); tr.dataset.key = d.report;
+    [d.report, d3.format(',')(Number(d.pages)), d.format, d.overall_pct == null || d.overall_pct === '' ? '—' : P(Number(d.overall_pct))].forEach((v) => { const c = document.createElement('td'); c.textContent = v; tr.appendChild(c); });
+    tb.appendChild(tr);
+  });
+}
+
+dash.onData(() => {
+  fill('#summary [data-source], #kpis [data-source]', fmtField);
+  drawOverall(); drawPace(); drawPhases(); drawBlock(); drawTable(); drawEta(); drawReports();
+});
+const named = document.getElementById(location.hash.slice(1)); if (named) setTimeout(() => named.scrollIntoView(), 300);
+</script>

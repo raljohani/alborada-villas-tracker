@@ -1,0 +1,65 @@
+[
+{
+"report": "أكتوبر 2025",
+"month": "2025-10-01",
+"pages": 11,
+"format": "PDF",
+"overall_pct": null
+},
+{
+"report": "يناير 2026",
+"month": "2026-01-01",
+"pages": 26,
+"format": "PDF",
+"overall_pct": 21.19
+},
+{
+"report": "فبراير 2026",
+"month": "2026-02-01",
+"pages": 27,
+"format": "PDF",
+"overall_pct": 22.13
+},
+{
+"report": "مارس 2026",
+"month": "2026-03-01",
+"pages": 27,
+"format": "PDF",
+"overall_pct": 23.71
+},
+{
+"report": "أبريل 2026",
+"month": "2026-04-01",
+"pages": 27,
+"format": "PDF",
+"overall_pct": 24.87
+},
+{
+"report": "مايو 2026",
+"month": "2026-05-01",
+"pages": 24,
+"format": "PowerPoint",
+"overall_pct": 25.42
+},
+{
+"report": "يونيو 2026",
+"month": "2026-06-01",
+"pages": 24,
+"format": "PDF",
+"overall_pct": 26.6
+},
+{
+"report": "أغسطس 2026",
+"month": "2026-08-01",
+"pages": 24,
+"format": "PDF",
+"overall_pct": 28.44
+},
+{
+"report": "سبتمبر 2026",
+"month": "2026-09-01",
+"pages": 24,
+"format": "PDF",
+"overall_pct": 29.35
+}
+]
