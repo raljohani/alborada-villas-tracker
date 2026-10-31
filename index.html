@@ -554,6 +554,31 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
 
 .reps{display:flex;flex-wrap:wrap;gap:var(--s-3)}
 .reps .rp{flex:1 1 300px}
+/* ---------- this month ---------- */
+.nb{position:relative;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r-2);padding:var(--s-5) var(--s-4) var(--s-4);margin-top:var(--s-1);box-shadow:0 10px 24px -18px rgba(20,25,18,.45)}
+.nb::before{content:"";position:absolute;top:-9px;inset-inline-start:28px;width:72px;height:18px;transform:rotate(-4deg);background:color-mix(in srgb,var(--warn-m) 30%,transparent);border:1px solid color-mix(in srgb,var(--warn-m) 35%,transparent)}
+.nb-row{display:flex;align-items:center;gap:var(--s-4);flex-wrap:wrap}
+.nb-big{font-size:2.4rem;line-height:1;font-weight:700;color:var(--site);letter-spacing:-.02em}
+.nb-sub{font-size:var(--t-sm);color:var(--ink-2);line-height:1.7;flex:1 1 12em}
+.nb-sub small{display:block;color:var(--ink-3);font-size:var(--t-xs)}
+.sks{list-style:none;margin:var(--s-4) 0 0;padding:0;display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:3px;align-items:end;height:84px;border-bottom:1px solid var(--rule)}
+.sk{cursor:default;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:3px}
+.sk i{display:block;width:100%;max-width:22px;background:color-mix(in srgb,var(--site) 55%,var(--sheet));border-radius:3px 3px 0 0;min-height:2px}
+.sk i.z{height:2px;background:var(--ink-3);opacity:.5}
+.sk span{font-size:10px;color:var(--ink-3);line-height:1;padding-bottom:3px}
+.sk.me i{background:var(--site)} .sk.me span{color:var(--site);font-weight:700}
+.nb-cap{display:flex;justify-content:space-between;gap:var(--s-2);font-size:var(--t-xs);color:var(--ink-3);margin-top:6px}
+.nb-mine{margin-top:var(--s-4);display:flex;align-items:center;gap:var(--s-2) var(--s-3);flex-wrap:wrap;background:var(--site-soft);border-radius:var(--r-2);padding:var(--s-3) var(--s-4);font-size:var(--t-sm)}
+.nb-mine .bd{background:var(--site);color:var(--on-site);border-radius:999px;padding:2px 12px;font-weight:700}
+.stg{display:inline-flex;align-items:center;gap:6px}
+.stg s{text-decoration:none;color:var(--ink-3);border:1px dashed var(--ink-3);border-radius:999px;padding:0 9px;font-size:var(--t-xs)}
+.stg b{border:1.5px solid var(--site);color:var(--site);border-radius:999px;padding:0 9px;font-size:var(--t-xs)}
+.nb-pick{margin-top:var(--s-4);font-size:var(--t-sm);color:var(--ink-2);background:var(--sunk);border-radius:var(--r-2);padding:var(--s-3) var(--s-4)}
+.nb-tags{list-style:none;margin:var(--s-3) 0 0;padding:0;display:grid;gap:6px;font-size:var(--t-sm);color:var(--ink-2)}
+.nb-tags li{display:flex;gap:var(--s-2);align-items:baseline;line-height:1.7}
+.nb-tags em{font-style:normal;flex:none;min-width:5.6em;font-size:var(--t-xs);font-weight:700;color:var(--site);border-inline-start:3px solid var(--site);padding-inline-start:6px}
+.nb-tags li.same em{color:var(--ink-3);border-color:var(--ink-3)}
+@container (min-width:760px){.nb-body{display:grid;grid-template-columns:1.1fr 1fr;gap:var(--s-6);align-items:start}.nb-body .nb-mine{margin-top:0}}
 </style>
 </head>
 <body>
@@ -595,6 +620,11 @@ select.sel{min-height:44px;padding:0 var(--s-3);border:var(--bw) solid var(--rul
   <section class="panel" id="p-mine" data-p="mine" aria-labelledby="h-mine">
     <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 01</span><h2 id="h-mine">بلوكي</h2><p class="take" id="mine-take"></p></div><div class="ph-act"></div></div>
     <div class="pb" id="mine-body"></div>
+  </section>
+
+  <section class="panel" id="p-month" data-p="month" aria-labelledby="h-month">
+    <div class="ph"><div class="ph-l"><span class="sheetno">لوحة 02</span><h2 id="h-month">دفتر هذا الشهر</h2><p class="take" id="month-take"></p></div><div class="ph-act"></div></div>
+    <div class="pb"><div class="nb" id="month-body"></div></div>
   </section>
 
   <section class="panel" id="p-sources" data-p="sources" aria-labelledby="h-sources">
@@ -850,7 +880,9 @@ const tl=[
  ['سبتمبر','اكتملت اللياسة والدهان الداخليان في المرحلة 1، وتمديدات الكهرباء والسباكة لخمسين فيلا في المرحلة 3.'],
  ['أكتوبر','بدأ العزل المائي للأسطح ودورات المياه والمطابخ وتركيب لوحات التوزيع الكهربائي في المرحلة 1، واكتملت اللياسة الداخلية لـ156 دورًا في المرحلة 2، وتمديدات الكهرباء والسباكة لجميع فلل المرحلة 3.']
 ];
-const PANELS=[['mine','بلوكي'],['sources','مصدر الأرقام'],['summary','المشروع باختصار'],['progress','تقدم المشروع'],['pace','وتيرة العمل'],['phases','المراحل الأربع'],['blocks','جميع البلوكات'],['notes','ملاحظات للمتابعة'],['trust','مطابقة المراحل'],['texts','نصوص مكررة'],['photos','صور مكررة'],['timeline','ما الذي اكتمل؟'],['faq','أسئلة شائعة'],['wafi','منصة وافي']];
+/* latest report in a glance: texts summarised from the report; stage before this report for blocks that moved */
+const MONTH={started:'العزل المائي في المرحلة 1، واللياسة الخارجية في بلوكي 7 و8',done:'الكهرباء والسباكة لكل فلل المرحلة 3، واللياسة الداخلية لـ156 دورًا في المرحلة 2',stageFrom:{7:4,8:4,12:3}};
+const PANELS=[['mine','بلوكي'],['month','دفتر هذا الشهر'],['sources','مصدر الأرقام'],['summary','المشروع باختصار'],['progress','تقدم المشروع'],['pace','وتيرة العمل'],['phases','المراحل الأربع'],['blocks','جميع البلوكات'],['notes','ملاحظات للمتابعة'],['trust','مطابقة المراحل'],['texts','نصوص مكررة'],['photos','صور مكررة'],['timeline','ما الذي اكتمل؟'],['faq','أسئلة شائعة'],['wafi','منصة وافي']];
 const PNAME=id=>PANELS.find(p=>p[0]===id)[1];
 
 /* ================= helpers ================= */
@@ -1096,6 +1128,30 @@ function openReport(k,from){
 /* ================= my block ================= */
 function ladderHTML(n){return `<div class="ladder" role="img" aria-label="المرحلة الحالية: ${STAGE_N[STAGE[n]-1]}">${STAGE_N.map((x,i)=>`<i class="${i+1<STAGE[n]?'done':i+1===STAGE[n]?'now':''}"></i>`).join('')}</div>`}
 const ladKey=()=>`<div class="ladkey" aria-hidden="true">${STAGE_N.map(x=>`<span>${x}</span>`).join('')}</div>`;
+function drawMonth(){
+  const L=SRC.length,k1=SRC[L-1],k0=SRC[L-2],prevK=SRC[L-3],box=$('#month-body');
+  const inc=SRC.slice(1).map((k,i)=>[k,(overall[k]-overall[SRC[i]])/(k-SRC[i])]);
+  const cur=overall[k1]-overall[k0],prev=overall[k0]-overall[prevK];
+  let since=null;for(let j=inc.length-2;j>=0;j--)if(inc[j][1]>=cur){since=inc[j][0];break}
+  const rank=since===null?'أعلى زيادة منذ بداية التقارير':inc.at(-2)[1]>=cur?'أقل من زيادة الشهر السابق':'أعلى زيادة شهرية منذ '+M[since];
+  const ds=blocks.map(b=>({b:b.b,d:last(b)-vAt(b,k0)})).sort((a,c)=>c.d-a.d||a.b-c.b),mx=Math.max(...ds.map(x=>x.d),.01);
+  const zero=ds.filter(x=>x.d<.005).map(x=>x.b),list=n=>n.length>1?n.slice(0,-1).join(' و')+' و'+n.at(-1):n[0];
+  const ph0=phases.filter(p=>Math.abs(p.v[k1]-p.v[k0])<.005).map(p=>p.name);
+  const same=[...ph0,zero.length?(zero.length>1?'وبلوكا ':'وبلوك ')+list(zero):''].filter(Boolean).join('، ').replace(/^و/,'');
+  $('#month-take').textContent=`ما الذي تغيّر بين تقريري ${M[k0]} و${M[k1]} 2026.`;
+  const b=myB(),pct=v=>`<b class="ltr">${v>0?'+':''}${v.toFixed(2)}%</b>`;
+  let mine='<p class="nb-pick">اختر بلوكك من لوحة «بلوكي» ليظهر هنا ما تغيّر فيه هذا الشهر.</p>';
+  if(b){const d=ds.find(x=>x.b===b.b).d,fr=MONTH.stageFrom[b.b];
+    mine=`<div class="nb-mine"><span class="bd">بلوكك ${b.b}</span><span>${d<.005?'لم تتغير نسبته، وبقيت':pct(d)+' فبلغ'} <b class="ltr">${last(b).toFixed(2)}%</b></span>${fr?`<span class="stg"><s>${STAGE_N[fr-1]}</s><span aria-hidden="true">←</span><b>${STAGE_N[STAGE[b.b]-1]}</b></span>`:`<span class="note">الترتيب ${ds.findIndex(x=>x.b===b.b)+1} من ${ds.length} هذا الشهر</span>`}</div>`}
+  box.innerHTML=`<div class="nb-body"><div>
+    <div class="nb-row"><b class="nb-big ltr">${cur>=0?'+':''}${cur.toFixed(2)}%</b><span class="nb-sub">تقدّم المشروع هذا الشهر فبلغ <b class="ltr">${overall[k1].toFixed(2)}%</b><small>${rank} · وكان في ${M[k0]} <span class="ltr">+${prev.toFixed(2)}%</span></small></span></div>
+    <ol class="sks" aria-label="زيادة كل بلوك عن ${M[k0]}، مرتبة من الأعلى">${ds.map(x=>`<li class="sk${b&&x.b===b.b?' me':''}" title="بلوك ${x.b}: ${x.d>0?'+':''}${x.d.toFixed(2)}%"><i${x.d<.005?' class="z"':` style="height:${(x.d/mx*100).toFixed(0)}%"`}></i><span>${x.b}</span><span class="sr">بلوك ${x.b}: ${x.d.toFixed(2)}%</span></li>`).join('')}</ol>
+    <div class="nb-cap"><span>الأعلى: بلوك ${ds[0].b} ${pct(ds[0].d)}</span>${zero.length?`<span>بلا تغيير: ${list(zero)}</span>`:''}</div>
+  </div><div>${mine}
+    <ul class="nb-tags"><li><em>بدأ</em><span>${MONTH.started}</span></li><li><em>اكتمل</em><span>${MONTH.done}</span></li>${same?`<li class="same"><em>بقي كما هو</em><span>${same}</span></li>`:''}</ul>
+  </div></div>`;
+  digits(box);
+}
 function drawMine(){
   const body=$('#mine-body'),take=$('#mine-take');
   const grid=`<div class="blockgrid">${blocks.map(b=>`<button type="button" data-b="${b.b}" aria-pressed="${b.b===S.block}">${b.b}</button>`).join('')}</div>`;
@@ -1123,7 +1179,7 @@ function drawMine(){
   body.querySelectorAll('[data-b]').forEach(x=>x.onclick=()=>setBlock(+x.dataset.b));
   glossify(body);digits(body);digits(take);
 }
-function setBlock(n){const first=!S.welcomed;S.block=n;S.welcomed=true;save();syncURL();$('#welcome').hidden=true;drawMine();drawBlocks();refreshExplains();toast('اخترت بلوك '+n);if(first)maybeTour()}
+function setBlock(n){const first=!S.welcomed;S.block=n;S.welcomed=true;save();syncURL();$('#welcome').hidden=true;drawMine();drawMonth();drawBlocks();refreshExplains();toast('اخترت بلوك '+n);if(first)maybeTour()}
 
 /* ================= block detail drawer ================= */
 function openBlock(n,from){
@@ -1207,7 +1263,7 @@ function drawDeep(){
 function opts(id,name,list,cur,on){$(id).innerHTML=list.map(([v,l])=>`<label><input type="radio" name="${name}" id="${name}-${v}" value="${v}" ${v===cur?'checked':''}><span>${l}</span></label>`).join('');$(id).querySelectorAll('input').forEach(i=>i.onchange=()=>on(i.value))}
 function buildSettings(){
   $('#setBlock').innerHTML='<option value="">لا شيء</option>'+blocks.map(b=>`<option value="${b.b}" ${b.b===S.block?'selected':''}>بلوك ${b.b}</option>`).join('');
-  $('#setBlock').onchange=e=>{const v=+e.target.value;if(v)setBlock(v);else{S.block=null;save();syncURL();drawMine();drawBlocks();refreshExplains();toast('أُلغي اختيار البلوك')}};
+  $('#setBlock').onchange=e=>{const v=+e.target.value;if(v)setBlock(v);else{S.block=null;save();syncURL();drawMine();drawMonth();drawBlocks();refreshExplains();toast('أُلغي اختيار البلوك')}};
   opts('#setTheme','th',[['light','فاتح'],['dark','داكن'],['auto','تلقائي']],S.theme,v=>{S.theme=v;save();applyLook();redraw()});
   opts('#setSize','sz',[['s','صغير'],['m','متوسط'],['l','كبير']],S.size,v=>{S.size=v;save();applyLook();redraw()});
   opts('#setDensity','dn',[['comfy','مريح'],['compact','مضغوط']],S.density,v=>{S.density=v;save();applyLook()});
@@ -1257,6 +1313,8 @@ const myB=()=>S.block?blocks.find(x=>x.b===S.block):null;
 const EXPLAIN={
  mine:{w:'ملخص حالة بلوكك وحده، لا المشروع كله.',h:'الرقم الكبير هو نسبة ما أُنجز من أعمال بلوكك. والبيوت العشرة تمثّل البناء كاملًا، والملوّن منها هو المنجَز. والشريط ذو المربعات الستة يوضح مراحل البناء من الهيكل إلى التشطيب، والمربع المخطَّط هو المرحلة الجارية الآن.',
    y:()=>{const b=myB();return b?`بلوكك (بلوك ${b.b}) أنجز ${last(b).toFixed(2)}% من أعماله. وموعد اكتماله المكتوب هنا تقدير غير رسمي، فالشركة لم تعلن مواعيد لتسليم البلوكات.`:'اختر رقم بلوكك من الأزرار ليظهر لك ملخصه.'}},
+ month:{w:'خلاصة ما تغيّر في آخر تقرير مقارنةً بالتقرير الذي قبله.',h:'الرقم الكبير هو مقدار تقدّم المشروع هذا الشهر. والأعمدة الصغيرة تمثّل زيادة كل بلوك، مرتبة من الأعلى إلى الأدنى، وعمود بلوكك أغمق لونًا. وفي الأسفل ما بدأ وما اكتمل وما بقي كما هو وفق التقرير.',
+   y:()=>{const b=myB();return b?`انظر إلى عمود بلوك ${b.b} لتعرف موقعه بين البلوكات هذا الشهر.`:'اختر بلوكك ليظهر لك ما تغيّر فيه.'}},
  sources:{w:'من أين جاءت أرقام هذه الصفحة.',h:'كل غلاف يمثل تقريرًا شهريًا أرسلته الشركة، والرقم أسفله نسبة إنجاز المشروع في ذلك التقرير. وفي آخر الصفحة لوحة تعرض البيانات الرسمية للمشروع في منصة وافي.',
    y:()=>'إذا أردت التحقق من أي رقم، فاضغط على التقرير وافتح صفحة بلوكك فيه.'},
  summary:{w:'صورة عامة عن المشروع كله، لا عن بلوك بعينه.',h:'الدائرة توضح الجزء المنجز من المشروع. والبطاقات الأربع تعرض: النسبة الحالية، ومقدار التقدم في كل شهر، والموعد التقديري للاكتمال، وعدد البلوكات شبه المتوقفة.',
@@ -1382,11 +1440,11 @@ function startTour(){if(tourEl)return;tourEl=document.createElement('div');tourE
 /* ================= boot ================= */
 function charts(){drawRing();drawOverall();drawPace();drawPhases();if(view==='rank')drawBump();digits($('main'))}
 function redraw(){requestAnimationFrame(charts)}
-function renderAll(){if(S.digits!=='arab'){drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();drawNotes();charts();restoreLatin();return}drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();drawNotes();charts();digits(document.body)}
+function renderAll(){if(S.digits!=='arab'){drawShelf();drawMine();drawMonth();drawBlocks();drawDeep();drawFaq();drawNotes();charts();restoreLatin();return}drawShelf();drawMine();drawMonth();drawBlocks();drawDeep();drawFaq();drawNotes();charts();digits(document.body)}
 /* switching back to 123: static text was converted in place, so reload it from the markup */
 function restoreLatin(){if(converted)location.reload()}
 applyLook();setupPanels();layoutPanels();
-drawShelf();drawMine();drawBlocks();drawDeep();drawFaq();drawNotes();charts();
+drawShelf();drawMine();drawMonth();drawBlocks();drawDeep();drawFaq();drawNotes();charts();
 $$('.panel .take,.panel .lead,.panel .note,.panel .srcnote,.panel .callout,.panel .disc,.panel .rp,.panel .tl,.wafi dl').forEach(glossify);
 if(S.digits==='arab')digits(document.body)
 syncURL();welcome();if(S.welcomed&&!S.toured&&!new URLSearchParams(location.search).get('block'))maybeTour();
